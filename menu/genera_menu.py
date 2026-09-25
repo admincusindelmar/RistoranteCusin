@@ -94,6 +94,7 @@ DEGUSTAZIONI = [
     ),
     dict(
         id="vegetariana",
+        icona="alga",
         nome="Vegetariana di Mare",
         sotto="Il profumo del mare, senza pesce",
         sotto_en="The scent of the sea, without fish",
@@ -139,9 +140,9 @@ DEGUSTAZIONI = [
                        "Grilled squid on dandelion greens with anchovy sauce", (4, 14)),
             ]),
             ("Primo", "First course", [
-                piatto("Tagliolini pepe e limone",
-                       "Tagliolini artigianali pepe e limone, mazzancolle e funghi porcini",
-                       "Handmade pepper and lemon tagliolini, king prawns and porcini mushrooms",
+                piatto("Tagliolini al pepe e limone",
+                       "Tagliolini artigianali con pepe e limone nell'impasto, mazzancolle e funghi porcini",
+                       "Handmade tagliolini with pepper and lemon in the dough, king prawns and porcini mushrooms",
                        (1, 2, 3)),
             ]),
             ("Secondo", "Main course", [
@@ -231,9 +232,9 @@ PRIMI = [
     piatto("Spaghetto Benedetto Cavalieri",
            "Alle vongole veraci, fiocchi di pomodoro e olio al lime",
            "Spaghetti with clams, tomato flakes and lime oil", (1, 14), cottura=True),
-    piatto("Tagliolini pepe e limone",
-           "Tagliolini artigianali pepe e limone, mazzancolle e funghi porcini",
-           "Handmade pepper and lemon tagliolini, king prawns and porcini mushrooms", (1, 2, 3)),
+    piatto("Tagliolini al pepe e limone",
+           "Tagliolini artigianali con pepe e limone nell'impasto, mazzancolle e funghi porcini",
+           "Handmade tagliolini with pepper and lemon in the dough, king prawns and porcini mushrooms", (1, 2, 3)),
     piatto("Risotto calamari e totani",
            "Risotto con calamari e totani al tartufo",
            "Risotto with squid, flying squid and truffle", (14,)),
@@ -399,8 +400,44 @@ def svg_pesce():
 </g></svg>"""
 
 
+def svg_alga():
+    """Alga marina a nastri ondulati con nervatura, bolle e sasso: marino ma vegetale."""
+    def fronda(x0, alt, amp, fase, larg, pieghe=1.6):
+        n = 36
+        cen, sx, dx = [], [], []
+        for i in range(n + 1):
+            u = i / n
+            y = 96 - u * alt
+            x = x0 + amp * math.sin(u * math.pi * pieghe + fase) * u
+            w = larg * (math.sin(math.pi * min(u * 1.08, 1)) ** .7) + .4 * (1 - u)
+            cen.append((x, y))
+            sx.append((x - w, y))
+            dx.append((x + w, y))
+        bordo = "M" + " L".join(_p(*q) for q in sx) + " L" + " L".join(_p(*q) for q in reversed(dx)) + " Z"
+        nerv = "M" + " L".join(_p(*q) for q in cen)
+        vene = ""
+        for i in range(4, n - 2, 3):
+            (xc, yc), (xl, yl), (xr, yr) = cen[i], sx[i - 2], dx[i - 2]
+            vene += f"M{_p(xc, yc)} L{_p(xl * .55 + xc * .45, yl)} M{_p(xc, yc)} L{_p(xr * .55 + xc * .45, yr)} "
+        return bordo, nerv, vene
+
+    parti = [fronda(42, 86, 13, 0, 8.5, 2.1), fronda(26, 64, 10, 2.4, 7, 1.9), fronda(58, 72, 11, 3.8, 7.2, 2.0),
+             fronda(14, 40, 6, 1, 5, 1.5), fronda(72, 46, 6, 4.4, 5.2, 1.6)]
+    bordi = "".join(f'<path d="{b}" stroke-width=".9" fill="#e9ebf0"/>' for b, _, _ in reversed(parti))
+    nerv = "".join(f'<path d="{n}" stroke-width=".5"/><path d="{v}" stroke-width=".35" opacity=".8"/>'
+                   for _, n, v in reversed(parti))
+    return f"""<svg viewBox="-4 0 92 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+{bordi}{nerv}
+<path d="M10 97 C 16 90, 30 89, 38 94 C 46 89, 62 88, 74 97" stroke-width=".9"/>
+<path d="M18 96 C 22 93, 28 93, 31 95 M50 95 C 55 92, 62 92, 66 95" stroke-width=".4"/>
+<circle cx="76" cy="26" r="2.6" stroke-width=".7"/><circle cx="81" cy="15" r="1.8" stroke-width=".7"/>
+<circle cx="76" cy="6" r="1.2" stroke-width=".7"/><circle cx="6" cy="44" r="1.6" stroke-width=".7"/>
+</g></svg>"""
+
+
 PESCE = svg_pesce()
 CONCHIGLIA = svg_capasanta()
+ALGA = svg_alga()
 
 SPIGA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
 <path d="M30 56V14"/><path d="M30 18c-6-2-9-8-8-14 6 2 9 8 8 14zM30 18c6-2 9-8 8-14-6 2-9 8-8 14z"/>
@@ -413,10 +450,10 @@ FRECCIA = """<svg viewBox="0 0 90 34" class="freccia" aria-hidden="true"><g fill
 <path d="M5 15 L13 13.2 M5 15 L10.5 21"/></g></svg>"""
 
 
-def testata(titolo, sotto, icona="", classe_icona="icona"):
-    return f"""<header class="testata">
+def testata(titolo, sotto, icona=""):
+    return f"""<header class="testata{'' if icona else ' senza-icona'}">
   <h1>{t(titolo)}</h1><div class="riga"></div><p class="sottotitolo">{t(sotto)}</p>
-  <div class="{classe_icona}">{icona}</div>
+  {f'<div class="icona">{icona}</div>' if icona else ''}
 </header>"""
 
 
@@ -427,7 +464,8 @@ def riga_piatto(p):
     desc = f'<p class="desc">{t(p["desc"])}</p>' if p["desc"] else ""
     en = f'<p class="en">{t(p["en"])}</p>' if p["en"] else ""
     nota = f'<p class="nota">{t(p["nota"])}</p>' if p["nota"] else ""
-    return f"""<div class="voce{' firma' if p['chef'] else ''}">
+    classi = "voce" + (" firma" if p["chef"] else "") + (" con-cottura" if p["cottura"] else "")
+    return f"""<div class="{classi}">
   <div class="testo">{chef}<h3>{t(p['nome'])}{cott}</h3>{desc}{en}{nota}{allerg(p['allergeni'])}</div>
   <div class="prezzo">{prezzo(p['prezzo'])}</div>
 </div>"""
@@ -452,7 +490,7 @@ def pagina_degustazione(d, n):
             for p in piatti)
         blocchi.append(f'<div class="portata"><h2>{it} <span>{en}</span></h2><ul>{voci}</ul></div>')
     corpo = f"""
-{testata('Degustazione', 'Tasting Menu', CONCHIGLIA)}
+{testata('Degustazione', 'Tasting Menu', ALGA if d.get('icona') == 'alga' else CONCHIGLIA)}
 <div class="deg">
   <h1 class="deg-nome">{t(d['nome'])}</h1>
   <p class="deg-sotto">{t(d['sotto'])}<br><em>{t(d['sotto_en'])}</em></p>
@@ -464,7 +502,7 @@ def pagina_degustazione(d, n):
   <p class="abbina">Chiedi al nostro personale l'abbinamento al calice dalla Carta dei Vini<br>
   <em>Ask our staff for a wine-by-the-glass pairing from our Wine List</em></p>
 </div>"""
-    return pagina(corpo, n, "p-deg")
+    return pagina(corpo, n, "p-deg riempi")
 
 
 INDICE = [
@@ -492,10 +530,10 @@ def pagina_indice():
     return pagina(corpo, None, "p-indice")
 
 
-def pagina_carta(titolo, sotto, icona, intro, corpo_extra, n, classe_icona="icona", classe=""):
-    corpo = f"""{testata(titolo, sotto, icona, classe_icona)}
+def pagina_carta(titolo, sotto, icona, intro, corpo_extra, n, classe=""):
+    corpo = f"""{testata(titolo, sotto, icona)}
 <p class="intro">{intro}</p>{corpo_extra}"""
-    return pagina(corpo, n, classe)
+    return pagina(corpo, n, (classe + " riempi").strip())
 
 
 def pagina_crudo(n):
@@ -527,7 +565,7 @@ def pagina_crudo(n):
   </li>
 </ol>
 <p class="condividi">{FRECCIA}perfetto da condividere al centro del tavolo</p>"""
-    return pagina(corpo, n, "p-crudo")
+    return pagina(corpo, n, "p-crudo riempi")
 
 
 def pagina_primi(n):
@@ -540,7 +578,7 @@ def pagina_primi(n):
     return pagina_carta("Primi Piatti", "First Courses", SPIGA,
                         "Pasta artigianale e risotti mantecati al momento · "
                         "<em>Handmade pasta and freshly made risotti</em>",
-                        elenco(PRIMI) + nota, n, "icona stretta", "p-primi")
+                        elenco(PRIMI) + nota, n, "p-primi")
 
 
 def pagina_secondi(n):
@@ -550,7 +588,7 @@ def pagina_secondi(n):
     return pagina_carta("Secondi Piatti", "Main Courses", PESCE,
                         "Il pescato alla griglia, in crosta e fritto leggero · "
                         "<em>Grilled, crusted and lightly fried catch</em>",
-                        elenco(SECONDI) + contorni, n, "icona larga")
+                        elenco(SECONDI) + contorni, n)
 
 
 def pagina_servizio_allergeni(n):
@@ -596,13 +634,15 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 
 /* testata: MAIUSCOLO spaziato, filetto a 16,8 mm, sottotitolo sotto il filetto */
 .testata { position: relative; height: 26mm; margin-bottom: 6mm; }
-.testata h1 { font-size: 22pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; line-height: 1.1; }
-.testata .riga { position: absolute; top: 8.1mm; left: 0; width: 143.5mm; height: .53mm; background: var(--filo-testata); }
-.testata .sottotitolo { position: absolute; top: 9.6mm; font-size: 16pt; font-weight: 300; letter-spacing: .1em; }
-.testata .icona { position: absolute; right: -4mm; top: 2mm; width: 28mm; height: 24mm; }
-.testata .icona.larga { right: -8mm; top: 5mm; width: 44mm; height: 19mm; }
-.testata .icona.stretta { right: 0; top: 3mm; width: 18mm; height: 22mm; }
-.intro { font-size: 13.5pt; font-style: italic; color: var(--tenue); margin: -1mm 0 6mm; max-width: 136mm; }
+.testata h1 { font-size: 21pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; line-height: 1.1; }
+.testata .riga { position: absolute; top: 9.4mm; left: 0; width: 116mm; height: .53mm; background: var(--filo-testata); }
+.testata .sottotitolo { position: absolute; top: 10.6mm; font-size: 16pt; font-weight: 300; letter-spacing: .1em; }
+.testata.senza-icona .riga { width: 143.5mm; }
+/* illustrazione nello spazio dopo il filetto: da 165 a 192 mm, centrata sul filetto */
+.testata .icona { position: absolute; left: 121.5mm; top: 3.4mm; width: 28mm; height: 12.5mm;
+  display: flex; align-items: center; justify-content: center; }
+.testata .icona svg { width: 100%; height: 100%; }
+.intro { font-size: 12.5pt; font-style: italic; color: var(--tenue); margin: -1mm 0 6mm; max-width: 136mm; }
 
 /* voci: testo a sinistra, filetto verticale continuo a 183 mm, prezzo a 187 mm */
 .elenco { position: relative; display: flex; flex-direction: column; gap: 4.2mm; }
@@ -610,42 +650,44 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
   width: .53mm; background: var(--filo); }
 .voce { display: grid; grid-template-columns: calc(var(--x-filo) - 4mm) 1fr; column-gap: 8mm; }
 .voce .testo { position: relative; }
-.voce .prezzo { font-size: 15pt; font-weight: 700; align-self: center; }
-.voce h3 { font-size: 15.5pt; font-weight: 700; line-height: 1.2; }
-.voce .desc { font-size: 13.5pt; line-height: 1.25; }
-.voce .en { font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
-.voce .nota { font-size: 12.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; line-height: 1.25; }
-.all { display: block; font-size: 10.5pt; letter-spacing: .05em; color: var(--tenue); margin-top: .6mm; }
-.chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 15pt; color: var(--oro);
+.voce .prezzo { font-size: 14pt; font-weight: 700; align-self: center; }
+.voce h3 { font-size: 14.5pt; font-weight: 700; line-height: 1.2; }
+.voce .desc { font-size: 12.5pt; line-height: 1.25; }
+.voce .en { font-size: 11.5pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
+.voce .nota { font-size: 11.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; line-height: 1.25; }
+.all { display: block; font-size: 9.5pt; letter-spacing: .05em; color: var(--tenue); margin-top: .6mm; }
+.chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 14pt; color: var(--oro);
   line-height: 1; margin-bottom: .8mm; }
 .passi .chef, .crudo .chef { display: inline; }
 .voce.firma .testo { border: 1px solid #c9bb95; padding: 2.6mm 3.5mm; margin-left: -3.5mm; background: #efeff0; }
 .compatto { gap: 2.6mm; }
-.compatto .voce h3 { font-size: 15pt; }
-.en-riga { font-weight: 400; font-size: 12.5pt; color: var(--tenue); margin-left: 2mm; }
+.compatto .voce h3 { font-size: 14pt; }
+.en-riga { font-weight: 400; font-size: 11.5pt; color: var(--tenue); margin-left: 2mm; }
 
 /* freccia arrotolata "18 minuti" */
 .voce h3 { position: relative; }
-.cottura { position: absolute; right: 0; top: -4mm; display: flex; align-items: center; gap: 1mm;
-  font-family: 'Caveat', cursive; font-size: 15pt; line-height: .95; color: var(--oro); }
-.cottura em { font-style: normal; font-size: 12.5pt; opacity: .85; }
+.cottura { position: absolute; right: 0; top: .6mm; display: flex; align-items: center; gap: 1mm;
+  font-family: 'Caveat', cursive; font-size: 14pt; line-height: .95; color: var(--oro); }
+.cottura em { font-style: normal; font-size: 11.5pt; opacity: .85; }
 .voce.firma .cottura { right: 0; }
 .p-primi .elenco { gap: 3.4mm; }
 .p-primi .intro { margin-bottom: 4.5mm; }
-.freccia { width: 21mm; height: 8mm; color: var(--oro); flex: none; }
+.voce.con-cottura .testo > p { max-width: calc(100% - 47mm); }
+.voce.con-cottura.firma .testo > p { max-width: calc(100% - 44mm); }
+.freccia { width: 16mm; height: 7mm; color: var(--oro); flex: none; }
 .nota-pasta { margin-top: 4.5mm; padding-top: 3mm; border-top: 1px solid var(--filo); max-width: 136mm; }
-.nota-pasta p { font-size: 13pt; line-height: 1.3; }
-.nota-pasta p.en { font-size: 12pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
+.nota-pasta p { font-size: 12pt; line-height: 1.3; }
+.nota-pasta p.en { font-size: 11pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
 
 /* sotto-sezione (come "Toscana" nella carta vini) */
 .sezione { margin: 8mm 0 3.5mm; }
-.sezione h2 { font-size: 20pt; font-weight: 700; }
-.sezione h2 span { font-size: 14pt; font-weight: 400; font-style: italic; color: var(--tenue); margin-left: 2mm; }
+.sezione h2 { font-size: 19pt; font-weight: 700; }
+.sezione h2 span { font-size: 13pt; font-weight: 400; font-style: italic; color: var(--tenue); margin-left: 2mm; }
 
 /* il crudo */
 .crudo-titolo { margin: -2mm 0 5mm; }
-.crudo-titolo h2 { font-family: 'Caveat', cursive; font-weight: 600; font-size: 34pt; color: var(--oro); line-height: 1; }
-.crudo-titolo p { font-size: 13.5pt; line-height: 1.3; margin-top: 1mm; }
+.crudo-titolo h2 { font-family: 'Caveat', cursive; font-weight: 600; font-size: 33pt; color: var(--oro); line-height: 1; }
+.crudo-titolo p { font-size: 12.5pt; line-height: 1.3; margin-top: 1mm; }
 .crudo-titolo em { color: var(--tenue); }
 .passi { list-style: none; position: relative; }
 .passi::before { content: ""; position: absolute; left: -9.3mm; top: 6mm; bottom: 8mm;
@@ -653,71 +695,156 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .passi > li { position: relative; margin-bottom: 6mm; }
 .passi .n { position: absolute; left: -14.5mm; top: -1mm; width: 10.5mm; height: 10.5mm; border-radius: 50%;
   background: var(--carta); border: 1.2px solid var(--oro); color: var(--oro); text-align: center;
-  font-family: 'Caveat', cursive; font-weight: 600; font-size: 20pt; line-height: 10mm; }
-.passi h4 { font-size: 13pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 3mm; }
-.passi h4 em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1.5mm; font-size: 13pt; }
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 19pt; line-height: 10mm; }
+.passi h4 { font-size: 12pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 3mm; }
+.passi h4 em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1.5mm; font-size: 12pt; }
 .passi .elenco { gap: 2.6mm; }
-.unita { font-weight: 400; font-style: italic; font-size: 13pt; color: var(--tenue); }
+.unita { font-weight: 400; font-style: italic; font-size: 12pt; color: var(--tenue); }
 .salse { list-style: none; display: flex; flex-wrap: wrap; gap: 2.5mm; max-width: 136mm; }
-.salse li { font-size: 14pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; background: #efeff0; }
-.condividi { display: flex; align-items: center; gap: 2mm; font-family: 'Caveat', cursive; font-size: 18pt;
+.salse li { font-size: 13pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; background: #efeff0; }
+.condividi { display: flex; align-items: center; gap: 2mm; font-family: 'Caveat', cursive; font-size: 17pt;
   color: var(--oro); margin-top: -1mm; }
 
 /* indice */
 .p-indice .biglietto { position: absolute; top: 10mm; right: 14mm; width: 70mm; padding: 6mm 8mm 8mm;
   border: 1.2px solid #9a9aa3; border-radius: 1mm 3mm 2mm 4mm; transform: rotate(-14deg);
-  font-family: 'Caveat', cursive; font-size: 23pt; line-height: 1.12; color: #85858d; }
+  font-family: 'Caveat', cursive; font-size: 22pt; line-height: 1.12; color: #85858d; }
 .p-indice .biglietto::after { content:""; position:absolute; inset: 3mm -3mm -3mm 3mm; border: 1px solid #b5b5bc;
   border-radius: 3mm 1mm 4mm 2mm; z-index: -1; }
 .indice { position: absolute; top: 112mm; left: var(--sx); right: var(--dx); }
-.indice h1 { font-weight: 400; font-size: 46pt; letter-spacing: .02em; text-align: center; width: var(--x-filo); }
+.indice h1 { font-weight: 400; font-size: 45pt; letter-spacing: .02em; text-align: center; width: var(--x-filo); }
 .indice .lista { margin-top: 6mm; position: relative; }
 .indice .lista::before { content:""; position:absolute; left: var(--x-filo); top: -30mm; bottom: -4mm; width: .53mm; background: var(--filo); }
-.indice .r { display: grid; grid-template-columns: var(--x-filo) 1fr; padding: 3mm 0; font-size: 14pt;
+.indice .r { display: grid; grid-template-columns: var(--x-filo) 1fr; padding: 3mm 0; font-size: 13pt;
   letter-spacing: .12em; text-transform: uppercase; }
 .indice .r span:first-child { text-align: center; }
-.indice .r em { display: block; font-size: 11.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
-.indice .pg { white-space: nowrap; text-align: center; align-self: center; }
-.firma-rist { position: absolute; bottom: 14mm; left: var(--sx); right: var(--dx); text-align: center; font-size: 13pt;
+.indice .r em { display: block; font-size: 10.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
+.indice .pg { white-space: nowrap; text-align: left; padding-left: 4mm; align-self: center; }
+.firma-rist { position: absolute; bottom: 14mm; left: var(--sx); right: var(--dx); text-align: center; font-size: 12pt;
   letter-spacing: .35em; text-transform: uppercase; color: var(--tenue); }
 
 /* degustazioni: centrate sulla colonna di testo, non sul foglio */
 .p-deg { display: flex; flex-direction: column; }
 .deg { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .deg > * { flex: none; }
-.deg-nome { font-size: 36pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
-.deg-sotto { font-size: 14pt; color: var(--tenue); margin: 1.5mm 0 4mm; line-height: 1.25; }
+.deg-nome { font-size: 35pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
+.deg-sotto { font-size: 13pt; color: var(--tenue); margin: 1.5mm 0 4mm; line-height: 1.25; }
 .portata { margin: 0 auto 2.6mm; width: 100%; }
-.portata h2 { font-size: 12.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
+.portata h2 { font-size: 11.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
   margin-bottom: 1.2mm; }
 .portata h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
 .portata ul { list-style: none; }
 .portata li { margin-bottom: 1.8mm; }
-.portata li h3 { font-size: 15pt; font-weight: 700; line-height: 1.15; }
-.portata .desc { font-size: 13.5pt; line-height: 1.2; }
-.portata .en { font-size: 12.3pt; font-style: italic; color: var(--tenue); line-height: 1.2; }
-.all-riga { font-style: normal; font-size: 10.5pt; letter-spacing: .05em; margin-left: 2.5mm; white-space: nowrap; }
+.portata li h3 { font-size: 14pt; font-weight: 700; line-height: 1.15; }
+.portata .desc { font-size: 12.5pt; line-height: 1.2; }
+.portata .en { font-size: 11.3pt; font-style: italic; color: var(--tenue); line-height: 1.2; }
+.all-riga { font-style: normal; font-size: 9.5pt; letter-spacing: .05em; margin-left: 2.5mm; white-space: nowrap; }
 .all-riga::before { content: '·'; margin-right: 2.5mm; }
 .deg-prezzo { align-self: center; display: inline-flex; align-items: center; gap: 4mm; margin-top: 1.5mm; padding: 0 7mm;
   border-left: .53mm solid var(--filo); border-right: .53mm solid var(--filo); }
-.deg-prezzo .cifra { font-size: 32pt; font-weight: 600; }
-.deg-prezzo .pp { font-size: 12pt; text-align: left; line-height: 1.2; color: var(--tenue); }
-.tavolo { font-size: 13.5pt; font-weight: 600; margin-top: 2.5mm; line-height: 1.25; }
+.deg-prezzo .cifra { font-size: 31pt; font-weight: 600; }
+.deg-prezzo .pp { font-size: 11pt; text-align: left; line-height: 1.2; color: var(--tenue); }
+.tavolo { font-size: 12.5pt; font-weight: 600; margin-top: 2.5mm; line-height: 1.25; }
 .tavolo em { font-weight: 400; color: var(--tenue); }
-.abbina { font-size: 12.5pt; color: var(--tenue); margin-top: 1.5mm; line-height: 1.25; }
+.abbina { font-size: 11.5pt; color: var(--tenue); margin-top: 1.5mm; line-height: 1.25; }
 
 /* allergeni */
 .allergeni { margin-top: 10mm; border-top: 1px solid var(--filo); padding-top: 5mm; max-width: 150mm; }
-.allergeni h2 { font-size: 15pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
+.allergeni h2 { font-size: 14pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
 .allergeni h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
-.legenda { list-style: none; columns: 2; column-gap: 8mm; font-size: 13pt; margin-bottom: 4mm; }
+.legenda { list-style: none; columns: 2; column-gap: 8mm; font-size: 12pt; margin-bottom: 4mm; }
 .legenda li { padding: .5mm 0; }
 .legenda b { display: inline-block; width: 7mm; }
 .legenda em { color: var(--tenue); }
-.allergeni p { font-size: 11.8pt; line-height: 1.3; margin-bottom: 1mm; }
+.allergeni p { font-size: 10.8pt; line-height: 1.3; margin-bottom: 1mm; }
 .allergeni p.en { font-style: italic; color: var(--tenue); margin-bottom: 2.4mm; }
+/* aria: --aria viene calcolata pagina per pagina per riempire il foglio senza sforare */
+.riempi { --aria: 0mm; }
+.riempi .elenco { gap: calc(4.2mm + var(--aria)); }
+.riempi .voce .testo > * + * { margin-top: calc(var(--aria) * .09); }
+.riempi .voce .testo > .all { margin-top: calc(.6mm + var(--aria) * .09); }
+.riempi .elenco.compatto { gap: calc(2.6mm + var(--aria) * .5); }
+.riempi .intro { margin-bottom: calc(6mm + var(--aria)); }
+.riempi .sezione { margin-top: calc(8mm + var(--aria)); margin-bottom: calc(3.5mm + var(--aria) * .5); }
+.riempi .nota-pasta { margin-top: calc(4.5mm + var(--aria)); }
+.riempi .passi > li { margin-bottom: calc(6mm + var(--aria)); }
+.riempi .crudo-titolo { margin-bottom: calc(5mm + var(--aria)); }
+.p-deg.riempi .deg { justify-content: flex-start; }
+.p-deg.riempi .deg-sotto { margin-bottom: calc(4mm + var(--aria)); }
+.p-deg.riempi .portata { margin-bottom: calc(2.6mm + var(--aria)); }
+.p-deg.riempi .portata li { margin-bottom: calc(1.8mm + var(--aria) * .45); }
+.p-deg.riempi .deg-nome { margin-top: calc(var(--aria) * .6); }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
+
+RIEMPI_JS = """() => {
+  const MM = 96 / 25.4, LIMITE = 270 * MM;   // il contenuto resta sopra i 270 mm (numero di pagina a 282)
+  const fondo = p => {
+    const top = p.getBoundingClientRect().top; let max = 0;
+    p.querySelectorAll('*').forEach(e => {
+      if (e.closest('.num') || e.closest('.testata') || e.matches('.deg, .elenco')) return;
+      const r = e.getBoundingClientRect(); if (r.height) max = Math.max(max, r.bottom - top);
+    });
+    return max;
+  };
+  const esito = [];
+  document.querySelectorAll('.pagina.riempi').forEach((p, i) => {
+    let lo = 0, hi = 15;
+    p.style.setProperty('--aria', '0mm');
+    if (fondo(p) <= LIMITE) {
+      for (let k = 0; k < 18; k++) {
+        const m = (lo + hi) / 2; p.style.setProperty('--aria', m + 'mm');
+        if (fondo(p) <= LIMITE) lo = m; else hi = m;
+      }
+    }
+    p.style.setProperty('--aria', lo + 'mm');
+    esito.push(Math.round(lo * 10) / 10);
+  });
+  return esito;
+}"""
+
+# Controllo sovrapposizioni: ogni elemento grafico (illustrazioni, filetti, riquadri, frecce,
+# etichette a mano) non deve toccare nessun testo né un altro elemento grafico.
+SOVRAPPOSIZIONI_JS = """() => {
+  const MM = 96 / 25.4, errori = [];
+  const box = (r, nome) => ({l: r.left, t: r.top, r: r.right, b: r.bottom, nome});
+  const tocca = (a, b) => a.l < b.r - .5 && b.l < a.r - .5 && a.t < b.b - .5 && b.t < a.b - .5;
+  document.querySelectorAll('.pagina').forEach((p, ip) => {
+    const grafici = [], testi = [];
+    p.querySelectorAll('.icona svg, .riga, .cottura, .chef, .freccia, .passi .n, .salse li').forEach(e =>
+      grafici.push({...box(e.getBoundingClientRect(), e.className.baseVal ?? e.className), el: e}));
+    p.querySelectorAll('.elenco').forEach(e => {         // filetto verticale dei prezzi
+      const r = e.getBoundingClientRect(), x = r.left + 139.7 * MM;
+      grafici.push({l: x, r: x + .53 * MM, t: r.top - MM, b: r.bottom + MM, nome: 'filetto prezzi', el: e});
+    });
+    p.querySelectorAll('.indice .lista').forEach(e => {     // filetto verticale dell'indice
+      const r = e.getBoundingClientRect(), x = r.left + 139.7 * MM;
+      grafici.push({l: x, r: x + .53 * MM, t: r.top - 30 * MM, b: r.bottom + 4 * MM, nome: 'filetto indice', el: e});
+    });
+    p.querySelectorAll('.deg-prezzo').forEach(e => {        // filetti ai lati del prezzo degustazione
+      const r = e.getBoundingClientRect();
+      [r.left, r.right - .53 * MM].forEach(x => grafici.push({l: x, r: x + .53 * MM, t: r.top, b: r.bottom, nome: 'filetto prezzo', el: null}));
+    });
+    p.querySelectorAll('.voce.firma .testo').forEach(e => {   // bordi dei riquadri
+      const r = e.getBoundingClientRect();
+      [[r.left, r.top, r.right, r.top + 1], [r.left, r.bottom - 1, r.right, r.bottom],
+       [r.left, r.top, r.left + 1, r.bottom], [r.right - 1, r.top, r.right, r.bottom]]
+        .forEach(([l, t, rr, b]) => grafici.push({l, t, r: rr, b, nome: 'bordo riquadro', el: e}));
+    });
+    const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) {
+      const n = w.currentNode; if (!n.textContent.trim()) continue;
+      const rg = document.createRange(); rg.selectNodeContents(n);
+      [...rg.getClientRects()].forEach(r => testi.push({...box(r, n.textContent.trim().slice(0, 30)), el: n.parentElement}));
+    }
+    const dentro = (a, b) => a.el && b.el && (a.el.contains(b.el) || b.el.contains(a.el)) && !/filetto/.test(a.nome + b.nome);
+    grafici.forEach((g, i) => {
+      testi.forEach(tx => { if (!dentro(g, tx) && tocca(g, tx)) errori.push(`pag. ${ip + 1}: ${g.nome} tocca "${tx.nome}"`); });
+      grafici.slice(i + 1).forEach(h => { if (!dentro(g, h) && tocca(g, h)) errori.push(`pag. ${ip + 1}: ${g.nome} tocca ${h.nome}`); });
+    });
+  });
+  return errori;
+}"""
 
 
 def documento(pagine, titolo):
@@ -736,7 +863,7 @@ def main():
                      elenco(ANTIPASTI) +
                      '<p class="condividi" style="margin-top:8mm">' + FRECCIA +
                      'e per chi ama il crudo… girate pagina: Componi il tuo Crudo</p>',
-                     5, "icona larga"),
+                     5),
         pagina_crudo(6),
         pagina_primi(7),
         pagina_secondi(8),
@@ -756,6 +883,12 @@ def main():
             pagina_web.goto(f_html.resolve().as_uri())
             pagina_web.wait_for_load_state("networkidle")
             pagina_web.evaluate("document.fonts.ready")
+            aria = pagina_web.evaluate(RIEMPI_JS)
+            print("  aria aggiunta (mm) per pagina da riempire:", aria)
+            errori = pagina_web.evaluate(SOVRAPPOSIZIONI_JS)
+            if errori:
+                print("\n".join(errori))
+                raise SystemExit(f"STOP {nome}: ci sono sovrapposizioni, PDF non generato")
             # controllo: nessun contenuto deve sforare la pagina
             sfori = pagina_web.evaluate("""() => [...document.querySelectorAll('.pagina')].map((p, i) => {
                 const fondo = p.getBoundingClientRect().bottom - 15 * 3.7795;
