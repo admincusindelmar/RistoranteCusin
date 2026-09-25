@@ -96,122 +96,177 @@
   src: url(fonts/CormorantGaramond-700-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
 @page { size: A4; margin: 0; }
-:root { --carta:#e9e9ee; --inchiostro:#3b3b40; --tenue:#77777f; --filo:#8a8a92; --oro:#b59a5b; }
+:root {
+  --carta:#e9ebf0; --inchiostro:#191919; --tenue:#6d6d74; --filo-testata:#3d3d3b; --filo:#afafb2;
+  --oro:#a88a4a; --ill:#8b8b93;
+  /* misure della Carta Vini */
+  --sx: 43.3mm;      /* inizio testo dal bordo sinistro (fori del porta menù) */
+  --dx: 17mm;        /* margine destro */
+  --x-filo: 139.7mm; /* filetto prezzi a 183 mm dal bordo = 139,7 mm dall'inizio testo */
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--carta); color: var(--inchiostro);
   font-family: 'Cormorant Garamond', Georgia, serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; font-style: normal; }
-.pagina { width: 210mm; height: 297mm; padding: 16mm 20mm 14mm; position: relative; overflow: hidden;
-  page-break-after: always; background: var(--carta); }
-.num { position: absolute; bottom: 9mm; left: 0; right: 0; text-align: center; font-size: 10pt; color: var(--tenue); }
-.ill { width: 100%; height: 100%; color: #9a9aa3; }
+.pagina { width: 210mm; height: 297mm; padding: 8.4mm var(--dx) 22mm var(--sx); position: relative;
+  overflow: hidden; page-break-after: always; background: var(--carta); }
+.num { position: absolute; top: 282mm; left: 0; right: 0; text-align: center; font-size: 15pt;
+  font-weight: 300; color: #231f20; }
+.ill { width: 100%; height: 100%; color: var(--ill); }
 
-/* testata come nella carta vini: MAIUSCOLO spaziato + sottotitolo + filetto */
-.testata { display: flex; justify-content: space-between; align-items: flex-end;
-  border-bottom: 1px solid var(--filo); padding-bottom: 3mm; margin-bottom: 7mm; width: 78%; }
-.testata h1 { font-size: 20pt; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; }
-.testata .sottotitolo { font-size: 11pt; letter-spacing: .18em; color: var(--tenue); margin-top: 1mm; }
-.testata .icona { width: 26mm; height: 14mm; margin-bottom: -1mm; transform: translateX(34mm); }
-.intro { font-size: 11.5pt; font-style: italic; color: var(--tenue); margin: -2mm 0 7mm; max-width: 150mm; }
+/* testata: MAIUSCOLO spaziato, filetto a 16,8 mm, sottotitolo sotto il filetto */
+.testata { position: relative; height: 26mm; margin-bottom: 6mm; }
+.testata h1 { font-size: 22pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; line-height: 1.1; }
+.testata .riga { position: absolute; top: 8.1mm; left: 0; width: 143.5mm; height: .53mm; background: var(--filo-testata); }
+.testata .sottotitolo { position: absolute; top: 9.6mm; font-size: 16pt; font-weight: 300; letter-spacing: .1em; }
+.testata .icona { position: absolute; right: -4mm; top: 2mm; width: 28mm; height: 24mm; }
+.testata .icona.larga { right: -8mm; top: 5mm; width: 44mm; height: 19mm; }
+.testata .icona.stretta { right: 0; top: 3mm; width: 18mm; height: 22mm; }
+.intro { font-size: 13.5pt; font-style: italic; color: var(--tenue); margin: -1mm 0 6mm; max-width: 136mm; }
 
-/* voci con filetto verticale e prezzo a destra, senza simbolo € */
-.elenco { display: flex; flex-direction: column; gap: 4.6mm; }
-.voce { display: grid; grid-template-columns: 1fr 1px 14mm; column-gap: 5mm; }
-.voce .filetto { background: var(--filo); }
-.voce .prezzo { font-size: 13pt; font-weight: 500; align-self: center; text-align: right; }
-.voce h3 { font-size: 13.5pt; font-weight: 700; line-height: 1.2; }
-.voce .desc { font-size: 11.5pt; line-height: 1.3; }
-.voce .en { font-size: 10.5pt; font-style: italic; color: var(--tenue); line-height: 1.3; }
-.voce .nota { font-size: 10.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; }
-.all { display: block; font-size: 8.5pt; letter-spacing: .06em; color: var(--tenue); margin-top: .8mm; }
-.chef { font-family: 'Caveat', cursive; font-weight: 600; font-size: 13pt; color: var(--oro);
-  margin-left: 3mm; letter-spacing: 0; white-space: nowrap; }
-.voce.firma .testo, .voce.crudo .testo { border: 1px solid #c9bb95; padding: 3mm 4mm; background: #efeee9; }
-.salse-tit { font-size: 10.5pt; margin-top: 1.8mm; letter-spacing: .04em; }
-.salse { list-style: none; display: flex; flex-wrap: wrap; gap: 1mm 4mm; font-size: 11pt; margin-top: .5mm; }
-.salse li::before { content: "· "; color: var(--oro); }
-.compatto { gap: 3mm; }
+/* voci: testo a sinistra, filetto verticale continuo a 183 mm, prezzo a 187 mm */
+.elenco { position: relative; display: flex; flex-direction: column; gap: 4.2mm; }
+.elenco::before { content: ""; position: absolute; left: var(--x-filo); top: -1mm; bottom: -1mm;
+  width: .53mm; background: var(--filo); }
+.voce { display: grid; grid-template-columns: calc(var(--x-filo) - 4mm) 1fr; column-gap: 8mm; }
+.voce .testo { position: relative; }
+.voce .prezzo { font-size: 15pt; font-weight: 700; align-self: center; }
+.voce h3 { font-size: 15.5pt; font-weight: 700; line-height: 1.2; }
+.voce .desc { font-size: 13.5pt; line-height: 1.25; }
+.voce .en { font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
+.voce .nota { font-size: 12.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; line-height: 1.25; }
+.all { display: block; font-size: 10.5pt; letter-spacing: .05em; color: var(--tenue); margin-top: .6mm; }
+.chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 15pt; color: var(--oro);
+  line-height: 1; margin-bottom: .8mm; }
+.passi .chef, .crudo .chef { display: inline; }
+.voce.firma .testo { border: 1px solid #c9bb95; padding: 2.6mm 3.5mm; margin-left: -3.5mm; background: #efeff0; }
+.compatto { gap: 2.6mm; }
+.compatto .voce h3 { font-size: 15pt; }
+.en-riga { font-weight: 400; font-size: 12.5pt; color: var(--tenue); margin-left: 2mm; }
+
+/* freccia arrotolata "18 minuti" */
+.voce h3 { position: relative; }
+.cottura { position: absolute; right: 0; top: -4mm; display: flex; align-items: center; gap: 1mm;
+  font-family: 'Caveat', cursive; font-size: 15pt; line-height: .95; color: var(--oro); }
+.cottura em { font-style: normal; font-size: 12.5pt; opacity: .85; }
+.voce.firma .cottura { right: 0; }
+.p-primi .elenco { gap: 3.4mm; }
+.p-primi .intro { margin-bottom: 4.5mm; }
+.freccia { width: 21mm; height: 8mm; color: var(--oro); flex: none; }
+.nota-pasta { margin-top: 4.5mm; padding-top: 3mm; border-top: 1px solid var(--filo); max-width: 136mm; }
+.nota-pasta p { font-size: 13pt; line-height: 1.3; }
+.nota-pasta p.en { font-size: 12pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
+
+/* sotto-sezione (come "Toscana" nella carta vini) */
+.sezione { margin: 8mm 0 3.5mm; }
+.sezione h2 { font-size: 20pt; font-weight: 700; }
+.sezione h2 span { font-size: 14pt; font-weight: 400; font-style: italic; color: var(--tenue); margin-left: 2mm; }
+
+/* il crudo */
+.crudo-titolo { margin: -2mm 0 5mm; }
+.crudo-titolo h2 { font-family: 'Caveat', cursive; font-weight: 600; font-size: 34pt; color: var(--oro); line-height: 1; }
+.crudo-titolo p { font-size: 13.5pt; line-height: 1.3; margin-top: 1mm; }
+.crudo-titolo em { color: var(--tenue); }
+.passi { list-style: none; position: relative; }
+.passi::before { content: ""; position: absolute; left: -9.3mm; top: 6mm; bottom: 8mm;
+  border-left: 1.3px dashed #c9bb95; }
+.passi > li { position: relative; margin-bottom: 6mm; }
+.passi .n { position: absolute; left: -14.5mm; top: -1mm; width: 10.5mm; height: 10.5mm; border-radius: 50%;
+  background: var(--carta); border: 1.2px solid var(--oro); color: var(--oro); text-align: center;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 20pt; line-height: 10mm; }
+.passi h4 { font-size: 13pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 3mm; }
+.passi h4 em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1.5mm; font-size: 13pt; }
+.passi .elenco { gap: 2.6mm; }
+.unita { font-weight: 400; font-style: italic; font-size: 13pt; color: var(--tenue); }
+.salse { list-style: none; display: flex; flex-wrap: wrap; gap: 2.5mm; max-width: 136mm; }
+.salse li { font-size: 14pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; background: #efeff0; }
+.condividi { display: flex; align-items: center; gap: 2mm; font-family: 'Caveat', cursive; font-size: 18pt;
+  color: var(--oro); margin-top: -1mm; }
 
 /* indice */
 .p-indice .biglietto { position: absolute; top: 10mm; right: 14mm; width: 70mm; padding: 6mm 8mm 8mm;
   border: 1.2px solid #9a9aa3; border-radius: 1mm 3mm 2mm 4mm; transform: rotate(-14deg);
-  font-family: 'Caveat', cursive; font-size: 21pt; line-height: 1.12; color: #85858d; }
+  font-family: 'Caveat', cursive; font-size: 23pt; line-height: 1.12; color: #85858d; }
 .p-indice .biglietto::after { content:""; position:absolute; inset: 3mm -3mm -3mm 3mm; border: 1px solid #b5b5bc;
   border-radius: 3mm 1mm 4mm 2mm; z-index: -1; }
-.indice { position: absolute; top: 118mm; left: 0; right: 0; }
-.indice h1 { font-weight: 400; font-size: 44pt; letter-spacing: .02em; text-align: center; width: 120mm; margin-left: 16mm; }
-.indice .lista { margin: 6mm auto 0; width: 150mm; position: relative; }
-.indice .lista::before { content:""; position:absolute; left: 110mm; top: -30mm; bottom: -4mm; width: 1px; background: var(--filo); }
-.indice .r { display: grid; grid-template-columns: 110mm 40mm; padding: 3mm 0; font-size: 12pt;
+.indice { position: absolute; top: 112mm; left: var(--sx); right: var(--dx); }
+.indice h1 { font-weight: 400; font-size: 46pt; letter-spacing: .02em; text-align: center; width: var(--x-filo); }
+.indice .lista { margin-top: 6mm; position: relative; }
+.indice .lista::before { content:""; position:absolute; left: var(--x-filo); top: -30mm; bottom: -4mm; width: .53mm; background: var(--filo); }
+.indice .r { display: grid; grid-template-columns: var(--x-filo) 1fr; padding: 3mm 0; font-size: 14pt;
   letter-spacing: .12em; text-transform: uppercase; }
 .indice .r span:first-child { text-align: center; }
-.indice .r em { display: block; font-size: 9.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
-.indice .pg { text-align: center; align-self: center; }
-.firma-rist { position: absolute; bottom: 14mm; left: 0; right: 0; text-align: center; font-size: 11pt;
+.indice .r em { display: block; font-size: 11.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
+.indice .pg { white-space: nowrap; text-align: center; align-self: center; }
+.firma-rist { position: absolute; bottom: 14mm; left: var(--sx); right: var(--dx); text-align: center; font-size: 13pt;
   letter-spacing: .35em; text-transform: uppercase; color: var(--tenue); }
 
-/* degustazioni */
+/* degustazioni: centrate sulla colonna di testo, non sul foglio */
 .p-deg { display: flex; flex-direction: column; }
-.deg { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 8mm; }
+.deg { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .deg > * { flex: none; }
-.deg-prezzo { align-self: center; }
-.deg-nome { font-size: 34pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
-.deg-sotto { font-size: 12pt; color: var(--tenue); margin: 2mm 0 5mm; }
-.portata { margin: 0 auto 3.6mm; max-width: 150mm; }
-.portata h2 { font-size: 10.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
-  margin-bottom: 1.6mm; }
+.deg-nome { font-size: 36pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
+.deg-sotto { font-size: 14pt; color: var(--tenue); margin: 1.5mm 0 4mm; line-height: 1.25; }
+.portata { margin: 0 auto 2.6mm; width: 100%; }
+.portata h2 { font-size: 12.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
+  margin-bottom: 1.2mm; }
 .portata h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
 .portata ul { list-style: none; }
-.portata li { margin-bottom: 2.2mm; }
-.portata li h3 { font-size: 13pt; font-weight: 700; }
-.portata .desc { font-size: 11.5pt; line-height: 1.25; }
-.portata .en { font-size: 10.3pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
-.portata .all { margin-top: .3mm; }
-.deg-prezzo { display: inline-flex; align-items: center; gap: 4mm; margin-top: 2mm; padding: 1mm 7mm;
-  border-left: 1px solid var(--filo); border-right: 1px solid var(--filo); }
-.deg-prezzo .cifra { font-size: 30pt; font-weight: 500; }
-.deg-prezzo .pp { font-size: 10pt; text-align: left; line-height: 1.2; color: var(--tenue); }
-.abbina { font-size: 10.5pt; color: var(--tenue); margin-top: 3mm; }
+.portata li { margin-bottom: 1.8mm; }
+.portata li h3 { font-size: 15pt; font-weight: 700; line-height: 1.15; }
+.portata .desc { font-size: 13.5pt; line-height: 1.2; }
+.portata .en { font-size: 12.3pt; font-style: italic; color: var(--tenue); line-height: 1.2; }
+.all-riga { font-style: normal; font-size: 10.5pt; letter-spacing: .05em; margin-left: 2.5mm; white-space: nowrap; }
+.all-riga::before { content: '·'; margin-right: 2.5mm; }
+.deg-prezzo { align-self: center; display: inline-flex; align-items: center; gap: 4mm; margin-top: 1.5mm; padding: 0 7mm;
+  border-left: .53mm solid var(--filo); border-right: .53mm solid var(--filo); }
+.deg-prezzo .cifra { font-size: 32pt; font-weight: 600; }
+.deg-prezzo .pp { font-size: 12pt; text-align: left; line-height: 1.2; color: var(--tenue); }
+.tavolo { font-size: 13.5pt; font-weight: 600; margin-top: 2.5mm; line-height: 1.25; }
+.tavolo em { font-weight: 400; color: var(--tenue); }
+.abbina { font-size: 12.5pt; color: var(--tenue); margin-top: 1.5mm; line-height: 1.25; }
 
 /* allergeni */
-.allergeni { margin-top: 10mm; border-top: 1px solid var(--filo); padding-top: 5mm; }
-.allergeni h2 { font-size: 13pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
+.allergeni { margin-top: 10mm; border-top: 1px solid var(--filo); padding-top: 5mm; max-width: 150mm; }
+.allergeni h2 { font-size: 15pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
 .allergeni h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
-.legenda { list-style: none; columns: 2; column-gap: 10mm; font-size: 11pt; margin-bottom: 4mm; }
-.legenda li { padding: .6mm 0; }
+.legenda { list-style: none; columns: 2; column-gap: 8mm; font-size: 13pt; margin-bottom: 4mm; }
+.legenda li { padding: .5mm 0; }
 .legenda b { display: inline-block; width: 7mm; }
 .legenda em { color: var(--tenue); }
-.allergeni p { font-size: 9.8pt; line-height: 1.3; margin-bottom: 1.2mm; }
-.allergeni p.en { font-style: italic; color: var(--tenue); margin-bottom: 2.6mm; }
-.bozza { position: fixed; top: 5mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
+.allergeni p { font-size: 11.8pt; line-height: 1.3; margin-bottom: 1mm; }
+.allergeni p.en { font-style: italic; color: var(--tenue); margin-bottom: 2.4mm; }
+.bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 </style></head><body><div class="bozza">BOZZA · in giallo i punti da definire</div><section class="pagina p-deg">
 <header class="testata">
-  <div><h1>Degustazione</h1><p class="sottotitolo">Tasting Menu</p></div>
-  <div class="icona"><svg viewBox="0 0 70 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M35 52C14 50 4 34 8 20 14 8 26 4 35 4s21 4 27 16c4 14-6 30-27 32z"/>
-<path d="M35 52V6M35 52L16 10M35 52L54 10M35 52L9 24M35 52L61 24"/>
-<path d="M27 52h16l-3 5H30z"/></g></svg></div>
+  <h1>Degustazione</h1><div class="riga"></div><p class="sottotitolo">Tasting Menu</p>
+  <div class="icona"><svg viewBox="0 0 120 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+<path d="M119.46 72.68 Q125.54 63.99 117.16 61.24 Q121.62 51.33 112.44 50.18 Q115.01 39.40 105.37 40.07 Q105.86 28.88 96.15 31.49 Q94.50 20.36 85.16 24.95 Q81.43 14.37 72.91 20.86 Q67.27 11.27 60.00 19.46 Q52.73 11.27 47.09 20.86 Q38.57 14.37 34.84 24.95 Q25.50 20.36 23.85 31.49 Q14.14 28.88 14.63 40.07 Q4.99 39.40 7.56 50.18 Q-1.62 51.33 2.84 61.24 Q-5.54 63.99 0.54 72.68" stroke-width="1.1"/><path d="M0.54 72.68 L34.00 84.00 L32.00 96.00 L60.00 96.00 L88.00 96.00 L86.00 84.00 L119.46 72.68 M34.00 84.00 L51.00 87.00 M86.00 84.00 L69.00 87.00 M36.00 90.00 L52.00 92.00 M84.00 90.00 L68.00 92.00" stroke-width=".9"/>
+<path d="M68.34 88.61 Q94.86 77.67 124.03 67.58 M68.21 88.31 Q93.98 75.68 121.90 62.59 M67.60 87.18 Q92.88 70.94 120.75 55.27 M67.42 86.91 Q91.61 69.08 117.65 50.57 M66.62 85.90 Q89.47 64.59 114.86 43.56 M66.39 85.66 Q87.85 62.94 110.85 39.37 M65.42 84.82 Q84.71 58.96 106.46 33.10 M65.16 84.62 Q82.77 57.59 101.66 29.61 M64.05 83.96 Q78.77 54.37 95.87 24.48 M63.76 83.82 Q76.57 53.35 90.42 21.86 M62.55 83.37 Q71.90 51.10 83.54 18.23 M62.24 83.28 Q69.52 50.49 77.63 16.60 M60.97 83.05 Q64.43 49.36 70.05 14.71 M60.65 83.02 Q61.97 49.18 63.91 14.16 M59.35 83.02 Q56.75 49.26 56.09 14.16 M59.03 83.05 Q54.29 49.52 49.95 14.71 M57.76 83.28 Q49.24 50.79 42.37 16.60 M57.45 83.37 Q46.88 51.48 36.46 18.23 M56.24 83.82 Q42.28 53.87 29.58 21.86 M55.95 83.96 Q40.11 54.95 24.13 24.48 M54.84 84.62 Q36.21 58.29 18.34 29.61 M54.58 84.82 Q34.31 59.71 13.54 33.10 M53.61 85.66 Q31.29 63.79 9.15 39.37 M53.38 85.90 Q29.72 65.49 5.14 43.56 M52.58 86.91 Q27.71 70.04 2.35 50.57 M52.40 87.18 Q26.50 71.94 -0.75 55.27 M51.79 88.31 Q25.55 76.71 -1.90 62.59 M51.66 88.61 Q24.73 78.72 -4.03 67.58 " stroke-width=".55"/><path d="M81.74 84.94 L81.54 83.47 L81.24 82.01 L80.83 80.55 L80.31 79.11 L79.69 77.70 L78.95 76.32 L78.11 74.99 L77.17 73.72 L76.13 72.50 L74.99 71.36 L73.77 70.31 L72.46 69.34 L71.08 68.46 L69.63 67.69 L68.11 67.02 L66.55 66.47 L64.95 66.04 L63.32 65.73 L61.66 65.54 L60.00 65.48 L58.34 65.54 L56.68 65.73 L55.05 66.04 L53.45 66.47 L51.89 67.02 L50.37 67.69 L48.92 68.46 L47.54 69.34 L46.23 70.31 L45.01 71.36 L43.87 72.50 L42.83 73.72 L41.89 74.99 L41.05 76.32 L40.31 77.70 L39.69 79.11 L39.17 80.55 L38.76 82.01 L38.46 83.47 L38.26 84.94 M91.97 81.61 L91.68 79.46 L91.24 77.30 L90.63 75.16 L89.87 73.04 L88.95 70.97 L87.87 68.94 L86.64 66.99 L85.25 65.11 L83.72 63.33 L82.05 61.65 L80.25 60.10 L78.32 58.67 L76.29 57.38 L74.16 56.25 L71.93 55.27 L69.64 54.46 L67.28 53.83 L64.88 53.37 L62.45 53.09 L60.00 53.00 L57.55 53.09 L55.12 53.37 L52.72 53.83 L50.36 54.46 L48.07 55.27 L45.84 56.25 L43.71 57.38 L41.68 58.67 L39.75 60.10 L37.95 61.65 L36.28 63.33 L34.75 65.11 L33.36 66.99 L32.13 68.94 L31.05 70.97 L30.13 73.04 L29.37 75.16 L28.76 77.30 L28.32 79.46 L28.03 81.61 M102.19 78.29 L101.82 75.44 L101.23 72.60 L100.44 69.77 L99.43 66.98 L98.21 64.24 L96.79 61.56 L95.16 58.98 L93.33 56.51 L91.31 54.15 L89.10 51.94 L86.73 49.89 L84.19 48.00 L81.50 46.31 L78.68 44.81 L75.75 43.52 L72.72 42.45 L69.61 41.61 L66.44 41.01 L63.23 40.64 L60.00 40.52 L56.77 40.64 L53.56 41.01 L50.39 41.61 L47.28 42.45 L44.25 43.52 L41.32 44.81 L38.50 46.31 L35.81 48.00 L33.27 49.89 L30.90 51.94 L28.69 54.15 L26.67 56.51 L24.84 58.98 L23.21 61.56 L21.79 64.24 L20.57 66.98 L19.56 69.77 L18.77 72.60 L18.18 75.44 L17.81 78.29 M111.14 75.38 L110.69 71.93 L109.98 68.48 L109.01 65.05 L107.79 61.67 L106.32 58.35 L104.59 55.11 L102.62 51.98 L100.40 48.98 L97.95 46.13 L95.28 43.45 L92.39 40.95 L89.32 38.67 L86.06 36.61 L82.65 34.80 L79.09 33.23 L75.42 31.94 L71.65 30.92 L67.81 30.19 L63.92 29.75 L60.00 29.60 L56.08 29.75 L52.19 30.19 L48.35 30.92 L44.58 31.94 L40.91 33.23 L37.35 34.80 L33.94 36.61 L30.68 38.67 L27.61 40.95 L24.72 43.45 L22.05 46.13 L19.60 48.98 L17.38 51.98 L15.41 55.11 L13.68 58.35 L12.21 61.67 L10.99 65.05 L10.02 68.48 L9.31 71.93 L8.86 75.38 " stroke-width=".4" stroke-dasharray="1.2 2.2" opacity=".75"/>
+</g></svg></div>
 </header>
 <div class="deg">
   <h1 class="deg-nome">Ultimo dell&#x27;Anno</h1>
   <p class="deg-sotto">Cenone di San Silvestro · 31 dicembre 2026<br><em>New Year&#x27;s Eve Dinner · 31st December 2026</em></p>
   <div class="portata"><h2>Antipasti <span>Starters</span></h2><ul><li><h3>Scampo e mandarino</h3>
             <p class="desc">Scampo, crema di mandorle salate, julienne croccante di sedano rapa e gel al mandarino</p>
-            <p class="en">Langoustine, salted almond cream, crunchy celeriac julienne and mandarin gel</p><span class="all">Allergeni · Allergens&nbsp; 2 · 8 · 9</span></li><li><h3>Gambero rosso e carciofo</h3>
+            <p class="en">Langoustine, salted almond cream, crunchy celeriac julienne and mandarin gel<span class="all-riga">Allergeni 2 · 8 · 9</span></p></li><li><h3>Gambero rosso e carciofo</h3>
             <p class="desc">Gambero rosso, bisque di crostacei e carciofo</p>
-            <p class="en">Red prawn, shellfish bisque and artichoke</p><span class="all">Allergeni · Allergens&nbsp; 2</span></li><li><h3>Polpette di cicala</h3>
+            <p class="en">Red prawn, shellfish bisque and artichoke<span class="all-riga">Allergeni 2</span></p></li><li><h3>Polpette di cicala</h3>
             <p class="desc">Polpette di cicala di mare</p>
-            <p class="en">Mantis shrimp croquettes</p><span class="all">Allergeni · Allergens&nbsp; 2</span></li></ul></div><div class="portata"><h2>Primi <span>First courses</span></h2><ul><li><h3>Risotto allo Champagne</h3>
+            <p class="en">Mantis shrimp croquettes<span class="all-riga">Allergeni 2</span></p></li></ul></div><div class="portata"><h2>Primi <span>First courses</span></h2><ul><li><h3>Risotto allo Champagne</h3>
             <p class="desc">Risotto al gambero rosso, Champagne, finocchi e scorza di limone</p>
-            <p class="en">Red prawn risotto, Champagne, fennel and lemon zest</p><span class="all">Allergeni · Allergens&nbsp; 2 · 12</span></li><li><h3>Linguine ai batti batti</h3>
+            <p class="en">Red prawn risotto, Champagne, fennel and lemon zest<span class="all-riga">Allergeni 2 · 12</span></p></li><li><h3>Linguine ai batti batti</h3>
             <p class="desc">Linguine con batti batti</p>
-            <p class="en">Linguine with slipper lobster</p><span class="all">Allergeni · Allergens&nbsp; 1 · 2</span></li></ul></div><div class="portata"><h2>Secondo <span>Main course</span></h2><ul><li><h3>Catalana</h3>
+            <p class="en">Linguine with slipper lobster<span class="all-riga">Allergeni 1 · 2</span></p></li></ul></div><div class="portata"><h2>Secondo <span>Main course</span></h2><ul><li><h3>Catalana</h3>
             <p class="desc">Catalana di crostacei <mark>composizione da definire</mark></p>
-            <p class="en">Catalan-style shellfish <mark>to be defined</mark></p><span class="all">Allergeni · Allergens&nbsp; 2</span></li></ul></div><div class="portata"><h2>Dolce <span>Dessert</span></h2><ul><li><h3><mark>Dolce da definire</mark></h3>
+            <p class="en">Catalan-style shellfish <mark>to be defined</mark><span class="all-riga">Allergeni 2</span></p></li></ul></div><div class="portata"><h2>Dolce <span>Dessert</span></h2><ul><li><h3><mark>Dolce da definire</mark></h3>
             
-            </li></ul></div>
+            <p class="en"></p></li></ul></div>
   <div class="deg-prezzo"><span class="cifra">100</span>
     <span class="pp">a persona<br><em>per person</em></span></div>
+  <p class="tavolo">Il menù degustazione è servito per l'intero tavolo<br>
+  <em>The tasting menu is served to the whole table</em></p>
   <p class="abbina">Chiedi al nostro personale l'abbinamento al calice dalla Carta dei Vini<br>
   <em>Ask our staff for a wine-by-the-glass pairing from our Wine List</em></p>
 </div></section></body></html>

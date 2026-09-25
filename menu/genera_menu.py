@@ -8,8 +8,13 @@ Uso:
 
 Per modificare piatti, prezzi o allergeni basta cambiare i dati qui sotto.
 Il testo tra [[doppie quadre]] è un punto ancora da decidere in cucina.
+
+Misure riprese dalla Carta Vini 2026 (A4, porta menù forato):
+  testo da 43,3 mm dal bordo sinistro · filetto prezzi a 183 mm · prezzi a 187 mm
+  filetto di testata a 16,8 mm · numero di pagina a 282 mm · sfondo #e9ebf0
 """
 import html
+import math
 import re
 import sys
 from pathlib import Path
@@ -40,9 +45,9 @@ ALLERGENI = {
 }
 
 
-def piatto(nome, desc, en, allergeni=(), prezzo=None, chef=False, nota=None):
+def piatto(nome, desc, en, allergeni=(), prezzo=None, chef=False, nota=None, cottura=False):
     return dict(nome=nome, desc=desc, en=en, allergeni=allergeni,
-                prezzo=prezzo, chef=chef, nota=nota)
+                prezzo=prezzo, chef=chef, nota=nota, cottura=cottura)
 
 
 # ---------------------------------------------------------------------------
@@ -72,9 +77,9 @@ DEGUSTAZIONI = [
                        "Paccheri ripieni di ricotta senza lattosio, mazzancolle e colatura di cachi",
                        "Paccheri filled with lactose-free ricotta, king prawns and persimmon glaze",
                        (1, 2, 7)),
-                piatto("Gnocco di riso al tartufo",
-                       "Gnocco di riso con calamari e totani al tartufo",
-                       "Rice gnocco with squid, flying squid and truffle", (14,)),
+                piatto("Gnocchi di riso al tartufo",
+                       "Gnocchi di riso con calamari e totani al tartufo",
+                       "Rice gnocchi with squid, flying squid and truffle", (14,)),
             ]),
             ("Secondo", "Main course", [
                 piatto("Dentice e carciofo",
@@ -99,8 +104,8 @@ DEGUSTAZIONI = [
                        "Cialda di ceci, lattuga di mare, oliva taggiasca e scorza di limone",
                        "Chickpea wafer, sea lettuce, Taggiasca olive and lemon zest", ()),
                 piatto("Sfera di verza",
-                       "Sfera di cavolo verza ripiena di robiola e pera, senape e olio al finocchio di mare",
-                       "Savoy cabbage sphere filled with robiola and pear, mustard and sea fennel oil",
+                       "Sfera di cavolo verza con robiola e pera, senape e olio al finocchio di mare",
+                       "Savoy cabbage sphere with robiola and pear, mustard and sea fennel oil",
                        (7, 10)),
             ]),
             ("Primo", "First course", [
@@ -111,10 +116,10 @@ DEGUSTAZIONI = [
             ("Secondo", "Main course", [
                 piatto("Cacciucco vegetale",
                        "Brodo di alga kombu e funghi, pomodoro e cialda di pane croccante, "
-                       "con cipollotto, [[sedano rapa o melone invernale]] e cavolo nero",
+                       "con cipollotto, melone invernale e cavolo nero",
                        "Kombu seaweed and mushroom broth, tomato and crispy bread wafer, "
-                       "with spring onion, [[celeriac or winter melon]] and black cabbage",
-                       (1, 9)),
+                       "with spring onion, winter melon and black cabbage",
+                       (1,)),
             ]),
         ],
     ),
@@ -126,9 +131,9 @@ DEGUSTAZIONI = [
         prezzo=45,
         portate=[
             ("Antipasti", "Starters", [
-                piatto("Nuvole di baccalà",
-                       "Nuvole di baccalà su crema di [[da definire]] e croccante di prosciutto senese",
-                       "Salt cod clouds on [[to be defined]] cream, crispy Sienese prosciutto", (4,)),
+                piatto("Baccalà e pecorino",
+                       "Taglio di baccalà arrostito su crema di pecorino",
+                       "Roasted salt cod on pecorino cream", (4, 7)),
                 piatto("Calamaro e tarassaco",
                        "Calamaro grigliato su erbette di tarassaco in salsa di acciughe",
                        "Grilled squid on dandelion greens with anchovy sauce", (4, 14)),
@@ -198,33 +203,34 @@ ANTIPASTI = [
            "King prawns with chickpea and flaxseed cream, mascarpone foam",
            (2, 7), chef=True),
     piatto("Sfera di verza",
-           "Sfera di cavolo verza ripiena di robiola e pera, senape e olio al finocchio di mare",
-           "Savoy cabbage sphere filled with robiola and pear, mustard and sea fennel oil",
+           "Sfera di cavolo verza con robiola e pera, senape e olio al finocchio di mare",
+           "Savoy cabbage sphere with robiola and pear, mustard and sea fennel oil",
            (7, 10), nota="Vegetariano · Vegetarian"),
     piatto("Calamaro e tarassaco",
            "Calamaro grigliato su erbette di tarassaco in salsa di acciughe",
            "Grilled squid on dandelion greens with anchovy sauce", (4, 14)),
 ]
 
-CRUDO = dict(
-    nome="Componi il tuo Crudo",
-    en="Build your own raw platter",
-    desc="Scegli il pescato crudo del giorno e abbinalo alle nostre salse",
-    desc_en="Choose from today's raw catch and pair it with our house sauces",
-    salse=["[[Salsa 1]]", "[[Salsa 2]]", "[[Salsa 3]]", "[[Salsa 4]]", "[[Salsa 5]]"],
-    allergeni=(2, 4, 14),
-    prezzo=None,
-)
+# Componi il tuo Crudo: (nome, en, unità, unità_en, prezzo, allergeni)
+CRUDO_PEZZI = [
+    ("Ostrica del Doge", "Doge oyster", "al pezzo", "each", "8,50", (14,)),
+    ("Scampo crudo", "Raw langoustine", "al pezzo", "each", "7,20", (2,)),
+    ("Gambero rosso crudo", "Raw red prawn", "al pezzo", "each", "7,40", (2,)),
+    ("Mazzancolla cruda", "Raw king prawn", "al pezzo", "each", "7,90", (2,)),
+    ("Tartare di tonno", "Tuna tartare", "la porzione", "portion", "18", (4,)),
+    ("Carpaccio di pescato", "Catch of the day carpaccio", "la porzione", "portion", "15", (4,)),
+]
+CRUDO_SALSE = ["[[Salsa 1]]", "[[Salsa 2]]", "[[Salsa 3]]", "[[Salsa 4]]", "[[Salsa 5]]"]
 
 PRIMI = [
-    piatto("Paccheri cacio e pepe e gambero rosso",
-           "Paccheri cacio e pepe con gambero rosso e la sua bisque",
+    piatto("Paccheri Benedetto Cavalieri",
+           "Cacio e pepe con gambero rosso e la sua bisque",
            "Paccheri cacio e pepe with red prawn and its bisque",
-           (1, 2, 7), chef=True,
+           (1, 2, 7), chef=True, cottura=True,
            nota="Provalo con una spolverata di pepe del Madagascar · Try it with a dusting of Madagascar pepper"),
-    piatto("Spaghetto alle vongole",
-           "Spaghetto alle vongole veraci, fiocchi di pomodoro e olio al lime",
-           "Spaghetti with clams, tomato flakes and lime oil", (1, 14)),
+    piatto("Spaghetto Benedetto Cavalieri",
+           "Alle vongole veraci, fiocchi di pomodoro e olio al lime",
+           "Spaghetti with clams, tomato flakes and lime oil", (1, 14), cottura=True),
     piatto("Tagliolini pepe e limone",
            "Tagliolini artigianali pepe e limone, mazzancolle e funghi porcini",
            "Handmade pepper and lemon tagliolini, king prawns and porcini mushrooms", (1, 2, 3)),
@@ -242,9 +248,9 @@ PRIMI = [
 
 SECONDI = [
     piatto("Grigliata di mare",
-           "Mazzancolle, gambero rosso, scampi, tonno e spiedino [[di cosa?]], "
+           "Mazzancolle, gambero rosso, scampi, tonno e spiedino di calamari, "
            "servita con [[salse da definire]]",
-           "King prawns, red prawn, langoustines, tuna and [[skewer]], served with [[sauces]]",
+           "King prawns, red prawn, langoustines, tuna and squid skewer, served with [[sauces]]",
            (2, 4, 14)),
     piatto("Scaloppata di tonno al sesamo",
            "Tonno in crosta di sesamo bianco e nero, verdure scottate e baffo di carota",
@@ -268,6 +274,13 @@ CONTORNI = [
     piatto("Patate fritte", "", "French fries", ()),
     piatto("Insalata verde", "", "Green salad", ()),
     piatto("Insalata mista", "", "Mixed salad", ()),
+]
+
+SERVIZIO = [
+    ("Acqua in vetro", "Water in glass bottle", "3"),
+    ("Coperto", "Cover charge", "4"),
+    ("Servizio dolce", "Cake service for desserts brought by guests", "2"),
+    ("Servizio tappo", "Corkage fee", "16"),
 ]
 
 # ---------------------------------------------------------------------------
@@ -295,47 +308,133 @@ def allerg(a):
     return f'<span class="all">Allergeni · Allergens&nbsp; {" · ".join(str(x) for x in a)}</span>'
 
 
-# Illustrazioni a tratto, nello spirito dei disegni della carta vini
-PESCE = """<svg viewBox="0 0 120 50" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M8 25c14-16 44-22 70-10 8 4 14 8 18 10-4 2-10 6-18 10-26 12-56 6-70-10z"/>
-<path d="M96 25l18-13c-3 8-3 18 0 26z"/><circle cx="24" cy="21" r="2.2"/>
-<path d="M36 13c4 7 4 17 0 24M52 11c5 8 5 20 0 28M68 13c4 7 4 17 0 24" opacity=".6"/>
-<path d="M44 12c6-6 16-8 24-4M46 38c6 5 14 6 20 3" opacity=".6"/></g></svg>"""
+def allerg_riga(a):
+    """Allergeni sulla stessa riga della traduzione (pagine degustazione)."""
+    if not a:
+        return ""
+    return f'<span class="all-riga">Allergeni {" · ".join(str(x) for x in a)}</span>'
 
-CONCHIGLIA = """<svg viewBox="0 0 70 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M35 52C14 50 4 34 8 20 14 8 26 4 35 4s21 4 27 16c4 14-6 30-27 32z"/>
-<path d="M35 52V6M35 52L16 10M35 52L54 10M35 52L9 24M35 52L61 24"/>
-<path d="M27 52h16l-3 5H30z"/></g></svg>"""
 
-FORCHETTA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
-<path d="M18 6v16c0 5 3 8 6 8s6-3 6-8V6M24 6v14M24 30v24"/>
-<path d="M42 6c-5 4-7 12-7 20 0 3 3 5 7 5v23"/></g></svg>"""
+# --- Illustrazioni a tratto, in stile incisione ------------------------------
 
-SPIGA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+def _p(x, y):
+    return f"{x:.2f} {y:.2f}"
+
+
+def svg_capasanta():
+    """Conchiglia (capasanta) con costolature doppie, bordo ondulato e linee di crescita."""
+    cx, cy, n = 60.0, 92.0, 15
+    a0, a1 = math.radians(18), math.radians(162)
+
+    def raggio(a):
+        return 78 * (0.80 + 0.20 * math.sin(a))
+
+    def pt(r, a):
+        return cx + r * math.cos(a), cy - r * math.sin(a)
+
+    angoli = [a0 + (a1 - a0) * i / (n - 1) for i in range(n)]
+    bordo = f"M{_p(*pt(raggio(a0) * .93, a0))}"
+    for i in range(n - 1):
+        am = (angoli[i] + angoli[i + 1]) / 2
+        p1 = pt(raggio(angoli[i + 1]) * .93, angoli[i + 1])
+        c = pt(raggio(am) * 1.04, am)
+        bordo += f" Q{_p(*c)} {_p(*p1)}"
+    coste = ""
+    for i, a in enumerate(angoli[:-1]):
+        am = (a + angoli[i + 1]) / 2
+        for d in (-.018, .018):
+            x1, y1 = pt(9, am + d)
+            x2, y2 = pt(raggio(am) * 1.0, am + d * 2.2)
+            xc, yc = pt(raggio(am) * .55, am + d * 1.6 + .015)
+            coste += f"M{_p(x1, y1)} Q{_p(xc, yc)} {_p(x2, y2)} "
+    crescita = ""
+    for f in (.34, .5, .66, .8):
+        pts = [pt(raggio(a) * f, a) for a in [a0 + (a1 - a0) * k / 40 for k in range(41)]]
+        crescita += "M" + " L".join(_p(*q) for q in pts) + " "
+    l0, r0 = pt(raggio(a1) * .93, a1), pt(raggio(a0) * .93, a0)
+    orecchie = (f"M{_p(*l0)} L{_p(cx - 26, cy - 8)} L{_p(cx - 28, cy + 4)} L{_p(cx, cy + 4)} "
+                f"L{_p(cx + 28, cy + 4)} L{_p(cx + 26, cy - 8)} L{_p(*r0)} "
+                f"M{_p(cx - 26, cy - 8)} L{_p(cx - 9, cy - 5)} M{_p(cx + 26, cy - 8)} L{_p(cx + 9, cy - 5)} "
+                f"M{_p(cx - 24, cy - 2)} L{_p(cx - 8, cy)} M{_p(cx + 24, cy - 2)} L{_p(cx + 8, cy)}")
+    return f"""<svg viewBox="0 0 120 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+<path d="{bordo}" stroke-width="1.1"/><path d="{orecchie}" stroke-width=".9"/>
+<path d="{coste}" stroke-width=".55"/><path d="{crescita}" stroke-width=".4" stroke-dasharray="1.2 2.2" opacity=".75"/>
+</g></svg>"""
+
+
+def svg_pesce():
+    """Pesce (orata) con squame, pinne a raggi, opercolo e linea laterale."""
+    corpo = ("M14 40 C 26 22, 60 10, 96 16 C 114 19, 128 28, 138 38 "
+             "C 128 48, 114 57, 96 60 C 60 66, 26 58, 14 40 Z")
+    squame = ""
+    for riga, y in enumerate(range(14, 66, 5)):
+        off = 3 if riga % 2 else 0
+        for x in range(48 + off, 134, 6):
+            squame += f"M{x} {y - 2.6} A3 3 0 0 0 {x} {y + 2.6} "
+    coda = "M136 40 L162 18 C 156 30, 156 50, 162 62 Z"
+    raggi_coda = "".join(f"M138 40 L{160 - abs(k) * .35:.1f} {40 + k:.1f} " for k in range(-19, 21, 4))
+    dorsale = "M50 17 C 58 2, 90 -1, 108 20"
+    raggi_dors = "".join(
+        f"M{50 + i * 5.8:.1f} {17 - 1.5 * math.sin(i / 10 * math.pi) + (i / 10) * 3:.1f} "
+        f"L{53 + i * 5.4:.1f} {7 - 5 * math.sin(i / 10 * math.pi) + (i / 10) * 11:.1f} "
+        for i in range(11))
+    anale = "M92 60 C 98 70, 110 70, 118 53"
+    raggi_anale = "".join(f"M{94 + i * 5:.1f} {60 - i * 1.6:.1f} L{96 + i * 5:.1f} {67 - i * 2.4:.1f} "
+                          for i in range(5))
+    pettorale = "M44 44 C 54 42, 64 48, 68 56 C 58 56, 49 52, 44 44 Z"
+    raggi_pett = "".join(f"M46 45 L{58 + i * 2.6:.1f} {49 + i * 1.8:.1f} " for i in range(4))
+    return f"""<svg viewBox="0 0 166 72" class="ill" aria-hidden="true">
+<defs><clipPath id="corpo-pesce"><path d="{corpo}"/></clipPath></defs>
+<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+<path d="{squame}" stroke-width=".45" opacity=".7" clip-path="url(#corpo-pesce)"/>
+<path d="{corpo}" stroke-width="1.1"/>
+<path d="{dorsale}" stroke-width=".9"/><path d="{raggi_dors}" stroke-width=".5"/>
+<path d="{anale}" stroke-width=".9"/><path d="{raggi_anale}" stroke-width=".5"/>
+<path d="{coda}" stroke-width=".9"/><path d="{raggi_coda}" stroke-width=".45"/>
+<path d="{pettorale}" stroke-width=".8" fill="#e9ebf0"/><path d="{raggi_pett}" stroke-width=".45"/>
+<path d="M40 22 C 48 32, 48 48, 40 58" stroke-width=".9"/><path d="M35 25 C 41 33, 41 47, 35 55" stroke-width=".5"/>
+<path d="M44 34 C 70 27, 104 29, 134 39" stroke-width=".5" stroke-dasharray="1.4 1.8"/>
+<circle cx="27" cy="35" r="3.6" stroke-width=".9"/><circle cx="27.4" cy="35" r="1.5" fill="currentColor" stroke="none"/>
+<path d="M14 40 L22 41.5" stroke-width=".8"/>
+</g></svg>"""
+
+
+PESCE = svg_pesce()
+CONCHIGLIA = svg_capasanta()
+
+SPIGA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
 <path d="M30 56V14"/><path d="M30 18c-6-2-9-8-8-14 6 2 9 8 8 14zM30 18c6-2 9-8 8-14-6 2-9 8-8 14z"/>
 <path d="M30 30c-7-2-11-8-10-14 7 2 11 8 10 14zM30 30c7-2 11-8 10-14-7 2-11 8-10 14z"/>
 <path d="M30 42c-7-2-11-8-10-14 7 2 11 8 10 14zM30 42c7-2 11-8 10-14-7 2-11 8-10 14z"/></g></svg>"""
 
-FOGLIA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M10 50C8 26 24 8 52 8c0 28-18 44-42 42z"/><path d="M10 50L40 20M22 38h12M30 30V18"/></g></svg>"""
+# freccia arrotolata disegnata a mano, punta verso sinistra (verso il nome del piatto)
+FRECCIA = """<svg viewBox="0 0 90 34" class="freccia" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M86 22 C 74 30, 58 30, 56 20 C 54 10, 68 8, 68 17 C 68 26, 46 30, 30 26 C 20 23, 12 19, 5 15"/>
+<path d="M5 15 L13 13.2 M5 15 L10.5 21"/></g></svg>"""
 
 
-def testata(titolo, sotto, icona=""):
+def testata(titolo, sotto, icona="", classe_icona="icona"):
     return f"""<header class="testata">
-  <div><h1>{t(titolo)}</h1><p class="sottotitolo">{t(sotto)}</p></div>
-  <div class="icona">{icona}</div>
+  <h1>{t(titolo)}</h1><div class="riga"></div><p class="sottotitolo">{t(sotto)}</p>
+  <div class="{classe_icona}">{icona}</div>
 </header>"""
 
 
 def riga_piatto(p):
-    chef = ('<span class="chef">il consiglio dello Chef</span>' if p["chef"] else "")
+    chef = '<span class="chef">il consiglio dello Chef</span>' if p["chef"] else ""
+    cott = (f'<span class="cottura">{FRECCIA}<span>18 minuti di cottura<br><em>18 min cooking time</em></span></span>'
+            if p["cottura"] else "")
     desc = f'<p class="desc">{t(p["desc"])}</p>' if p["desc"] else ""
     en = f'<p class="en">{t(p["en"])}</p>' if p["en"] else ""
     nota = f'<p class="nota">{t(p["nota"])}</p>' if p["nota"] else ""
     return f"""<div class="voce{' firma' if p['chef'] else ''}">
-  <div class="testo"><h3>{t(p['nome'])}{chef}</h3>{desc}{en}{nota}{allerg(p['allergeni'])}</div>
-  <div class="filetto"></div><div class="prezzo">{prezzo(p['prezzo'])}</div>
+  <div class="testo">{chef}<h3>{t(p['nome'])}{cott}</h3>{desc}{en}{nota}{allerg(p['allergeni'])}</div>
+  <div class="prezzo">{prezzo(p['prezzo'])}</div>
 </div>"""
+
+
+def elenco(voci, classe=""):
+    return f'<div class="elenco {classe}">{"".join(riga_piatto(v) for v in voci)}</div>'
 
 
 def pagina(corpo, n=None, classe=""):
@@ -349,7 +448,7 @@ def pagina_degustazione(d, n):
         voci = "".join(
             f"""<li><h3>{t(p['nome'])}</h3>
             {f'<p class="desc">{t(p["desc"])}</p>' if p['desc'] else ''}
-            {f'<p class="en">{t(p["en"])}</p>' if p['en'] else ''}{allerg(p['allergeni'])}</li>"""
+            <p class="en">{t(p['en'])}{allerg_riga(p['allergeni'])}</p></li>"""
             for p in piatti)
         blocchi.append(f'<div class="portata"><h2>{it} <span>{en}</span></h2><ul>{voci}</ul></div>')
     corpo = f"""
@@ -360,23 +459,27 @@ def pagina_degustazione(d, n):
   {''.join(blocchi)}
   <div class="deg-prezzo"><span class="cifra">{d['prezzo']}</span>
     <span class="pp">a persona<br><em>per person</em></span></div>
+  <p class="tavolo">Il menù degustazione è servito per l'intero tavolo<br>
+  <em>The tasting menu is served to the whole table</em></p>
   <p class="abbina">Chiedi al nostro personale l'abbinamento al calice dalla Carta dei Vini<br>
   <em>Ask our staff for a wine-by-the-glass pairing from our Wine List</em></p>
 </div>"""
     return pagina(corpo, n, "p-deg")
 
 
+INDICE = [
+    ("Degustazioni", "Tasting Menus", "2 - 4"),
+    ("Antipasti", "Starters", "5"),
+    ("Componi il tuo Crudo", "Raw Bar", "6"),
+    ("Primi Piatti", "First Courses", "7"),
+    ("Secondi e Contorni", "Main Courses & Sides", "8"),
+    ("Servizio e Allergeni", "Service & Allergens", "9"),
+]
+
+
 def pagina_indice():
-    voci = [
-        ("Degustazioni", "Tasting Menus", "2 - 4"),
-        ("Antipasti", "Starters", "5"),
-        ("Primi Piatti", "First Courses", "6"),
-        ("Secondi Piatti", "Main Courses", "7"),
-        ("Contorni", "Side Dishes", "8"),
-        ("Allergeni", "Allergens", "8"),
-    ]
     righe = "".join(f'<div class="r"><span>{a}<em>{b}</em></span><span class="pg">{c}</span></div>'
-                    for a, b, c in voci)
+                    for a, b, c in INDICE)
     corpo = f"""
 <div class="biglietto">
   <p>Scampo</p><p>Gambero rosso</p><p>Dentice</p><p>Vongole veraci</p><p>Calamaro</p>
@@ -389,33 +492,73 @@ def pagina_indice():
     return pagina(corpo, None, "p-indice")
 
 
-def pagina_carta(titolo, sotto, icona, intro, voci, n, extra=""):
-    corpo = f"""{testata(titolo, sotto, icona)}
-<p class="intro">{intro}</p>
-<div class="elenco">{''.join(riga_piatto(v) for v in voci)}</div>{extra}"""
-    return pagina(corpo, n)
+def pagina_carta(titolo, sotto, icona, intro, corpo_extra, n, classe_icona="icona", classe=""):
+    corpo = f"""{testata(titolo, sotto, icona, classe_icona)}
+<p class="intro">{intro}</p>{corpo_extra}"""
+    return pagina(corpo, n, classe)
 
 
-def box_crudo():
-    c = CRUDO
-    salse = "".join(f"<li>{t(s)}</li>" for s in c["salse"])
-    return f"""<div class="voce crudo">
-  <div class="testo">
-    <h3>{t(c['nome'])}<span class="chef">da condividere</span></h3>
-    <p class="desc">{t(c['desc'])}</p><p class="en">{t(c['en'])} — {t(c['desc_en'])}</p>
-    <p class="salse-tit">Le nostre cinque salse · <em>Our five sauces</em></p>
+def pagina_crudo(n):
+    pezzi = "".join(f"""<div class="voce">
+  <div class="testo"><h3>{nome} <span class="unita">{unita}</span></h3>
+  <p class="en">{en} · {unita_en}</p>{allerg(al)}</div>
+  <div class="prezzo">{pr}</div></div>""" for nome, en, unita, unita_en, pr, al in CRUDO_PEZZI)
+    salse = "".join(f"<li>{t(s)}</li>" for s in CRUDO_SALSE)
+    corpo = f"""{testata('Il Crudo', 'Raw Bar', CONCHIGLIA)}
+<div class="crudo-titolo">
+  <h2>Componi il tuo Crudo</h2>
+  <p>Il tuo plateau, a modo tuo: scegli, abbina, brinda.<br><em>Your platter, your way: pick, pair and raise a glass.</em></p>
+</div>
+<ol class="passi">
+  <li><span class="n">1</span>
+    <h4>Scegli i tuoi pezzi <em>Pick your pieces</em></h4>
+    <div class="elenco">{pezzi}</div>
+  </li>
+  <li><span class="n">2</span>
+    <h4>Abbina le nostre salse <em>Pair them with our sauces</em></h4>
     <ul class="salse">{salse}</ul>
-    {allerg(c['allergeni'])}
-  </div>
-  <div class="filetto"></div><div class="prezzo">{prezzo(c['prezzo'])}</div>
+  </li>
+  <li><span class="n">3</span>
+    <h4>Brinda con le bollicine <em>Raise a glass of bubbles</em></h4>
+    <div class="elenco">
+      <div class="voce"><div class="testo"><h3>Calice di Franciacorta</h3><p class="en">Glass of Franciacorta</p></div><div class="prezzo">14</div></div>
+      <div class="voce"><div class="testo"><h3>Calice di Champagne</h3><p class="en">Glass of Champagne</p></div><div class="prezzo">23</div></div>
+    </div>
+  </li>
+</ol>
+<p class="condividi">{FRECCIA}perfetto da condividere al centro del tavolo</p>"""
+    return pagina(corpo, n, "p-crudo")
+
+
+def pagina_primi(n):
+    nota = """<div class="nota-pasta">
+  <p><b>Spaghetto e pacchero Benedetto Cavalieri.</b> Sono una pasta artigianale particolare,
+  che richiede 18 minuti di cottura: vi chiediamo un po' di pazienza, ne varrà la pena.</p>
+  <p class="en">Our Benedetto Cavalieri spaghetti and paccheri are a special artisan pasta
+  that needs 18 minutes of cooking: thank you for your patience, it is worth the wait.</p>
 </div>"""
+    return pagina_carta("Primi Piatti", "First Courses", SPIGA,
+                        "Pasta artigianale e risotti mantecati al momento · "
+                        "<em>Handmade pasta and freshly made risotti</em>",
+                        elenco(PRIMI) + nota, n, "icona stretta", "p-primi")
 
 
-def pagina_contorni_allergeni(n):
-    contorni = "".join(riga_piatto(v) for v in CONTORNI)
+def pagina_secondi(n):
+    contorni = f"""<div class="sezione"><h2>Contorni <span>Side Dishes</span></h2></div>
+<div class="elenco compatto">{"".join(f'''<div class="voce"><div class="testo"><h3>{c["nome"]} <em class="en-riga">{c["en"]}</em></h3></div>
+  <div class="prezzo">{prezzo(c["prezzo"])}</div></div>''' for c in CONTORNI)}</div>"""
+    return pagina_carta("Secondi Piatti", "Main Courses", PESCE,
+                        "Il pescato alla griglia, in crosta e fritto leggero · "
+                        "<em>Grilled, crusted and lightly fried catch</em>",
+                        elenco(SECONDI) + contorni, n, "icona larga")
+
+
+def pagina_servizio_allergeni(n):
+    servizio = "".join(f"""<div class="voce"><div class="testo"><h3>{a}</h3><p class="en">{b}</p></div>
+  <div class="prezzo">{c}</div></div>""" for a, b, c in SERVIZIO)
     leg = "".join(f"<li><b>{k}</b> {a} <em>{b}</em></li>" for k, (a, b) in ALLERGENI.items())
-    corpo = f"""{testata('Contorni', 'Side Dishes', FOGLIA)}
-<div class="elenco compatto">{contorni}</div>
+    corpo = f"""{testata('Servizio', 'Service', "")}
+<div class="elenco">{servizio}</div>
 <div class="allergeni">
   <h2>Allergeni <span>Allergens</span></h2>
   <ul class="legenda">{leg}</ul>
@@ -433,94 +576,147 @@ def pagina_contorni_allergeni(n):
 
 CSS = """
 @page { size: A4; margin: 0; }
-:root { --carta:#e9e9ee; --inchiostro:#3b3b40; --tenue:#77777f; --filo:#8a8a92; --oro:#b59a5b; }
+:root {
+  --carta:#e9ebf0; --inchiostro:#191919; --tenue:#6d6d74; --filo-testata:#3d3d3b; --filo:#afafb2;
+  --oro:#a88a4a; --ill:#8b8b93;
+  /* misure della Carta Vini */
+  --sx: 43.3mm;      /* inizio testo dal bordo sinistro (fori del porta menù) */
+  --dx: 17mm;        /* margine destro */
+  --x-filo: 139.7mm; /* filetto prezzi a 183 mm dal bordo = 139,7 mm dall'inizio testo */
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--carta); color: var(--inchiostro);
   font-family: 'Cormorant Garamond', Georgia, serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; font-style: normal; }
-.pagina { width: 210mm; height: 297mm; padding: 16mm 20mm 14mm; position: relative; overflow: hidden;
-  page-break-after: always; background: var(--carta); }
-.num { position: absolute; bottom: 9mm; left: 0; right: 0; text-align: center; font-size: 10pt; color: var(--tenue); }
-.ill { width: 100%; height: 100%; color: #9a9aa3; }
+.pagina { width: 210mm; height: 297mm; padding: 8.4mm var(--dx) 22mm var(--sx); position: relative;
+  overflow: hidden; page-break-after: always; background: var(--carta); }
+.num { position: absolute; top: 282mm; left: 0; right: 0; text-align: center; font-size: 15pt;
+  font-weight: 300; color: #231f20; }
+.ill { width: 100%; height: 100%; color: var(--ill); }
 
-/* testata come nella carta vini: MAIUSCOLO spaziato + sottotitolo + filetto */
-.testata { display: flex; justify-content: space-between; align-items: flex-end;
-  border-bottom: 1px solid var(--filo); padding-bottom: 3mm; margin-bottom: 7mm; width: 78%; }
-.testata h1 { font-size: 20pt; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; }
-.testata .sottotitolo { font-size: 11pt; letter-spacing: .18em; color: var(--tenue); margin-top: 1mm; }
-.testata .icona { width: 26mm; height: 14mm; margin-bottom: -1mm; transform: translateX(34mm); }
-.intro { font-size: 11.5pt; font-style: italic; color: var(--tenue); margin: -2mm 0 7mm; max-width: 150mm; }
+/* testata: MAIUSCOLO spaziato, filetto a 16,8 mm, sottotitolo sotto il filetto */
+.testata { position: relative; height: 26mm; margin-bottom: 6mm; }
+.testata h1 { font-size: 22pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; line-height: 1.1; }
+.testata .riga { position: absolute; top: 8.1mm; left: 0; width: 143.5mm; height: .53mm; background: var(--filo-testata); }
+.testata .sottotitolo { position: absolute; top: 9.6mm; font-size: 16pt; font-weight: 300; letter-spacing: .1em; }
+.testata .icona { position: absolute; right: -4mm; top: 2mm; width: 28mm; height: 24mm; }
+.testata .icona.larga { right: -8mm; top: 5mm; width: 44mm; height: 19mm; }
+.testata .icona.stretta { right: 0; top: 3mm; width: 18mm; height: 22mm; }
+.intro { font-size: 13.5pt; font-style: italic; color: var(--tenue); margin: -1mm 0 6mm; max-width: 136mm; }
 
-/* voci con filetto verticale e prezzo a destra, senza simbolo € */
-.elenco { display: flex; flex-direction: column; gap: 4.6mm; }
-.voce { display: grid; grid-template-columns: 1fr 1px 14mm; column-gap: 5mm; }
-.voce .filetto { background: var(--filo); }
-.voce .prezzo { font-size: 13pt; font-weight: 500; align-self: center; text-align: right; }
-.voce h3 { font-size: 13.5pt; font-weight: 700; line-height: 1.2; }
-.voce .desc { font-size: 11.5pt; line-height: 1.3; }
-.voce .en { font-size: 10.5pt; font-style: italic; color: var(--tenue); line-height: 1.3; }
-.voce .nota { font-size: 10.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; }
-.all { display: block; font-size: 8.5pt; letter-spacing: .06em; color: var(--tenue); margin-top: .8mm; }
-.chef { font-family: 'Caveat', cursive; font-weight: 600; font-size: 13pt; color: var(--oro);
-  margin-left: 3mm; letter-spacing: 0; white-space: nowrap; }
-.voce.firma .testo, .voce.crudo .testo { border: 1px solid #c9bb95; padding: 3mm 4mm; background: #efeee9; }
-.salse-tit { font-size: 10.5pt; margin-top: 1.8mm; letter-spacing: .04em; }
-.salse { list-style: none; display: flex; flex-wrap: wrap; gap: 1mm 4mm; font-size: 11pt; margin-top: .5mm; }
-.salse li::before { content: "· "; color: var(--oro); }
-.compatto { gap: 3mm; }
+/* voci: testo a sinistra, filetto verticale continuo a 183 mm, prezzo a 187 mm */
+.elenco { position: relative; display: flex; flex-direction: column; gap: 4.2mm; }
+.elenco::before { content: ""; position: absolute; left: var(--x-filo); top: -1mm; bottom: -1mm;
+  width: .53mm; background: var(--filo); }
+.voce { display: grid; grid-template-columns: calc(var(--x-filo) - 4mm) 1fr; column-gap: 8mm; }
+.voce .testo { position: relative; }
+.voce .prezzo { font-size: 15pt; font-weight: 700; align-self: center; }
+.voce h3 { font-size: 15.5pt; font-weight: 700; line-height: 1.2; }
+.voce .desc { font-size: 13.5pt; line-height: 1.25; }
+.voce .en { font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
+.voce .nota { font-size: 12.5pt; font-style: italic; color: var(--oro); margin-top: .6mm; line-height: 1.25; }
+.all { display: block; font-size: 10.5pt; letter-spacing: .05em; color: var(--tenue); margin-top: .6mm; }
+.chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 15pt; color: var(--oro);
+  line-height: 1; margin-bottom: .8mm; }
+.passi .chef, .crudo .chef { display: inline; }
+.voce.firma .testo { border: 1px solid #c9bb95; padding: 2.6mm 3.5mm; margin-left: -3.5mm; background: #efeff0; }
+.compatto { gap: 2.6mm; }
+.compatto .voce h3 { font-size: 15pt; }
+.en-riga { font-weight: 400; font-size: 12.5pt; color: var(--tenue); margin-left: 2mm; }
+
+/* freccia arrotolata "18 minuti" */
+.voce h3 { position: relative; }
+.cottura { position: absolute; right: 0; top: -4mm; display: flex; align-items: center; gap: 1mm;
+  font-family: 'Caveat', cursive; font-size: 15pt; line-height: .95; color: var(--oro); }
+.cottura em { font-style: normal; font-size: 12.5pt; opacity: .85; }
+.voce.firma .cottura { right: 0; }
+.p-primi .elenco { gap: 3.4mm; }
+.p-primi .intro { margin-bottom: 4.5mm; }
+.freccia { width: 21mm; height: 8mm; color: var(--oro); flex: none; }
+.nota-pasta { margin-top: 4.5mm; padding-top: 3mm; border-top: 1px solid var(--filo); max-width: 136mm; }
+.nota-pasta p { font-size: 13pt; line-height: 1.3; }
+.nota-pasta p.en { font-size: 12pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
+
+/* sotto-sezione (come "Toscana" nella carta vini) */
+.sezione { margin: 8mm 0 3.5mm; }
+.sezione h2 { font-size: 20pt; font-weight: 700; }
+.sezione h2 span { font-size: 14pt; font-weight: 400; font-style: italic; color: var(--tenue); margin-left: 2mm; }
+
+/* il crudo */
+.crudo-titolo { margin: -2mm 0 5mm; }
+.crudo-titolo h2 { font-family: 'Caveat', cursive; font-weight: 600; font-size: 34pt; color: var(--oro); line-height: 1; }
+.crudo-titolo p { font-size: 13.5pt; line-height: 1.3; margin-top: 1mm; }
+.crudo-titolo em { color: var(--tenue); }
+.passi { list-style: none; position: relative; }
+.passi::before { content: ""; position: absolute; left: -9.3mm; top: 6mm; bottom: 8mm;
+  border-left: 1.3px dashed #c9bb95; }
+.passi > li { position: relative; margin-bottom: 6mm; }
+.passi .n { position: absolute; left: -14.5mm; top: -1mm; width: 10.5mm; height: 10.5mm; border-radius: 50%;
+  background: var(--carta); border: 1.2px solid var(--oro); color: var(--oro); text-align: center;
+  font-family: 'Caveat', cursive; font-weight: 600; font-size: 20pt; line-height: 10mm; }
+.passi h4 { font-size: 13pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 3mm; }
+.passi h4 em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1.5mm; font-size: 13pt; }
+.passi .elenco { gap: 2.6mm; }
+.unita { font-weight: 400; font-style: italic; font-size: 13pt; color: var(--tenue); }
+.salse { list-style: none; display: flex; flex-wrap: wrap; gap: 2.5mm; max-width: 136mm; }
+.salse li { font-size: 14pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; background: #efeff0; }
+.condividi { display: flex; align-items: center; gap: 2mm; font-family: 'Caveat', cursive; font-size: 18pt;
+  color: var(--oro); margin-top: -1mm; }
 
 /* indice */
 .p-indice .biglietto { position: absolute; top: 10mm; right: 14mm; width: 70mm; padding: 6mm 8mm 8mm;
   border: 1.2px solid #9a9aa3; border-radius: 1mm 3mm 2mm 4mm; transform: rotate(-14deg);
-  font-family: 'Caveat', cursive; font-size: 21pt; line-height: 1.12; color: #85858d; }
+  font-family: 'Caveat', cursive; font-size: 23pt; line-height: 1.12; color: #85858d; }
 .p-indice .biglietto::after { content:""; position:absolute; inset: 3mm -3mm -3mm 3mm; border: 1px solid #b5b5bc;
   border-radius: 3mm 1mm 4mm 2mm; z-index: -1; }
-.indice { position: absolute; top: 118mm; left: 0; right: 0; }
-.indice h1 { font-weight: 400; font-size: 44pt; letter-spacing: .02em; text-align: center; width: 120mm; margin-left: 16mm; }
-.indice .lista { margin: 6mm auto 0; width: 150mm; position: relative; }
-.indice .lista::before { content:""; position:absolute; left: 110mm; top: -30mm; bottom: -4mm; width: 1px; background: var(--filo); }
-.indice .r { display: grid; grid-template-columns: 110mm 40mm; padding: 3mm 0; font-size: 12pt;
+.indice { position: absolute; top: 112mm; left: var(--sx); right: var(--dx); }
+.indice h1 { font-weight: 400; font-size: 46pt; letter-spacing: .02em; text-align: center; width: var(--x-filo); }
+.indice .lista { margin-top: 6mm; position: relative; }
+.indice .lista::before { content:""; position:absolute; left: var(--x-filo); top: -30mm; bottom: -4mm; width: .53mm; background: var(--filo); }
+.indice .r { display: grid; grid-template-columns: var(--x-filo) 1fr; padding: 3mm 0; font-size: 14pt;
   letter-spacing: .12em; text-transform: uppercase; }
 .indice .r span:first-child { text-align: center; }
-.indice .r em { display: block; font-size: 9.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
-.indice .pg { text-align: center; align-self: center; }
-.firma-rist { position: absolute; bottom: 14mm; left: 0; right: 0; text-align: center; font-size: 11pt;
+.indice .r em { display: block; font-size: 11.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
+.indice .pg { white-space: nowrap; text-align: center; align-self: center; }
+.firma-rist { position: absolute; bottom: 14mm; left: var(--sx); right: var(--dx); text-align: center; font-size: 13pt;
   letter-spacing: .35em; text-transform: uppercase; color: var(--tenue); }
 
-/* degustazioni */
+/* degustazioni: centrate sulla colonna di testo, non sul foglio */
 .p-deg { display: flex; flex-direction: column; }
-.deg { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 8mm; }
+.deg { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .deg > * { flex: none; }
-.deg-prezzo { align-self: center; }
-.deg-nome { font-size: 34pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
-.deg-sotto { font-size: 12pt; color: var(--tenue); margin: 2mm 0 5mm; }
-.portata { margin: 0 auto 3.6mm; max-width: 150mm; }
-.portata h2 { font-size: 10.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
-  margin-bottom: 1.6mm; }
+.deg-nome { font-size: 36pt; font-weight: 400; letter-spacing: .06em; line-height: 1.05; }
+.deg-sotto { font-size: 14pt; color: var(--tenue); margin: 1.5mm 0 4mm; line-height: 1.25; }
+.portata { margin: 0 auto 2.6mm; width: 100%; }
+.portata h2 { font-size: 12.5pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--oro);
+  margin-bottom: 1.2mm; }
 .portata h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
 .portata ul { list-style: none; }
-.portata li { margin-bottom: 2.2mm; }
-.portata li h3 { font-size: 13pt; font-weight: 700; }
-.portata .desc { font-size: 11.5pt; line-height: 1.25; }
-.portata .en { font-size: 10.3pt; font-style: italic; color: var(--tenue); line-height: 1.25; }
-.portata .all { margin-top: .3mm; }
-.deg-prezzo { display: inline-flex; align-items: center; gap: 4mm; margin-top: 2mm; padding: 1mm 7mm;
-  border-left: 1px solid var(--filo); border-right: 1px solid var(--filo); }
-.deg-prezzo .cifra { font-size: 30pt; font-weight: 500; }
-.deg-prezzo .pp { font-size: 10pt; text-align: left; line-height: 1.2; color: var(--tenue); }
-.abbina { font-size: 10.5pt; color: var(--tenue); margin-top: 3mm; }
+.portata li { margin-bottom: 1.8mm; }
+.portata li h3 { font-size: 15pt; font-weight: 700; line-height: 1.15; }
+.portata .desc { font-size: 13.5pt; line-height: 1.2; }
+.portata .en { font-size: 12.3pt; font-style: italic; color: var(--tenue); line-height: 1.2; }
+.all-riga { font-style: normal; font-size: 10.5pt; letter-spacing: .05em; margin-left: 2.5mm; white-space: nowrap; }
+.all-riga::before { content: '·'; margin-right: 2.5mm; }
+.deg-prezzo { align-self: center; display: inline-flex; align-items: center; gap: 4mm; margin-top: 1.5mm; padding: 0 7mm;
+  border-left: .53mm solid var(--filo); border-right: .53mm solid var(--filo); }
+.deg-prezzo .cifra { font-size: 32pt; font-weight: 600; }
+.deg-prezzo .pp { font-size: 12pt; text-align: left; line-height: 1.2; color: var(--tenue); }
+.tavolo { font-size: 13.5pt; font-weight: 600; margin-top: 2.5mm; line-height: 1.25; }
+.tavolo em { font-weight: 400; color: var(--tenue); }
+.abbina { font-size: 12.5pt; color: var(--tenue); margin-top: 1.5mm; line-height: 1.25; }
 
 /* allergeni */
-.allergeni { margin-top: 10mm; border-top: 1px solid var(--filo); padding-top: 5mm; }
-.allergeni h2 { font-size: 13pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
+.allergeni { margin-top: 10mm; border-top: 1px solid var(--filo); padding-top: 5mm; max-width: 150mm; }
+.allergeni h2 { font-size: 15pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 3mm; }
 .allergeni h2 span { font-weight: 400; font-style: italic; letter-spacing: .08em; text-transform: none; color: var(--tenue); }
-.legenda { list-style: none; columns: 2; column-gap: 10mm; font-size: 11pt; margin-bottom: 4mm; }
-.legenda li { padding: .6mm 0; }
+.legenda { list-style: none; columns: 2; column-gap: 8mm; font-size: 13pt; margin-bottom: 4mm; }
+.legenda li { padding: .5mm 0; }
 .legenda b { display: inline-block; width: 7mm; }
 .legenda em { color: var(--tenue); }
-.allergeni p { font-size: 9.8pt; line-height: 1.3; margin-bottom: 1.2mm; }
-.allergeni p.en { font-style: italic; color: var(--tenue); margin-bottom: 2.6mm; }
-.bozza { position: fixed; top: 5mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
+.allergeni p { font-size: 11.8pt; line-height: 1.3; margin-bottom: 1mm; }
+.allergeni p.en { font-style: italic; color: var(--tenue); margin-bottom: 2.4mm; }
+.bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
 
 
@@ -537,14 +733,14 @@ def main():
         *[pagina_degustazione(d, i + 2) for i, d in enumerate(DEGUSTAZIONI)],
         pagina_carta("Antipasti", "Starters", PESCE,
                      "Per iniziare, il mare in piccoli assaggi · <em>To begin, the sea in small bites</em>",
-                     ANTIPASTI, 5, extra='<div class="elenco" style="margin-top:4.6mm">' + box_crudo() + "</div>"),
-        pagina_carta("Primi Piatti", "First Courses", SPIGA,
-                     "Pasta artigianale e risotti mantecati al momento · <em>Handmade pasta and freshly made risotti</em>",
-                     PRIMI, 6),
-        pagina_carta("Secondi Piatti", "Main Courses", PESCE,
-                     "Il pescato alla griglia, in crosta e fritto leggero · <em>Grilled, crusted and lightly fried catch</em>",
-                     SECONDI, 7),
-        pagina_contorni_allergeni(8),
+                     elenco(ANTIPASTI) +
+                     '<p class="condividi" style="margin-top:8mm">' + FRECCIA +
+                     'e per chi ama il crudo… girate pagina: Componi il tuo Crudo</p>',
+                     5, "icona larga"),
+        pagina_crudo(6),
+        pagina_primi(7),
+        pagina_secondi(8),
+        pagina_servizio_allergeni(9),
     ]
     suffisso = "" if FINALE else "_BOZZA"
     lavori = [
@@ -560,6 +756,14 @@ def main():
             pagina_web.goto(f_html.resolve().as_uri())
             pagina_web.wait_for_load_state("networkidle")
             pagina_web.evaluate("document.fonts.ready")
+            # controllo: nessun contenuto deve sforare la pagina
+            sfori = pagina_web.evaluate("""() => [...document.querySelectorAll('.pagina')].map((p, i) => {
+                const fondo = p.getBoundingClientRect().bottom - 15 * 3.7795;
+                const oltre = [...p.querySelectorAll('.testo, .portata, .allergeni, .nota-pasta, .condividi, .passi, .tavolo, .abbina')]
+                    .some(e => e.getBoundingClientRect().bottom > fondo);
+                return oltre ? i + 1 : null; }).filter(Boolean)""")
+            if sfori:
+                print(f"ATTENZIONE {nome}: contenuto troppo vicino al fondo nelle pagine {sfori}")
             pagina_web.pdf(path=str(QUI / f"{nome}.pdf"), format="A4", print_background=True,
                            prefer_css_page_size=True)
             print("creato", nome + ".pdf")
