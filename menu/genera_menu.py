@@ -79,8 +79,8 @@ DEGUSTAZIONI = [
                        "Paccheri filled with lactose-free ricotta, king prawns and persimmon glaze",
                        (1, 2, 7)),
                 piatto("Gnocchi al Calasole",
-                       "Gnocchi di riso con calamari, seppia e tartufo",
-                       "Rice gnocchi with squid, cuttlefish and truffle", (14,)),
+                       "Gnocchi di riso con calamari, totani, seppia e tartufo",
+                       "Rice gnocchi with squid, flying squid, cuttlefish and truffle", (14,)),
             ]),
             ("Secondo", "Main course", [
                 piatto("Dentice e cardo",
@@ -273,21 +273,27 @@ SECONDI = [
     piatto("Il fritto mare della zia",
            "Frittura di mare e verdure in farina di riso, leggera e croccante",
            "Light, crispy fried seafood and vegetables in rice flour",
-           (2, 4, 14), chef=True),
+           (2, 4, 14), prezzo=21, chef=True),
+    piatto("Cacciucco vegetale",
+           "Brodo di alga kombu e funghi, pomodoro e cialda di pane croccante, "
+           "con cipollotto, melone invernale e cavolo nero",
+           "Kombu seaweed and mushroom broth, tomato and crispy bread wafer, "
+           "with spring onion, winter melon and black cabbage",
+           (1,), nota="Vegetariano · Vegetarian"),
     piatto("Spigola alla griglia",
            "Spigola alla griglia con verdure spicchiate",
            "Grilled sea bass with roasted vegetable wedges", (4,)),
     piatto("Tagliata toscana",
            "Tagliata di manzo con patate arrosto",
-           "Sliced Tuscan beef steak with roast potatoes", ()),
+           "Sliced Tuscan beef steak with roast potatoes", (), prezzo=24),
 ]
 
 CONTORNI = [
-    piatto("Verdure al forno spicchiate", "", "Roasted vegetable wedges", ()),
-    piatto("Patate arrosto", "", "Roast potatoes", ()),
-    piatto("Patate fritte", "", "French fries", ()),
-    piatto("Insalata verde", "", "Green salad", ()),
-    piatto("Insalata mista", "", "Mixed salad", ()),
+    piatto("Verdure al forno spicchiate", "", "Roasted vegetable wedges", (), prezzo="8,50"),
+    piatto("Patate arrosto", "", "Roast potatoes", (), prezzo=7),
+    piatto("Patatine fritte", "", "French fries", (), prezzo=7),
+    piatto("Insalata verde", "", "Green salad", (), prezzo=7),
+    piatto("Insalata mista", "", "Mixed salad", (), prezzo=7),
 ]
 
 SERVIZIO = [
@@ -448,6 +454,10 @@ def svg_alga():
 </g></svg>"""
 
 
+FOGLIA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+<path d="M10 50C8 26 24 8 52 8c0 28-18 44-42 42z"/><path d="M10 50L44 16" stroke-width=".7"/>
+<path d="M20 40l-2-10M20 40l10 2M28 32l-1-11M28 32l11 1M36 24l0-9M36 24l9 0" stroke-width=".5"/></g></svg>"""
+
 PESCE = svg_pesce()
 CONCHIGLIA = svg_capasanta()
 ALGA = svg_alga()
@@ -587,21 +597,25 @@ def pagina_primi(n):
 
 
 def pagina_secondi(n):
-    contorni = f"""<div class="sezione"><h2>Contorni <span>Side Dishes</span></h2></div>
-<div class="elenco compatto">{"".join(f'''<div class="voce"><div class="testo"><h3>{c["nome"]} <em class="en-riga">{c["en"]}</em></h3></div>
-  <div class="prezzo">{prezzo(c["prezzo"])}</div></div>''' for c in CONTORNI)}</div>"""
     return pagina_carta("Secondi Piatti", "Main Courses", PESCE,
                         "Il pescato alla griglia, in crosta e fritto leggero · "
                         "<em>Grilled, crusted and lightly fried catch</em>",
-                        elenco(SECONDI) + contorni, n)
+                        elenco(SECONDI), n)
+
+
+def elenco_contorni():
+    return f"""<div class="elenco compatto">{"".join(f'''<div class="voce"><div class="testo"><h3>{c["nome"]} <em class="en-riga">{c["en"]}</em></h3></div>
+  <div class="prezzo">{prezzo(c["prezzo"])}</div></div>''' for c in CONTORNI)}</div>"""
 
 
 def pagina_servizio_allergeni(n):
-    servizio = "".join(f"""<div class="voce"><div class="testo"><h3>{a}</h3><p class="en">{b}</p></div>
+    servizio = "".join(f"""<div class="voce"><div class="testo"><h3>{a} <em class="en-riga">{b}</em></h3></div>
   <div class="prezzo">{c}</div></div>""" for a, b, c in SERVIZIO)
     leg = "".join(f"<li><b>{k}</b> {a} <em>{b}</em></li>" for k, (a, b) in ALLERGENI.items())
-    corpo = f"""{testata('Servizio', 'Service', "")}
-<div class="elenco">{servizio}</div>
+    corpo = f"""{testata('Contorni', 'Side Dishes', FOGLIA)}
+{elenco_contorni()}
+<div class="sezione"><h2>Servizio <span>Service</span></h2></div>
+<div class="elenco compatto">{servizio}</div>
 <div class="allergeni">
   <h2>Allergeni <span>Allergens</span></h2>
   <ul class="legenda">{leg}</ul>
@@ -868,7 +882,8 @@ def main():
     suffisso = "" if FINALE else "_BOZZA"
     lavori = [
         (carta, f"Menu_CusinDelMar_2026{suffisso}", "Menu Cusin del Mar 2026"),
-        ([pagina_degustazione(ULTIMO, None)], f"Menu_UltimoDellAnno_2026{suffisso}", "Ultimo dell'Anno 2026"),
+        # Ultimo dell'Anno accantonato per ora: per rigenerarlo togliere il commento
+        # ([pagina_degustazione(ULTIMO, None)], f"Menu_UltimoDellAnno_2026{suffisso}", "Ultimo dell'Anno 2026"),
     ]
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome")
