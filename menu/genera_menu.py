@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Genera il menù food di Cusin del Mar nello stile della Carta Vini 2026.
+Genera il menù food del Ristorante Cusin nello stile della Carta Vini 2026.
 
 Uso:
     python3 genera_menu.py            -> bozza (evidenzia in giallo ciò che è ancora da definire)
@@ -514,6 +514,20 @@ def pagina(corpo, n=None, classe=""):
     return f'<section class="pagina {classe}">{corpo}{num}</section>'
 
 
+def pagina_copertina():
+    """Pagina iniziale: citazione di Oscar Wilde, illustrazione a tratto, nome del ristorante."""
+    corpo = f"""<div class="copertina">
+  <div class="cop-ill">{CONCHIGLIA}</div>
+  <blockquote>
+    <p class="cit">«Ho dei gusti semplicissimi:<br>mi accontento sempre del meglio.»</p>
+    <p class="autore">Oscar Wilde</p>
+    <p class="cit-en">“I have the simplest tastes. I am always satisfied with the best.”</p>
+  </blockquote>
+</div>
+<p class="nome-rist">Ristorante Cusin</p>"""
+    return pagina(corpo, None, "p-copertina")
+
+
 def pagina_degustazione(d, n):
     blocchi = []
     for it, en, piatti in d["portate"]:
@@ -785,6 +799,19 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .salse-tit { font-size: 11.5pt; font-weight: 600; margin: 0 0 1.6mm; }
 .salse-tit em { font-weight: 400; color: var(--tenue); margin-left: 1mm; }
 .salse + .salse-en { font-size: 11pt; font-style: italic; color: var(--tenue); margin: 1.4mm 0 3.5mm; }
+/* copertina: tutto centrato sulla colonna di testo (da 43,3 a 193 mm), come il resto del menù */
+.p-copertina { display: flex; flex-direction: column; }
+.copertina { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding-bottom: 10mm; }
+.cop-ill { width: 34mm; height: 28mm; margin-bottom: 14mm; }
+.cop-ill svg { width: 100%; height: 100%; }
+.copertina blockquote { max-width: 130mm; }
+.cit { font-size: 25pt; font-style: italic; font-weight: 400; line-height: 1.35; }
+.autore { margin-top: 9mm; font-size: 13pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; }
+.autore::before { content: ""; display: block; width: 18mm; height: .53mm; background: var(--filo-testata); margin: 0 auto 6mm; }
+.cit-en { margin-top: 6mm; font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.3; }
+.nome-rist { position: absolute; top: 266mm; left: var(--sx); right: var(--dx); text-align: center;
+  font-size: 15pt; font-weight: 600; letter-spacing: .4em; text-transform: uppercase; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
 
@@ -822,7 +849,7 @@ SOVRAPPOSIZIONI_JS = """() => {
   const tocca = (a, b) => a.l < b.r - .5 && b.l < a.r - .5 && a.t < b.b - .5 && b.t < a.b - .5;
   document.querySelectorAll('.pagina').forEach((p, ip) => {
     const grafici = [], testi = [];
-    p.querySelectorAll('.icona svg, .riga, .cottura, .chef, .freccia, .passi .n, .salse li, .num').forEach(e =>
+    p.querySelectorAll('.icona svg, .cop-ill svg, .autore, .nome-rist, .riga, .cottura, .chef, .freccia, .passi .n, .salse li, .num').forEach(e =>
       grafici.push({...box(e.getBoundingClientRect(), e.className.baseVal ?? e.className), el: e}));
     p.querySelectorAll('.elenco').forEach(e => {         // filetto verticale dei prezzi
       const r = e.getBoundingClientRect(), x = r.left + 139.7 * MM;
@@ -867,6 +894,7 @@ def documento(pagine, titolo):
 
 def main():
     carta = [
+        pagina_copertina(),
         *[pagina_degustazione(d, i + 1) for i, d in enumerate(DEGUSTAZIONI)],
         pagina_carta("Antipasti", "Starters", PESCE,
                      "Per iniziare, il mare in piccoli assaggi · <em>To begin, the sea in small bites</em>",
@@ -881,7 +909,7 @@ def main():
     ]
     suffisso = "" if FINALE else "_BOZZA"
     lavori = [
-        (carta, f"Menu_CusinDelMar_2026{suffisso}", "Menu Cusin del Mar 2026"),
+        (carta, f"Menu_RistoranteCusin_2026{suffisso}", "Menu Ristorante Cusin 2026"),
         # Ultimo dell'Anno accantonato per ora: per rigenerarlo togliere il commento
         # ([pagina_degustazione(ULTIMO, None)], f"Menu_UltimoDellAnno_2026{suffisso}", "Ultimo dell'Anno 2026"),
     ]

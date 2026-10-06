@@ -1,4 +1,4 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Cusin del Mar 2026</title>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Ristorante Cusin 2026</title>
 <style>@font-face{font-family: 'Caveat';
   font-style: normal;
   font-weight: 400;
@@ -248,8 +248,32 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .salse-tit { font-size: 11.5pt; font-weight: 600; margin: 0 0 1.6mm; }
 .salse-tit em { font-weight: 400; color: var(--tenue); margin-left: 1mm; }
 .salse + .salse-en { font-size: 11pt; font-style: italic; color: var(--tenue); margin: 1.4mm 0 3.5mm; }
+/* copertina: tutto centrato sulla colonna di testo (da 43,3 a 193 mm), come il resto del menù */
+.p-copertina { display: flex; flex-direction: column; }
+.copertina { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding-bottom: 10mm; }
+.cop-ill { width: 34mm; height: 28mm; margin-bottom: 14mm; }
+.cop-ill svg { width: 100%; height: 100%; }
+.copertina blockquote { max-width: 130mm; }
+.cit { font-size: 25pt; font-style: italic; font-weight: 400; line-height: 1.35; }
+.autore { margin-top: 9mm; font-size: 13pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; }
+.autore::before { content: ""; display: block; width: 18mm; height: .53mm; background: var(--filo-testata); margin: 0 auto 6mm; }
+.cit-en { margin-top: 6mm; font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.3; }
+.nome-rist { position: absolute; top: 266mm; left: var(--sx); right: var(--dx); text-align: center;
+  font-size: 15pt; font-weight: 600; letter-spacing: .4em; text-transform: uppercase; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
-</style></head><body><div class="bozza">BOZZA · in giallo i punti da definire</div><section class="pagina p-deg riempi">
+</style></head><body><div class="bozza">BOZZA · in giallo i punti da definire</div><section class="pagina p-copertina"><div class="copertina">
+  <div class="cop-ill"><svg viewBox="0 0 120 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+<path d="M119.46 72.68 Q125.54 63.99 117.16 61.24 Q121.62 51.33 112.44 50.18 Q115.01 39.40 105.37 40.07 Q105.86 28.88 96.15 31.49 Q94.50 20.36 85.16 24.95 Q81.43 14.37 72.91 20.86 Q67.27 11.27 60.00 19.46 Q52.73 11.27 47.09 20.86 Q38.57 14.37 34.84 24.95 Q25.50 20.36 23.85 31.49 Q14.14 28.88 14.63 40.07 Q4.99 39.40 7.56 50.18 Q-1.62 51.33 2.84 61.24 Q-5.54 63.99 0.54 72.68" stroke-width="1.1"/><path d="M0.54 72.68 L34.00 84.00 L32.00 96.00 L60.00 96.00 L88.00 96.00 L86.00 84.00 L119.46 72.68 M34.00 84.00 L51.00 87.00 M86.00 84.00 L69.00 87.00 M36.00 90.00 L52.00 92.00 M84.00 90.00 L68.00 92.00" stroke-width=".9"/>
+<path d="M68.34 88.61 Q94.86 77.67 124.03 67.58 M68.21 88.31 Q93.98 75.68 121.90 62.59 M67.60 87.18 Q92.88 70.94 120.75 55.27 M67.42 86.91 Q91.61 69.08 117.65 50.57 M66.62 85.90 Q89.47 64.59 114.86 43.56 M66.39 85.66 Q87.85 62.94 110.85 39.37 M65.42 84.82 Q84.71 58.96 106.46 33.10 M65.16 84.62 Q82.77 57.59 101.66 29.61 M64.05 83.96 Q78.77 54.37 95.87 24.48 M63.76 83.82 Q76.57 53.35 90.42 21.86 M62.55 83.37 Q71.90 51.10 83.54 18.23 M62.24 83.28 Q69.52 50.49 77.63 16.60 M60.97 83.05 Q64.43 49.36 70.05 14.71 M60.65 83.02 Q61.97 49.18 63.91 14.16 M59.35 83.02 Q56.75 49.26 56.09 14.16 M59.03 83.05 Q54.29 49.52 49.95 14.71 M57.76 83.28 Q49.24 50.79 42.37 16.60 M57.45 83.37 Q46.88 51.48 36.46 18.23 M56.24 83.82 Q42.28 53.87 29.58 21.86 M55.95 83.96 Q40.11 54.95 24.13 24.48 M54.84 84.62 Q36.21 58.29 18.34 29.61 M54.58 84.82 Q34.31 59.71 13.54 33.10 M53.61 85.66 Q31.29 63.79 9.15 39.37 M53.38 85.90 Q29.72 65.49 5.14 43.56 M52.58 86.91 Q27.71 70.04 2.35 50.57 M52.40 87.18 Q26.50 71.94 -0.75 55.27 M51.79 88.31 Q25.55 76.71 -1.90 62.59 M51.66 88.61 Q24.73 78.72 -4.03 67.58 " stroke-width=".55"/><path d="M81.74 84.94 L81.54 83.47 L81.24 82.01 L80.83 80.55 L80.31 79.11 L79.69 77.70 L78.95 76.32 L78.11 74.99 L77.17 73.72 L76.13 72.50 L74.99 71.36 L73.77 70.31 L72.46 69.34 L71.08 68.46 L69.63 67.69 L68.11 67.02 L66.55 66.47 L64.95 66.04 L63.32 65.73 L61.66 65.54 L60.00 65.48 L58.34 65.54 L56.68 65.73 L55.05 66.04 L53.45 66.47 L51.89 67.02 L50.37 67.69 L48.92 68.46 L47.54 69.34 L46.23 70.31 L45.01 71.36 L43.87 72.50 L42.83 73.72 L41.89 74.99 L41.05 76.32 L40.31 77.70 L39.69 79.11 L39.17 80.55 L38.76 82.01 L38.46 83.47 L38.26 84.94 M91.97 81.61 L91.68 79.46 L91.24 77.30 L90.63 75.16 L89.87 73.04 L88.95 70.97 L87.87 68.94 L86.64 66.99 L85.25 65.11 L83.72 63.33 L82.05 61.65 L80.25 60.10 L78.32 58.67 L76.29 57.38 L74.16 56.25 L71.93 55.27 L69.64 54.46 L67.28 53.83 L64.88 53.37 L62.45 53.09 L60.00 53.00 L57.55 53.09 L55.12 53.37 L52.72 53.83 L50.36 54.46 L48.07 55.27 L45.84 56.25 L43.71 57.38 L41.68 58.67 L39.75 60.10 L37.95 61.65 L36.28 63.33 L34.75 65.11 L33.36 66.99 L32.13 68.94 L31.05 70.97 L30.13 73.04 L29.37 75.16 L28.76 77.30 L28.32 79.46 L28.03 81.61 M102.19 78.29 L101.82 75.44 L101.23 72.60 L100.44 69.77 L99.43 66.98 L98.21 64.24 L96.79 61.56 L95.16 58.98 L93.33 56.51 L91.31 54.15 L89.10 51.94 L86.73 49.89 L84.19 48.00 L81.50 46.31 L78.68 44.81 L75.75 43.52 L72.72 42.45 L69.61 41.61 L66.44 41.01 L63.23 40.64 L60.00 40.52 L56.77 40.64 L53.56 41.01 L50.39 41.61 L47.28 42.45 L44.25 43.52 L41.32 44.81 L38.50 46.31 L35.81 48.00 L33.27 49.89 L30.90 51.94 L28.69 54.15 L26.67 56.51 L24.84 58.98 L23.21 61.56 L21.79 64.24 L20.57 66.98 L19.56 69.77 L18.77 72.60 L18.18 75.44 L17.81 78.29 M111.14 75.38 L110.69 71.93 L109.98 68.48 L109.01 65.05 L107.79 61.67 L106.32 58.35 L104.59 55.11 L102.62 51.98 L100.40 48.98 L97.95 46.13 L95.28 43.45 L92.39 40.95 L89.32 38.67 L86.06 36.61 L82.65 34.80 L79.09 33.23 L75.42 31.94 L71.65 30.92 L67.81 30.19 L63.92 29.75 L60.00 29.60 L56.08 29.75 L52.19 30.19 L48.35 30.92 L44.58 31.94 L40.91 33.23 L37.35 34.80 L33.94 36.61 L30.68 38.67 L27.61 40.95 L24.72 43.45 L22.05 46.13 L19.60 48.98 L17.38 51.98 L15.41 55.11 L13.68 58.35 L12.21 61.67 L10.99 65.05 L10.02 68.48 L9.31 71.93 L8.86 75.38 " stroke-width=".4" stroke-dasharray="1.2 2.2" opacity=".75"/>
+</g></svg></div>
+  <blockquote>
+    <p class="cit">«Ho dei gusti semplicissimi:<br>mi accontento sempre del meglio.»</p>
+    <p class="autore">Oscar Wilde</p>
+    <p class="cit-en">“I have the simplest tastes. I am always satisfied with the best.”</p>
+  </blockquote>
+</div>
+<p class="nome-rist">Ristorante Cusin</p></section><section class="pagina p-deg riempi">
 <header class="testata">
   <h1>Degustazione</h1><div class="riga"></div><p class="sottotitolo">Tasting Menu</p>
   <div class="icona"><svg viewBox="0 0 120 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
