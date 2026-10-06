@@ -2,6 +2,8 @@
 """
 Genera il menù food del Ristorante Cusin nello stile della Carta Vini 2026.
 
+Richiede: playwright, shapely (per i tratteggi dell'illustrazione di copertina).
+
 Uso:
     python3 genera_menu.py            -> bozza (evidenzia in giallo ciò che è ancora da definire)
     python3 genera_menu.py --finale   -> versione pulita da stampa
@@ -20,6 +22,8 @@ import sys
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+
+from illustrazione_costa import COSTA_INCHIOSTRO
 
 QUI = Path(__file__).parent
 FINALE = "--finale" in sys.argv
@@ -458,54 +462,9 @@ FOGLIA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="non
 <path d="M10 50C8 26 24 8 52 8c0 28-18 44-42 42z"/><path d="M10 50L44 16" stroke-width=".7"/>
 <path d="M20 40l-2-10M20 40l10 2M28 32l-1-11M28 32l11 1M36 24l0-9M36 24l9 0" stroke-width=".5"/></g></svg>"""
 
-def svg_costa():
-    """Veduta costiera a tratto per la copertina: promontorio con faro, vela, onde e gabbiani."""
-    oriz = 62
-    # onde: righe sempre più ampie verso chi guarda, lasciando libera la barca
-    onde = ""
-    for k, y in enumerate((66, 71, 77, 84, 92)):
-        lung, amp, passo = 5 + k * 2.2, .9 + k * .35, 15 + k * 5
-        x = 4 + (k % 2) * passo / 2
-        while x + lung < 196:
-            if not (44 <= x + lung and x <= 78 and y <= 79):
-                onde += f"M{x:.1f} {y} q{lung / 4:.1f} {-amp:.1f} {lung / 2:.1f} 0 t{lung / 2:.1f} 0 "
-            x += passo
-    # promontorio completo: pendio dolce a sinistra, scogliera a destra
-    monte = (f"M106 {oriz} C 120 60, 132 50, 146 44 C 156 40, 164 31, 176 30 "
-             f"C 184 30, 189 33, 191 38 L193 47 L192.5 52 L195 {oriz - 3} L198 {oriz}")
-    isola = f"M6 {oriz} C 12 58.5, 20 57, 28 58 C 34 58.8, 38 60.5, 42 {oriz}"
-    tratti = "".join(f"M{x:.1f} {y:.1f} l-3.2 4.2 " for x, y in
-                     ((128, 55), (134, 52), (140, 48.5), (147, 45), (153, 42.5), (159, 38), (165, 34.5),
-                      (171, 32.5), (181, 32), (186, 34.5)))
-    tratti += "".join(f"M{x:.1f} {y:.1f} l0 {h:.1f} " for x, y, h in ((189, 37, 7), (186.5, 39, 9), (184, 41, 6)))
-    scogli = f"M106 {oriz} q3 -2.2 6 0 q2.5 -1.6 5 0 M186 {oriz} q3 -2.4 6 0 q2.4 -1.8 5 0"
-    # faro
-    faro = ("M173 30.5 L174.4 15 L177.6 15 L179 30.5 M174.1 19.5 L177.9 19.5 M173.7 25 L178.3 25 "
-            "M173.8 15 L178.2 15 L178.2 11 L173.8 11 Z M173.4 11 L176 7.6 L178.6 11")
-    luce = "M171 12.8 L163 11.4 M171 13.6 L163 15.2 M181 12.8 L189 11.4 M181 13.6 L189 15.2"
-    # barca a vela
-    barca = ("M48 72 L74 72 L70 75.5 L52 75.5 Z M61.5 72 L61.5 45 "
-             "M62.5 47 L62.5 70 L75 70 Z M60.5 49 L51 70 L60.5 70 Z")
-    riflesso = "M50 78 q3 -.8 6 0 M60 79.5 q3 -.8 6 0 M66 77.8 q2.5 -.7 5 0"
-    gabbiani = ("M34 28 q3.5 -4 7 0 q3.5 -4 7 0 M52 20 q2.4 -2.8 5 0 q2.4 -2.8 5 0 "
-                "M126 22 q1.8 -2 3.6 0 q1.8 -2 3.6 0")
-    nuvole = "M18 44 C 30 40, 44 40, 56 43 M78 36 C 88 33, 100 33, 108 35"
-    return f"""<svg viewBox="0 0 200 100" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-<path d="M42 {oriz} L49 {oriz} M77 {oriz} L106 {oriz} M198 {oriz} L200 {oriz}" stroke-width=".7"/>
-<path d="{monte}" stroke-width="1.1"/><path d="{isola}" stroke-width=".7"/>
-<path d="{tratti}" stroke-width=".45" opacity=".8"/><path d="{scogli}" stroke-width=".7"/>
-<path d="{faro}" stroke-width=".8"/><path d="{luce}" stroke-width=".5" stroke-dasharray="1.6 1.4"/>
-<path d="{barca}" stroke-width=".85"/><path d="{riflesso}" stroke-width=".5"/>
-<path d="{onde}" stroke-width=".55"/>
-<path d="{gabbiani}" stroke-width=".8"/>
-<path d="{nuvole}" stroke-width=".45" opacity=".7"/>
-</g></svg>"""
-
-
 PESCE = svg_pesce()
 CONCHIGLIA = svg_capasanta()
 ALGA = svg_alga()
-COSTA = svg_costa()
 
 SPIGA = """<svg viewBox="0 0 60 60" class="ill" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
 <path d="M30 56V14"/><path d="M30 18c-6-2-9-8-8-14 6 2 9 8 8 14zM30 18c6-2 9-8 8-14-6 2-9 8-8 14z"/>
@@ -562,7 +521,7 @@ def pagina(corpo, n=None, classe=""):
 def pagina_copertina():
     """Pagina iniziale: citazione di Oscar Wilde, illustrazione a tratto, nome del ristorante."""
     corpo = f"""<div class="copertina">
-  <div class="cop-ill">{COSTA}</div>
+  <div class="cop-ill">{COSTA_INCHIOSTRO}</div>
   <blockquote>
     <p class="cit">«Ho dei gusti semplicissimi:<br>mi accontento sempre del meglio.»</p>
     <p class="autore">Oscar Wilde</p>
@@ -848,7 +807,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .p-copertina { display: flex; flex-direction: column; }
 .copertina { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding-bottom: 10mm; }
-.cop-ill { width: 78mm; height: 39mm; margin-bottom: 13mm; }
+.cop-ill { width: 120mm; height: 60mm; margin-bottom: 12mm; }
 .cop-ill svg { width: 100%; height: 100%; }
 .copertina blockquote { max-width: 130mm; }
 .cit { font-size: 25pt; font-style: italic; font-weight: 400; line-height: 1.35; }
