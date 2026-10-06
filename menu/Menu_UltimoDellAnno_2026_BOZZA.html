@@ -97,7 +97,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
 @page { size: A4; margin: 0; }
 :root {
-  --carta:#e9ebf0; --inchiostro:#191919; --tenue:#6d6d74; --filo-testata:#3d3d3b; --filo:#afafb2;
+  --inchiostro:#191919; --tenue:#6d6d74; --filo-testata:#3d3d3b; --filo:#afafb2;
   --oro:#a88a4a; --ill:#8b8b93;
   /* misure della Carta Vini */
   --sx: 43.3mm;      /* inizio testo dal bordo sinistro (fori del porta menù) */
@@ -105,11 +105,11 @@
   --x-filo: 139.7mm; /* filetto prezzi a 183 mm dal bordo = 139,7 mm dall'inizio testo */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--carta); color: var(--inchiostro);
+html, body { background: none; color: var(--inchiostro);
   font-family: 'Cormorant Garamond', Georgia, serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; font-style: normal; }
 .pagina { width: 210mm; height: 297mm; padding: 8.4mm var(--dx) 22mm var(--sx); position: relative;
-  overflow: hidden; page-break-after: always; background: var(--carta); }
+  overflow: hidden; page-break-after: always; }
 .num { position: absolute; top: 282mm; left: 0; right: 0; text-align: center; font-size: 15pt;
   font-weight: 300; color: #231f20; }
 .ill { width: 100%; height: 100%; color: var(--ill); }
@@ -141,7 +141,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 14pt; color: var(--oro);
   line-height: 1; margin-bottom: .8mm; }
 .passi .chef, .crudo .chef { display: inline; }
-.voce.firma .testo { border: 1px solid #c9bb95; padding: 2.6mm 3.5mm; margin-left: -3.5mm; background: #efeff0; }
+.voce.firma .testo { border: 1px solid #c9bb95; padding: 2.6mm 3.5mm; margin-left: -3.5mm; }
 .compatto { gap: 2.6mm; }
 .compatto .voce h3 { font-size: 14pt; }
 .en-riga { font-weight: 400; font-size: 11.5pt; color: var(--tenue); margin-left: 2mm; }
@@ -172,38 +172,20 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .crudo-titolo p { font-size: 12.5pt; line-height: 1.3; margin-top: 1mm; }
 .crudo-titolo em { color: var(--tenue); }
 .passi { list-style: none; position: relative; }
-.passi::before { content: ""; position: absolute; left: -9.3mm; top: 6mm; bottom: 8mm;
-  border-left: 1.3px dashed #c9bb95; }
+.passi > li:not(:last-child)::before { content: ""; position: absolute; left: -9.3mm; top: 11mm;
+  bottom: calc(-6mm - var(--aria, 0mm) + 1.5mm); border-left: 1.3px dashed #c9bb95; }
 .passi > li { position: relative; margin-bottom: 6mm; }
 .passi .n { position: absolute; left: -14.5mm; top: -1mm; width: 10.5mm; height: 10.5mm; border-radius: 50%;
-  background: var(--carta); border: 1.2px solid var(--oro); color: var(--oro); text-align: center;
+  border: 1.2px solid var(--oro); color: var(--oro); text-align: center;
   font-family: 'Caveat', cursive; font-weight: 600; font-size: 19pt; line-height: 10mm; }
 .passi h4 { font-size: 12pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 3mm; }
 .passi h4 em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1.5mm; font-size: 12pt; }
 .passi .elenco { gap: 2.6mm; }
 .unita { font-weight: 400; font-style: italic; font-size: 12pt; color: var(--tenue); }
 .salse { list-style: none; display: flex; flex-wrap: wrap; gap: 2.5mm; max-width: 136mm; }
-.salse li { font-size: 13pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; background: #efeff0; }
+.salse li { font-size: 13pt; padding: 1.2mm 4.5mm; border: 1px solid #c9bb95; border-radius: 20mm; }
 .condividi { display: flex; align-items: center; gap: 2mm; font-family: 'Caveat', cursive; font-size: 17pt;
   color: var(--oro); margin-top: -1mm; }
-
-/* indice */
-.p-indice .biglietto { position: absolute; top: 10mm; right: 14mm; width: 70mm; padding: 6mm 8mm 8mm;
-  border: 1.2px solid #9a9aa3; border-radius: 1mm 3mm 2mm 4mm; transform: rotate(-14deg);
-  font-family: 'Caveat', cursive; font-size: 22pt; line-height: 1.12; color: #85858d; }
-.p-indice .biglietto::after { content:""; position:absolute; inset: 3mm -3mm -3mm 3mm; border: 1px solid #b5b5bc;
-  border-radius: 3mm 1mm 4mm 2mm; z-index: -1; }
-.indice { position: absolute; top: 112mm; left: var(--sx); right: var(--dx); }
-.indice h1 { font-weight: 400; font-size: 45pt; letter-spacing: .02em; text-align: center; width: var(--x-filo); }
-.indice .lista { margin-top: 6mm; position: relative; }
-.indice .lista::before { content:""; position:absolute; left: var(--x-filo); top: -30mm; bottom: -4mm; width: .53mm; background: var(--filo); }
-.indice .r { display: grid; grid-template-columns: var(--x-filo) 1fr; padding: 3mm 0; font-size: 13pt;
-  letter-spacing: .12em; text-transform: uppercase; }
-.indice .r span:first-child { text-align: center; }
-.indice .r em { display: block; font-size: 10.5pt; text-transform: none; letter-spacing: .08em; color: var(--tenue); }
-.indice .pg { white-space: nowrap; text-align: left; padding-left: 4mm; align-self: center; }
-.firma-rist { position: absolute; bottom: 14mm; left: var(--sx); right: var(--dx); text-align: center; font-size: 12pt;
-  letter-spacing: .35em; text-transform: uppercase; color: var(--tenue); }
 
 /* degustazioni: centrate sulla colonna di testo, non sul foglio */
 .p-deg { display: flex; flex-direction: column; }
@@ -256,6 +238,16 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .p-deg.riempi .portata { margin-bottom: calc(2.6mm + var(--aria)); }
 .p-deg.riempi .portata li { margin-bottom: calc(1.8mm + var(--aria) * .45); }
 .p-deg.riempi .deg-nome { margin-top: calc(var(--aria) * .6); }
+/* salse/aggiunte a pagamento */
+.testo.extra { font-size: 12.5pt; line-height: 1.25; margin-top: 1.4mm; }
+.extra-tit { display: block; font-size: 10.5pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--oro); margin-bottom: .4mm; }
+.extra-tit em { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--tenue); }
+.extra-nome { font-weight: 600; }
+.prezzo.extra { font-size: 13pt !important; font-weight: 600 !important; align-self: end !important; }
+.voce .all-riga, .testo.extra .all-riga { color: var(--tenue); font-style: normal; }
+.salse-tit { font-size: 11.5pt; font-weight: 600; margin: 0 0 1.6mm; }
+.salse-tit em { font-weight: 400; color: var(--tenue); margin-left: 1mm; }
+.salse + .salse-en { font-size: 11pt; font-style: italic; color: var(--tenue); margin: 1.4mm 0 3.5mm; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 </style></head><body><div class="bozza">BOZZA · in giallo i punti da definire</div><section class="pagina p-deg riempi">
 <header class="testata">
