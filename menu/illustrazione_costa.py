@@ -708,7 +708,255 @@ def disegna_antignano():
             f'<g stroke="none" clip-path="url(#vignetta)">{corpo}</g></svg>')
 
 
-COSTA_INCHIOSTRO = disegna_antignano()
+
+# =============================================================================
+# LA TERRAZZA SUL MARE: vista morbida ed elegante, ispirata alle foto del locale
+# =============================================================================
+
+def ellisse(cx, cy, rx, ry, n=36, rumore=0.0, inizio=0.0, fine=2 * math.pi):
+    pts = []
+    for i in range(n + 1):
+        a = inizio + (fine - inizio) * i / n
+        k = 1 + (rnd.uniform(-rumore, rumore) if rumore else 0)
+        pts.append((cx + math.cos(a) * rx * k, cy + math.sin(a) * ry * k))
+    return pts
+
+
+def masso(st, cx, cy, rx, ry):
+    """Masso tondeggiante: sagoma morbida, contorno in luce in alto a sinistra, ombra curva in basso a destra."""
+    rx *= rnd.uniform(.85, 1.15)
+    ry *= rnd.uniform(.85, 1.1)
+    cx += rnd.uniform(-2.5, 2.5)
+    cy += rnd.uniform(-1.5, 1.5)
+    pts = ellisse(cx, cy, rx, ry, 40, .06)
+    st.copri(pts)
+    inizio = math.pi * rnd.uniform(.9, 1.1)
+    st.tratto(ellisse(cx, cy, rx, ry, 18, .04, inizio, inizio + math.pi * rnd.uniform(.6, .9)), .5, .1)
+    poly = Polygon(pts).buffer(0)
+    # ombra: archi concentrici spostati verso il basso a destra (tratteggio che segue la forma)
+    for k in range(1, 7):
+        f = 1 - k * .11
+        arco = ellisse(cx + rx * (1 - f) * .55, cy + ry * (1 - f) * .7, rx * f, ry * f, 16, .02,
+                       -math.pi * .15, math.pi * .75)
+        linea = LineString(arco).intersection(poly)
+        st.inchiostro.append(segmenti(linea, .18 + k * .015, .04))
+    zona = poly.intersection(Polygon(ellisse(cx + rx * .5, cy + ry * .6, rx * .75, ry * .7, 30)))
+    st.ombra(zona, 52, .9, .18, .35, .15)
+
+
+def tavolino(st, x, y_piano, y_terra):
+    """Tavolino rotondo con tovaglia drappeggiata, due calici e un vasetto di fiori."""
+    rx, ry = 6.2, 1.3
+    # tovaglia: piano ellittico e drappeggio a campana con orlo ondulato
+    sx = bezier((x - rx, y_piano), (x - rx - .4, y_piano + 3), (x - rx - 1.6, y_piano + 5.5), (x - rx - 1.8, y_terra - 2), 10)
+    dx = bezier((x + rx, y_piano), (x + rx + .4, y_piano + 3), (x + rx + 1.6, y_piano + 5.5), (x + rx + 1.8, y_terra - 2), 10)
+    orlo = []
+    n = 16
+    for i in range(n + 1):
+        u = i / n
+        xx = x + rx + 1.8 - u * (2 * rx + 3.6)
+        orlo.append((xx, y_terra - 2 + math.sin(u * math.pi * 5) * .5 + math.sin(u * math.pi) * 1.1))
+    sagoma = ellisse(x, y_piano, rx, ry, 20, 0, math.pi, 2 * math.pi) + dx + orlo + sx[::-1]
+    st.copri(sagoma)
+    st.tratto(ellisse(x, y_piano, rx, ry, 30), .45, .2)
+    st.tratto(sx, .55, .15)
+    st.tratto(dx, .55, .15)
+    st.tratto(orlo, .5, .1)
+    for k, fx in enumerate((-.55, -.15, .3, .7)):                      # pieghe
+        st.tratto(bezier((x + fx * rx, y_piano + ry * .9), (x + fx * rx * 1.05, y_piano + 3),
+                         (x + fx * rx * 1.15, y_terra - 4), (x + fx * rx * 1.25, y_terra - 1.3), 8), .22, .04)
+    st.ombra(Polygon(dx + [(x + rx * .55, y_terra - 1), (x + rx * .45, y_piano + 1.2)]).buffer(0), 70, .6, .2, .15)
+    # calici e vasetto
+    for cxg in (x - 2.6, x + 2.2):
+        coppa = bezier((cxg - 1, y_piano - 4.2), (cxg - 1.1, y_piano - 2.6), (cxg - .3, y_piano - 2), (cxg, y_piano - 2), 8) + \
+                bezier((cxg, y_piano - 2), (cxg + .3, y_piano - 2), (cxg + 1.1, y_piano - 2.6), (cxg + 1, y_piano - 4.2), 8)
+        st.copri(coppa)
+        st.tratto(coppa, .3, .1)
+        st.retta(cxg - 1, y_piano - 4.2, cxg + 1, y_piano - 4.2, .2)
+        st.retta(cxg, y_piano - 2, cxg, y_piano - .3, .22)
+        st.tratto(ellisse(cxg, y_piano - .3, 1, .25, 10), .2, .1)
+        st.ombra(Polygon(coppa).buffer(0).intersection(rett(cxg - 1.2, y_piano - 3.3, cxg + 1.2, y_piano - 2)), 0, .35, .16, .05)
+    vaso = [(x - .2 - .5, y_piano - .2), (x - .2 - .6, y_piano - 2.2), (x - .2 + .6, y_piano - 2.2), (x - .2 + .5, y_piano - .2)]
+    st.tratto(vaso + [vaso[0]], .25, .1)
+    for a in (-.5, 0, .45):
+        st.tratto(bezier((x - .2, y_piano - 2.2), (x - .2 + a, y_piano - 3.5), (x - .2 + a * 2, y_piano - 4.5),
+                         (x - .2 + a * 2.6, y_piano - 5.2), 6), .2, .05)
+        st.tratto(ellisse(x - .2 + a * 2.6, y_piano - 5.6, .45, .45, 8), .25, .1)
+
+
+def sedia(st, x, y_seduta, y_terra, verso=1):
+    """Sedia da bistrot con schienale curvo."""
+    sch = bezier((x, y_seduta), (x + verso * .3, y_seduta - 3), (x + verso * 1.2, y_seduta - 5.5), (x + verso * .4, y_seduta - 7), 10)
+    st.tratto(sch, .45, .15)
+    st.tratto(bezier((x + verso * .4, y_seduta - 7), (x - verso * .8, y_seduta - 7.6), (x - verso * 2.2, y_seduta - 6.8),
+                     (x - verso * 2.2, y_seduta - 5.6), 8), .4, .1)
+    st.tratto(ellisse(x - verso * 2, y_seduta, 2.4, .5, 14), .35, .1)
+    for dx in (0, -verso * 4):
+        st.tratto(bezier((x + dx, y_seduta + .3), (x + dx + verso * .1, y_seduta + 2), (x + dx + verso * .4, y_terra - 1.5),
+                         (x + dx + verso * .7, y_terra), 6), .3, .1)
+
+
+def bouganville(st, x0, y0, x1, y1, n=70):
+    """Cascata di fiori: piccoli riccioli lungo un ramo che scende."""
+    ramo = bezier((x0, y0), (x0 + (x1 - x0) * .2, y0 + 6), (x1 - 2, y1 - 6), (x1, y1), 30)
+    st.tratto(ramo, .45, .1)
+    for i in range(n):
+        u = rnd.random()
+        bx, by = ramo[int(u * (len(ramo) - 1))]
+        bx += rnd.uniform(-3.5, 3.5) * (1 - u * .4)
+        by += rnd.uniform(-2.5, 2.5)
+        r = rnd.uniform(.6, 1.1)
+        fiore = ellisse(bx, by, r, r * .8, 9, .15)
+        st.copri(fiore)
+        st.tratto(fiore, .26, .1)
+        if rnd.random() < .45:
+            st.ombra(Polygon(fiore).buffer(0), 60, .35, .16, .05)
+
+
+def disegna_terrazza():
+    W, H, ORIZ = 300, 150, 62
+    cielo, mare, costa, scoglio, terrazza, primo = (Strato() for _ in range(6))
+
+    # ---------- CIELO
+    for (x, y, s) in ((54, 26, 1.0), (66, 32, .75), (112, 18, .6)):
+        for verso in (-1, 1):
+            ala = bezier((x, y + .6 * s), (x + verso * 1.5 * s, y - 2 * s), (x + verso * 4 * s, y - 2.6 * s),
+                         (x + verso * 6.2 * s, y + 1 * s), 10)
+            cielo.tratto(ala, .7 * s + .2, .08)
+    for (x0, y0, l) in ((8, 30, 40), (22, 34, 22), (124, 36, 30), (138, 40, 16)):
+        cielo.tratto(linea_mossa(x0, y0, x0 + l, y0, 10, .3), .3, .05)
+
+    # ---------- COSTA LONTANA: colline morbide a sinistra (come nella terza foto)
+    colle = catena(bezier((-4, 44), (12, 41), (28, 43), (44, 47.5)),
+                   bezier((44, 47.5), (62, 52.5), (80, 57), (104, ORIZ)))
+    costa.copri(colle + [(104, ORIZ + 1), (-4, ORIZ + 1)])
+    costa.tratto(colle, .6, .1)
+    forma = Polygon(colle + [(104, ORIZ), (-4, ORIZ)])
+    costa.ombra(forma, 0, 1.3, .2, .45, .2)
+    for k in range(26):                                                    # macchia lontana
+        x = rnd.uniform(4, 90)
+        ytop = 44 + max(0, x - 30) * .26
+        y = rnd.uniform(ytop + 1.5, ORIZ - 1)
+        if forma.contains(Polygon([(x - 1, y), (x + 1, y), (x, y - 1)])):
+            costa.tratto(bezier((x - 1.2, y + .3), (x - .5, y - .7), (x + .5, y - .7), (x + 1.2, y + .3), 6), .28, .05)
+    mare.tratto(linea_mossa(104, ORIZ, 172, ORIZ, 12, .04), .45, .06)
+    dietro = catena(bezier((168, ORIZ), (190, 56), (214, 50), (240, 46)),
+                    bezier((240, 46), (262, 42.5), (284, 41), (304, 40.5)))
+    costa.copri(dietro + [(304, 100), (176, 100), (176, ORIZ + 4)])
+    costa.tratto(dietro, .6, .12)
+    forma_d = Polygon(dietro + [(304, 96), (176, 96)])
+    costa.ombra(forma_d, 8, 1.8, .16, .55, .35)
+    for k in range(70):                                                     # macchia sul pendio
+        x = rnd.uniform(172, 302)
+        y = rnd.uniform(40, 90)
+        if forma_d.contains(Polygon([(x - 1.6, y), (x + 1.6, y), (x, y - 1.6)])):
+            r = rnd.uniform(1.2, 2.2)
+            costa.tratto(bezier((x - r, y + .4), (x - r * .4, y - r * .7), (x + r * .4, y - r * .7), (x + r, y + .4), 6), .3, .05)
+            if rnd.random() < .5:
+                costa.ombra(Polygon(ellisse(x, y + .3, r, r * .45, 10)).buffer(0), 70, .5, .16, .1)
+
+    # ---------- MARE
+    y = ORIZ + 2
+    while y < 149.5:
+        prof = (y - ORIZ) / (150 - ORIZ)
+        x = rnd.uniform(-4, 10)
+        while x < 300:
+            lun = rnd.uniform(2.5, 8) * (0.5 + prof * 1.4)
+            vuoto = rnd.uniform(7, 20) * (1.3 - prof * .5)
+            d = dentro(x + lun / 2, y)
+            if d < .8 or rnd.random() > (d - .8) * 5:
+                onda = bezier((x, y), (x + lun * .3, y - .45), (x + lun * .7, y - .45), (x + lun, y + rnd.uniform(-.1, .1)), 6)
+                mare.tratto(onda, (.2 + prof * .34) * (1 - max(0, d - .75) * 1.6), .04)
+            x += lun + vuoto
+        y += (1.5 + prof * 3.0) * rnd.uniform(.85, 1.15)
+    vela = Polygon([(130, ORIZ - 1.2), (134.5, ORIZ - 12), (135.3, ORIZ - 1.2)])
+    mare.tratto([(134.5, ORIZ - 12.4), (134.6, ORIZ + .2)], .5, .2)
+    mare.tratto(bezier((130, ORIZ - 1.2), (131.5, ORIZ - 5), (133.2, ORIZ - 9), (134.4, ORIZ - 11.8), 8), .45, .1)
+    mare.ombra(vela, 90, .7, .2, .1)
+    mare.tratto([(128.6, ORIZ + .4), (136.6, ORIZ + .4)], .55, .2)
+    # diga di scogli tondi, in curva
+    for i in range(16):
+        u = i / 15
+        cx = 20 + u * 78
+        cy = 98 - math.sin(u * math.pi * .9) * 9 - u * 6
+        r = 3.2 - u * 1.2
+        sasso = ellisse(cx, cy, r, r * .62, 16, .08)
+        mare.copri(sasso)
+        mare.tratto(ellisse(cx, cy, r, r * .62, 10, .05, math.pi, 2 * math.pi), .5, .12)
+        mare.ombra(Polygon(sasso).buffer(0).intersection(rett(cx - r, cy, cx + r, cy + r)), 55, .5, .2, .1)
+    for (x, y, l) in ((70, 108, 7), (116, 100, 5.5)):
+        barca(mare, x, y, l)
+
+    # ---------- SCOGLIERA: massi tondeggianti sotto la terrazza (dal fondo verso chi guarda)
+    for (cx, cy, rx, ry) in ((300, 100, 18, 9), (276, 101, 16, 8.5), (252, 103, 15, 8), (226, 104, 14, 8),
+                             (204, 106, 12, 7.5), (186, 108, 10, 7),
+                             (290, 116, 18, 10), (262, 118, 17, 10), (234, 120, 15, 9.5), (210, 122, 13, 9),
+                             (190, 125, 11, 8), (174, 130, 10, 7.5),
+                             (298, 134, 18, 11), (270, 137, 18, 11), (242, 139, 16, 10), (216, 141, 14, 9.5),
+                             (194, 143, 12, 8.5), (172, 146, 11, 7.5), (156, 149, 9, 6)):
+        masso(scoglio, cx, cy, rx, ry)
+    for (x, y) in ((150, 147), (160, 141), (168, 136), (178, 132.5), (184, 127)):      # schiuma alla base
+        scoglio.tratto(bezier((x - 4, y + .8), (x - 2, y - .6), (x + 1, y - .4), (x + 3, y + .8), 8), .3, .05)
+        scoglio.tratto(ellisse(x - 5, y + .6, .5, .35, 8), .2, .1)
+
+    # ---------- TERRAZZA: piano a sbalzo, ringhiera leggera, vele bianche, tavolini
+    piano = bezier((178, 93), (210, 91.2), (255, 90.4), (304, 90.2), 30)
+    sotto = bezier((180, 95.6), (210, 93.8), (255, 93), (304, 92.8), 30)
+    terrazza.copri(piano + sotto[::-1])
+    terrazza.tratto(piano, .8, .3)
+    terrazza.tratto(sotto, .6, .2)
+    terrazza.tratto([(178, 93), (180, 95.6)], .6, .2)
+    terrazza.ombra(Polygon(sotto + [(304, 95.6), (182, 98)]).buffer(0), 0, .5, .2, .15)
+    # vele bianche tese tra pali sottili (come la pergola del locale)
+    pali = [186, 224, 262, 300]
+    cima = {x: 54 - (x - 186) * .02 for x in pali}
+    quota_p = lambda x: 93 - (x - 178) * .02
+    for xa, xb in zip(pali[:-1], pali[1:]):
+        ya, yb = cima[xa], cima[xb]
+        bordo_alto = bezier((xa, ya), (xa + 12, ya - 1.6), (xb - 12, yb - 1.6), (xb, yb), 20)
+        bordo_basso = bezier((xa, ya + 1.2), (xa + 12, ya + 8.5), (xb - 12, yb + 8.5), (xb, yb + 1.2), 20)
+        terrazza.copri(bordo_alto + bordo_basso[::-1])
+        terrazza.tratto(bordo_alto, .55, .15)
+        terrazza.tratto(bordo_basso, .65, .15)
+        ombra_vela = Polygon(bordo_basso + [(xb, yb + 4), (xa, ya + 4)]).buffer(0).intersection(
+            Polygon(bordo_alto + bordo_basso[::-1]).buffer(0))
+        terrazza.ombra(ombra_vela, 8, .9, .2, .3, .2)
+        for k in (.33, .66):                                                # cuciture della vela
+            xm = xa + (xb - xa) * k
+            terrazza.tratto([(xm, ya - 1.2), (xm + .5, ya + 6.5)], .2, .05)
+    for x in pali:
+        terrazza.tratto([(x, cima[x] - .5), (x + .15, quota_p(x))], .65, .45)
+    # tavolini con sedie (visti attraverso la ringhiera in vetro)
+    for xt in (206, 244, 282):
+        yt = quota_p(xt)
+        sedia(terrazza, xt - 9.5, yt - 4.6, yt, -1)
+        sedia(terrazza, xt + 9.5, yt - 4.6, yt, 1)
+        tavolino(terrazza, xt, yt - 8.4, yt)
+    # ringhiera: corrimano morbido, montanti sottili, vetro appena accennato
+    corr = bezier((179, 80.5), (212, 78.6), (256, 77.8), (304, 77.6), 30)
+    terrazza.tratto(corr, .6, .25)
+    x = 181
+    while x < 304:
+        yc = 80.5 - (x - 179) * .023
+        terrazza.tratto([(x, yc), (x + .05, quota_p(x))], .32, .2)
+        x += 9.2
+    for x in range(184, 300, 23):                                           # riflessi sul vetro
+        yc = 80.5 - (x - 179) * .023
+        terrazza.tratto([(x + 2, yc + 9.5), (x + 5, yc + 2)], .18, .04)
+        terrazza.tratto([(x + 3.4, yc + 9.5), (x + 6.4, yc + 2)], .18, .04)
+
+    # ---------- BOUGANVILLE che ricade dal bordo della terrazza e sale sul primo palo
+    bouganville(primo, 180, 92, 168, 116, 80)
+    bouganville(primo, 186, 90, 184, 64, 40)
+
+    corpo = "".join(st.svg() for st in (cielo, mare, costa, scoglio, terrazza, primo))
+    ovale = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in vignetta()) + "Z"
+    return (f'<svg viewBox="0 0 {W} {H}" class="ill" aria-hidden="true">'
+            f'<defs><clipPath id="vignetta"><path d="{ovale}"/></clipPath></defs>'
+            f'<g stroke="none" clip-path="url(#vignetta)">{corpo}</g></svg>')
+
+
+COSTA_INCHIOSTRO = disegna_terrazza()
 
 if __name__ == "__main__":
     import sys
