@@ -56,32 +56,43 @@ def degustazione(d):
         voci = "".join(f'<li><p>{t(p["desc"] or p["nome"])}{allergeni(p["allergeni"])}</p></li>' for p in piatti)
         portate += f'<div class="portata"><h5>{nome_portata}</h5><ul>{voci}</ul></div>'
     return f"""<section class="deg">
-  <p class="deg-tipo">Degustazione</p>
   <h3>{t(d['nome'])}</h3>
-  <p class="deg-sotto">{t(d['sotto'])}</p>
   {portate}
-  <div class="deg-prezzo"><span>{d['prezzo']}</span><em>a persona</em></div>
-  <p class="deg-nota">Servito per l'intero tavolo</p>
+  <div class="deg-piede"><div class="deg-prezzo"><span>{d['prezzo']}</span><em>a persona</em></div>
+  <p class="deg-nota">Servito per<br>l'intero tavolo</p></div>
 </section>"""
 
 
 def crudo():
+    """Il crudo in tre blocchi (uno per passo), così può continuare nella colonna successiva."""
     pezzi = "".join(riga(n, prezzo(pr), al, unita) for n, _, unita, _, pr, al in CRUDO_PEZZI)
     extra = "".join(riga("+ " + n, pr, al) for n, _, pr, al in CRUDO_SALSE_EXTRA)
     incluse = " e ".join(CRUDO_SALSE_INCLUSE)
-    return f"""<p class="crudo-tit">Componi il tuo Crudo</p>
-<p class="passo"><span>1</span> Scegli i tuoi pezzi</p>
-<div class="elenco">{pezzi}</div>
-<p class="passo"><span>2</span> Abbina le salse</p>
-<p class="incluse">Incluse: {incluse.lower()}{allergeni((3,))}</p>
-<div class="elenco">{extra}</div>
-<p class="passo"><span>3</span> Brinda con le bollicine</p>
-<div class="elenco">{riga("Calice di Franciacorta", "14")}{riga("Calice di Champagne", "23")}</div>"""
+    passo1 = (f'<section class="sez apre"><h2>Il Crudo</h2><div class="riga"></div>'
+              f'<p class="crudo-tit">Componi il tuo Crudo</p>'
+              f'<p class="passo"><span>1</span> Scegli i tuoi pezzi</p><div class="elenco">{pezzi}</div></section>')
+    passo2 = (f'<div><p class="passo"><span>2</span> Abbina le salse</p>'
+              f'<p class="incluse">Incluse: {incluse.lower()}{allergeni((3,))}</p><div class="elenco">{extra}</div></div>')
+    passo3 = (f'<div class="chiude"><p class="passo"><span>3</span> Brinda con le bollicine</p>'
+              f'<div class="elenco">{riga("Calice di Franciacorta", "14")}{riga("Calice di Champagne", "23")}</div></div>')
+    return [(passo1, "Il Crudo", False), (passo2, "Il Crudo", True), (passo3, "Il Crudo", True)]
 
 
-def documento():
-    font = (QUI / "fonts.css").read_text()
-    deg = "".join(degustazione(d) for d in DEGUSTAZIONI)
+def sezione_divisibile(titolo, voci, coda=""):
+    """Sezione che può continuare nella colonna successiva, ma solo tra un piatto e l'altro."""
+    out = [(f'<section class="sez apre"><h2>{titolo}</h2><div class="riga"></div>'
+            f'<div class="elenco">{voci[0]}</div></section>', titolo, False)]
+    for v in voci[1:]:
+        out.append((f'<div class="elenco segue-voce">{v}</div>', titolo, True))
+    if coda:
+        out.append((coda, titolo, True))
+    out[-1] = (out[-1][0].replace('class="elenco segue-voce"', 'class="elenco segue-voce chiude"', 1)
+               if 'segue-voce' in out[-1][0] else f'<div class="chiude">{out[-1][0]}</div>', titolo, out[-1][2])
+    return out
+
+
+def blocchi():
+    """Le sezioni del menù, nell'ordine di lettura: (html, sezione, è_continuazione)."""
     nota_pasta = ('<p class="nota-pasta">Usiamo la pasta Benedetto Cavalieri – artigianale, trafilata al bronzo, '
                   'essiccata per 30 ore con il “Metodo delicato” dal 1918. Il lungo tempo di cottura è la misura '
                   'della sua qualità.</p>')
@@ -93,47 +104,92 @@ def documento():
     <p class="qr-em">Inquadra il codice con la fotocamera · Scan the code with your camera</p>
   </div>
 </section>"""
-    # tre colonne composte a mano per bilanciare le altezze (le colonne automatiche lasciavano buchi)
-    col1 = sezione("Degustazioni", deg, "degustazioni")
-    col2 = (sezione("Antipasti", f'<div class="elenco">{"".join(voce(p) for p in ANTIPASTI)}</div>') +
-            sezione("Primi Piatti", f'<div class="elenco">{"".join(voce(p) for p in PRIMI)}</div>{nota_pasta}') +
-            sezione("Servizio", f'<div class="elenco">{"".join(riga(a, c) for a, _, c in SERVIZIO)}</div>'))
-    col3 = (sezione("Il Crudo", crudo()) +
-            sezione("Secondi Piatti", f'<div class="elenco">{"".join(voce(p) for p in SECONDI)}</div>') +
-            sezione("Contorni", f'<div class="elenco">{"".join(riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI)}</div>') +
-            qr)
-    colonne = "".join(f'<div class="col">{c}</div>' for c in (col1, col2, col3))
+    deg = [degustazione(d) for d in DEGUSTAZIONI]
+    return ([(sezione("Degustazioni", deg[0], "degustazioni"), "Degustazioni", False)] +
+            [(d, "Degustazioni", True) for d in deg[1:]] +
+            sezione_divisibile("Antipasti", [voce(p) for p in ANTIPASTI]) +
+            crudo() +
+            sezione_divisibile("Primi Piatti", [voce(p) for p in PRIMI], nota_pasta) +
+            sezione_divisibile("Secondi Piatti", [voce(p) for p in SECONDI]) +
+            [(sezione("Contorni", f'<div class="elenco">{"".join(riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI)}</div>'), "Contorni", False),
+             (qr, "QR", False)])
+
+
+def documento(colonne):
+    """colonne: liste di blocchi, una per colonna."""
+    font = (QUI / "fonts.css").read_text()
+    def colonna(c):
+        html_c = "".join(h for h, _, _ in c)
+        if c and c[0][2] and c[0][1] != "Degustazioni":          # la sezione continua da sinistra
+            html_c = f'<p class="segue">{c[0][1]} <em>segue</em></p>' + html_c
+        return f'<div class="col">{html_c}</div>'
+    html_col = "".join(colonna(c) for c in colonne)
     bozza = "" if FINALE else '<div class="bozza">BOZZA · in giallo i punti da definire</div>'
+    servizio = "".join(f'<span>{a}<i>{c}</i></span>' for a, _, c in SERVIZIO)
     return f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Ristorante Cusin A3</title>
 <style>{font}{CSS}</style></head><body>{bozza}
 <main class="foglio">
-  <header class="testa"><h1>Ristorante Cusin</h1><div class="filo"></div><p>La Carta · Stagione 2026</p></header>
-  <div class="colonne">{colonne}</div>
-  <footer class="piede">I numeri accanto ai piatti indicano gli allergeni (Reg. UE 1169/2011): legenda e informazioni
+  <header class="testa"><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></header>
+  <div class="colonne" style="grid-template-columns: repeat({len(colonne)}, 1fr)">{html_col}</div>
+  <footer class="piede"><p class="servizio"><b>Servizio</b>{servizio}</p><p>I numeri accanto ai piatti indicano gli allergeni (Reg. UE 1169/2011): legenda e informazioni
   complete sono disponibili presso il nostro personale. Il pesce servito crudo è sottoposto ad abbattimento
-  (Reg. CE 853/2004).</footer>
+  (Reg. CE 853/2004).</p></footer>
 </main></body></html>"""
 
 
+def dividi(altezze, n, extra_inizio=()):
+    """Divide i blocchi (in ordine) in n colonne contigue riducendo al minimo la colonna più alta.
+    extra_inizio[i] = altezza aggiunta se la colonna comincia dal blocco i (la scritta "segue")."""
+    extra_inizio = extra_inizio or [0] * len(altezze)
+    from functools import lru_cache
+    pref = [0]
+    for h in altezze:
+        pref.append(pref[-1] + h)
+
+    @lru_cache(None)
+    def migliore(i, k):
+        if k == 1:
+            return pref[-1] - pref[i] + extra_inizio[i], (len(altezze),)
+        best = (float("inf"), ())
+        for j in range(i + 1, len(altezze) - k + 2):
+            resto, tagli = migliore(j, k - 1)
+            alto = max(pref[j] - pref[i] + extra_inizio[i], resto)
+            if alto < best[0]:
+                best = (alto, (j,) + tagli)
+        return best
+
+    alto, tagli = migliore(0, n)
+    inizio, gruppi = 0, []
+    for fine in tagli:
+        gruppi.append(list(range(inizio, fine)))
+        inizio = fine
+    return alto, gruppi
+
+
 CSS = """
-@page { size: A3; margin: 0; }
+@page { size: A3 landscape; margin: 0; }
 :root { --inchiostro:#191919; --tenue:#6d6d74; --filo:#afafb2; --filo-testa:#3d3d3b; --oro:#a88a4a; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: none; color: var(--inchiostro); font-family: 'Cormorant Garamond', Georgia, serif;
   -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; font-style: normal; }
+.segue { font-size: 10pt; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tenue); margin-bottom: 2mm; }
+.segue em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; }
+.sez.apre { margin-bottom: 0; }
+.chiude { margin-bottom: 3.5mm; }
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
-.foglio { width: 297mm; height: 420mm; padding: 14mm 14mm 11mm; position: relative; display: flex; flex-direction: column; }
+.foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
-.testa { text-align: center; margin-bottom: 5mm; }
-.testa h1 { font-size: 30pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; padding-left: .32em; }
-.testa .filo { width: 80mm; height: .53mm; background: var(--filo-testa); margin: 2.5mm auto 2mm; }
-.testa p { font-size: 15pt; font-weight: 300; letter-spacing: .14em; }
+.testa { display: flex; justify-content: center; align-items: baseline; gap: 6mm; margin-bottom: 4mm;
+  padding-bottom: 2mm; border-bottom: .53mm solid var(--filo-testa); }
+.testa h1 { font-size: 26pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; padding-left: .32em; }
+.testa .filo { width: 80mm; height: .53mm; background: var(--filo-testa); margin: 1.6mm auto 1.4mm; }
+.testa p { font-size: 13pt; font-weight: 300; letter-spacing: .14em; }
 
-.colonne { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 9mm; }
-.col { min-height: 0; display: flex; flex-direction: column; justify-content: space-between; }
-.col + .col { border-left: .3mm solid #d6d6da; margin-left: -4.5mm; padding-left: 4.5mm; }
-.sez { break-inside: avoid-column; margin-bottom: 4.5mm; }
+.colonne { flex: 1; min-height: 0; display: grid; column-gap: 8mm; }
+.col { min-height: 0; display: flex; flex-direction: column; }
+.col + .col { border-left: .3mm solid #d6d6da; margin-left: -4mm; padding-left: 4mm; }
+.sez { margin-bottom: 3.5mm; }
 .sez.degustazioni { break-inside: auto; }
 .sez h2 { font-size: 15pt; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; }
 .sez .riga { height: .4mm; background: var(--filo-testa); margin: 1.2mm 0 3mm; width: 100%; }
@@ -143,7 +199,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .elenco.due { display: grid; grid-template-columns: 1fr 1fr; column-gap: 4mm; }
 .elenco.due h4 { font-size: 11pt; }
 .v { display: grid; grid-template-columns: 1fr 12mm; break-inside: avoid; }
-.v .tx { padding: 0 3mm 1.8mm 0; }
+.v .tx { padding: 0 3mm 1.5mm 0; }
 .v .pr { border-left: .45mm solid var(--filo); padding-left: 2.6mm; font-size: 12pt; font-weight: 700; padding-top: .4mm; }
 .v.corta .tx { padding-bottom: .5mm; }
 .v h4 { font-size: 12pt; font-weight: 700; line-height: 1.2; }
@@ -174,11 +230,12 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .portata li { margin-bottom: .8mm; }
 .portata h4 { font-size: 11.5pt; font-weight: 700; line-height: 1.15; }
 .portata p { font-size: 11pt; line-height: 1.2; }
-.deg-prezzo { display: inline-flex; align-items: center; gap: 2.4mm; margin-top: 1mm; padding: 0 5mm;
+.deg-prezzo { display: inline-flex; align-items: center; gap: 2.4mm; padding: 0 5mm;
   border-left: .45mm solid var(--filo); border-right: .45mm solid var(--filo); }
 .deg-prezzo span { font-size: 19pt; font-weight: 600; }
 .deg-prezzo em { font-size: 10pt; color: var(--tenue); }
-.deg-nota { font-size: 10.5pt; font-weight: 600; margin-top: 1.2mm; }
+.deg-piede { display: flex; justify-content: center; align-items: center; gap: 4mm; margin-top: 1mm; }
+.deg-nota { font-size: 10.5pt; font-weight: 600; text-align: left; line-height: 1.15; }
 
 /* crudo */
 .crudo-tit { font-family: 'Caveat', cursive; font-weight: 600; font-size: 21pt; color: var(--oro); line-height: 1; margin-bottom: 1.6mm; }
@@ -195,41 +252,61 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .qr-testo .qr-it { font-family: 'Caveat', cursive; font-weight: 600; font-size: 17pt; color: var(--oro); line-height: 1; margin-bottom: 1mm; }
 .qr-testo .qr-em { font-style: italic; color: var(--tenue); font-size: 10pt; margin-top: 1mm; }
 
-.piede { margin-top: 4mm; padding-top: 2.4mm; border-top: .3mm solid #d6d6da; font-size: 9pt; color: var(--tenue);
+.piede p { white-space: nowrap; font-size: 8.5pt; }
+.piede .servizio { font-size: 12pt; color: var(--inchiostro); margin-bottom: 1.4mm; }
+.servizio b { letter-spacing: .24em; text-transform: uppercase; font-size: 11pt; margin-right: 5mm; }
+.servizio span { margin-right: 9mm; }
+.servizio i { font-style: normal; font-weight: 700; border-left: .45mm solid var(--filo); padding-left: 2.4mm; margin-left: 2.4mm; }
+.piede { margin-top: 2.5mm; padding-top: 1.6mm; border-top: .3mm solid #d6d6da; font-size: 9pt; color: var(--tenue);
   text-align: center; line-height: 1.3; }
 """
 
 
-def main():
+MISURA_JS = """() => {
+    const MM = 96 / 25.4, col = document.querySelector('.col');
+    const disponibile = document.querySelector('.colonne').getBoundingClientRect().height / MM;
+    const altezze = [...col.children].map(e => {
+        const st = getComputedStyle(e);
+        return (e.getBoundingClientRect().height + parseFloat(st.marginTop) + parseFloat(st.marginBottom)) / MM;
+    });
+    return {altezze, disponibile};
+}"""
+
+
+def main(n_colonne=4):
     nome = "Menu_RistoranteCusin_2026_A3" + ("" if FINALE else "_BOZZA")
     f_html = QUI / f"{nome}.html"
-    f_html.write_text(documento(), encoding="utf-8")
+    tutti = blocchi()
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome")
         pg = browser.new_page()
+        # 1) misura ogni blocco alla larghezza di una colonna
+        prova = [tutti] + [[] for _ in range(n_colonne - 1)]
+        segue_mm = 7                                                        # la scritta "segue" in cima alla colonna
+        extra = [segue_mm if cont and sez != "Degustazioni" else 0 for _, sez, cont in tutti]
+        f_html.write_text(documento(prova), encoding="utf-8")
         pg.goto(f_html.resolve().as_uri())
         pg.wait_for_load_state("networkidle")
         pg.evaluate("document.fonts.ready")
-        # controllo: tutto deve stare nelle tre colonne, senza una quarta colonna fuori dal foglio
-        esito = pg.evaluate("""() => {
-            const MM = 96 / 25.4, c = document.querySelector('.colonne').getBoundingClientRect();
-            const cols = [...document.querySelectorAll('.col')].map(col => {
-                const fine = Math.max(...[...col.children].map(e => e.getBoundingClientRect().bottom));
-                const tot = [...col.children].reduce((a, e) => a + e.getBoundingClientRect().height, 0);
-                return {altezza_mm: Math.round(tot / MM), libero_mm: Math.round((c.bottom - fine) / MM)};
-            });
-            return {colonne: cols, fuori: cols.filter(x => x.libero_mm < 0).length};
-        }""")
-        print("  controllo A3:", esito)
-        if esito["fuori"]:
+        misure = pg.evaluate(MISURA_JS)
+        print("  altezze blocchi (mm):", [round(h) for h in misure["altezze"]], "totale", round(sum(misure["altezze"])))
+        alto, gruppi = dividi(misure["altezze"], n_colonne, extra)
+        print(f"  colonna più alta {alto:.0f} mm su {misure['disponibile']:.0f} mm disponibili")
+        if alto > misure["disponibile"]:
             raise SystemExit("STOP: il contenuto non sta nell'A3")
-        pg.pdf(path=str(QUI / f"{nome}.pdf"), format="A3", print_background=True, prefer_css_page_size=True)
-        import pymupdf
-        pagine = len(pymupdf.open(QUI / f"{nome}.pdf"))
-        if pagine != 1:
-            raise SystemExit(f"STOP: il menù A3 occupa {pagine} pagine invece di una")
-        print("creato", nome + ".pdf")
+        # 2) impagina le colonne bilanciate
+        f_html.write_text(documento([[tutti[i] for i in g] for g in gruppi]), encoding="utf-8")
+        pg.goto(f_html.resolve().as_uri())
+        pg.wait_for_load_state("networkidle")
+        pg.evaluate("document.fonts.ready")
+        pg.pdf(path=str(QUI / f"{nome}.pdf"), format="A3", landscape=True, print_background=True,
+               prefer_css_page_size=True)
         browser.close()
+    import pymupdf
+    pagine = len(pymupdf.open(QUI / f"{nome}.pdf"))
+    if pagine != 1:
+        raise SystemExit(f"STOP: il menù A3 occupa {pagine} pagine invece di una")
+    print("creato", nome + ".pdf")
 
 
 if __name__ == "__main__":
