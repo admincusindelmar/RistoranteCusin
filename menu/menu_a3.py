@@ -64,18 +64,17 @@ def degustazione(d):
 
 
 def crudo():
-    """Il crudo in tre blocchi (uno per passo), così può continuare nella colonna successiva."""
+    """Il crudo in due blocchi (uno per passo), così può continuare nella colonna successiva.
+    Nell'A3 non ci sono i calici di bollicine."""
     pezzi = "".join(riga(n, prezzo(pr), al, unita) for n, _, unita, _, pr, al in CRUDO_PEZZI)
     extra = "".join(riga("+ " + n, pr, al) for n, _, pr, al in CRUDO_SALSE_EXTRA)
     incluse = " e ".join(CRUDO_SALSE_INCLUSE)
     passo1 = (f'<section class="sez apre"><h2>Il Crudo</h2><div class="riga"></div>'
               f'<p class="crudo-tit">Componi il tuo Crudo</p>'
               f'<p class="passo"><span>1</span> Scegli i tuoi pezzi</p><div class="elenco">{pezzi}</div></section>')
-    passo2 = (f'<div><p class="passo"><span>2</span> Abbina le salse</p>'
+    passo2 = (f'<div class="chiude"><p class="passo"><span>2</span> Abbina le salse</p>'
               f'<p class="incluse">Incluse: {incluse.lower()}{allergeni((3,))}</p><div class="elenco">{extra}</div></div>')
-    passo3 = (f'<div class="chiude"><p class="passo"><span>3</span> Brinda con le bollicine</p>'
-              f'<div class="elenco">{riga("Calice di Franciacorta", "14")}{riga("Calice di Champagne", "23")}</div></div>')
-    return [(passo1, "Il Crudo", False), (passo2, "Il Crudo", True), (passo3, "Il Crudo", True)]
+    return [(passo1, "Il Crudo", False), (passo2, "Il Crudo", True)]
 
 
 def sezione_divisibile(titolo, voci, coda=""):
