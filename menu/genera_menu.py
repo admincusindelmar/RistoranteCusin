@@ -106,7 +106,7 @@ DEGUSTAZIONI = [
                        "Due cioccolatini fondenti ripieni, uno di marmellata di vino e l'altro "
                        "di crema di melone invernale, e un biscotto ai fichi",
                        "Two dark chocolates, filled with wine jam and with winter melon cream, "
-                       "and a fig biscuit", (1, 12)),
+                       "and a fig biscuit", (1, 3, 7, 12)),
             ]),
         ],
     ),
@@ -262,7 +262,7 @@ PRIMI = [
     piatto("Spaghetto Benedetto Cavalieri",
            "Alle vongole veraci, fiocchi di pomodoro e olio al lime",
            "Spaghetti with clams, tomato flakes and lime oil", (1, 14), cottura=True),
-    piatto("Spaghetto al pomodoro",
+    piatto("Spaghetto Benedetto Cavalieri al pomodoro",
            "Spaghetto con salsa di pomodoro",
            "Spaghetti with tomato sauce", (1,), prezzo=15),
     piatto("Risotto al Calasole",

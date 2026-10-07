@@ -423,7 +423,292 @@ def disegna():
             f'<g fill="{INCHIOSTRO}" stroke="none" clip-path="url(#vignetta)">{corpo_svg}</g></svg>')
 
 
-COSTA_INCHIOSTRO = disegna()
+
+# =============================================================================
+# ANTIGNANO: la baia del Cusin del Mar, dalle foto del locale
+# =============================================================================
+
+def _d(pts):
+    return "M" + " L".join(f"{x:.2f} {y:.2f}" for x, y in pts) + "Z"
+
+
+class Strato:
+    """Un livello del disegno: sagoma bianca (copre ciò che sta dietro) + inchiostro."""
+    def __init__(self):
+        self.bianco, self.inchiostro = [], []
+
+    def copri(self, pts):
+        self.bianco.append(_d(pts))
+
+    def tratto(self, pts, larg=.7, punta=.12):
+        self.inchiostro.append(penna(pts, larg, punta))
+
+    def retta(self, x0, y0, x1, y1, larg=.5):
+        self.inchiostro.append(penna(linea_mossa(x0, y0, x1, y1, 6, .05), larg, .18))
+
+    def ombra(self, forma, angolo, passo, larg=.26, accorcia=.2, salto=0.0):
+        if not forma.is_empty:
+            self.inchiostro.append(tratteggio(forma, angolo, passo, larg, accorcia, salto))
+
+    def svg(self):
+        b = "".join(self.bianco)
+        return ((f'<path d="{b}" fill="#fff"/>' if b else "") +
+                f'<path d="{"".join(self.inchiostro)}" fill="{INCHIOSTRO}"/>')
+
+
+def ciuffo(cx, cy, r, lobi=None, schiaccia=.75):
+    """Sagoma di un cespuglio di macchia: contorno a lobi."""
+    lobi = lobi or rnd.randint(5, 8)
+    pts = []
+    for i in range(lobi * 10):
+        a = 2 * math.pi * i / (lobi * 10)
+        rr = r * (1 + .16 * abs(math.sin(a * lobi / 2 + rnd.uniform(0, .3))))
+        pts.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr * schiaccia))
+    return pts
+
+
+def macchia(st, cx, cy, r):
+    pts = ciuffo(cx, cy, r)
+    st.copri(pts)
+    poly = Polygon(pts).buffer(0)
+    # contorno a volute solo nella metà alta, ombra fitta in basso
+    for i in range(0, len(pts) - 4, 5):
+        arco = pts[i:i + 7]
+        if sum(q[1] for q in arco) / len(arco) < cy + r * .2:
+            st.tratto(arco, .55, .1)
+    basso = poly.intersection(rett(cx - 2 * r, cy - r * .1, cx + 2 * r, cy + 2 * r))
+    st.ombra(basso, 75, .7, .26, .15)
+    st.ombra(basso, 20, 1.1, .22, .25)
+    for k in range(int(r * 1.5)):
+        x = cx + rnd.uniform(-.6, .6) * r
+        y = cy + rnd.uniform(-.6, .1) * r * .75
+        if poly.contains(Polygon([(x - 1, y), (x + 1, y), (x, y - .8)])):
+            st.tratto(bezier((x - 1.1, y + .4), (x - .4, y - .6), (x + .4, y - .6), (x + 1.1, y + .4), 5), .3, .05)
+
+
+def ombrellone(st, x, y, w=3.2):
+    """Piccolo ombrellone da spiaggia a spicchi (come quelli del pontile)."""
+    cupola = bezier((x - w / 2, y), (x - w / 2.4, y - w * .42), (x + w / 2.4, y - w * .42), (x + w / 2, y), 8)
+    st.copri(cupola + [(x + w / 2, y + .2), (x - w / 2, y + .2)])
+    st.tratto(cupola, .4, .1)
+    st.retta(x - w / 2, y, x + w / 2, y, .3)
+    st.ombra(Polygon(cupola[:5] + [(x, y)]), 90, .45, .2, .05)       # spicchio in ombra
+    st.retta(x, y, x, y + w * .45, .3)
+
+
+def barca(st, x, y, l=7):
+    scafo = [(x - l / 2, y), (x + l / 2, y), (x + l * .38, y + l * .16), (x - l * .42, y + l * .16)]
+    st.copri(scafo)
+    st.tratto(scafo + [scafo[0]], .5, .15)
+    st.retta(x - l * .15, y, x - l * .15, y - l * .14, .35)
+    st.retta(x - l * .15, y - l * .14, x + l * .12, y - l * .14, .35)
+    st.retta(x + l * .12, y - l * .14, x + l * .12, y, .35)
+    for k in range(3):
+        st.retta(x - l * .45 + k * 1.2, y + l * .24 + k * .9, x + l * .25 - k * 1.1, y + l * .24 + k * .9, .22)
+
+
+def disegna_antignano():
+    W, H, ORIZ = 300, 150, 66
+    cielo, mare, sfondo, collina, cotto, bianco, pergola, riva, primo = (Strato() for _ in range(9))
+
+    # ---------- CIELO
+    for (x, y, s) in ((60, 30, 1.0), (72, 36, .75), (118, 22, .6)):
+        for verso in (-1, 1):
+            ala = bezier((x, y + .6 * s), (x + verso * 1.5 * s, y - 2 * s), (x + verso * 4 * s, y - 2.6 * s),
+                         (x + verso * 6.2 * s, y + 1 * s), 10)
+            cielo.tratto(ala, .7 * s + .2, .08)
+    for (x0, y0, l) in ((14, 40, 40), (28, 44, 22), (150, 30, 34), (166, 34, 18)):
+        cielo.tratto(linea_mossa(x0, y0, x0 + l, y0, 10, .3), .3, .05)
+
+    # ---------- MARE (fa da fondo a tutto ciò che sta sotto l'orizzonte)
+    for x0, x1 in ((2, 40), (46, 112)):
+        mare.tratto(linea_mossa(x0, ORIZ, x1, ORIZ, 10, .05), .45, .06)
+    y = ORIZ + 2
+    while y < 149.5:
+        prof = (y - ORIZ) / (150 - ORIZ)
+        x = rnd.uniform(-4, 10)
+        while x < 300:
+            lun = rnd.uniform(2.5, 8) * (0.5 + prof * 1.4)
+            vuoto = rnd.uniform(7, 20) * (1.3 - prof * .5)
+            d = dentro(x + lun / 2, y)
+            if d < .8 or rnd.random() > (d - .8) * 5:
+                mare.tratto(linea_mossa(x, y, x + lun, y + rnd.uniform(-.12, .12), 5, .2),
+                            (.2 + prof * .36) * (1 - max(0, d - .75) * 1.6), .04)
+            x += lun + vuoto
+        y += (1.5 + prof * 3.0) * rnd.uniform(.85, 1.15)
+
+    # diga di scogli a sinistra (in diagonale verso il largo)
+    for i in range(15):
+        u = i / 14
+        cx, cy = 6 + u * 62, 104 - u * 18 + rnd.uniform(-.6, .6)
+        r = 3.4 - u * 1.3 + rnd.uniform(-.4, .4)
+        sasso = [(cx + math.cos(a) * r * rnd.uniform(.85, 1.1), cy + math.sin(a) * r * .62 * rnd.uniform(.85, 1.1))
+                 for a in [2 * math.pi * k / 9 for k in range(9)]]
+        mare.copri(sasso)
+        mare.tratto(sasso[5:] + sasso[:2], .55, .12)
+        mare.ombra(Polygon(sasso).buffer(0).intersection(rett(cx - r, cy, cx + r, cy + r)), 60, .55, .22, .1)
+    for (x, y, l) in ((88, 104, 7.5), (104, 112, 6.5), (120, 96, 6), (76, 94, 5.5)):
+        barca(mare, x, y, l)
+
+    # ---------- PROMONTORIO CON LE CASE sullo sfondo
+    prom = catena(bezier((108, ORIZ), (120, 62.5), (136, 60), (150, 58.8)),
+                  bezier((150, 58.8), (164, 57.6), (180, 58.6), (196, 63)))
+    sfondo.copri(prom + [(196, ORIZ + .5), (108, ORIZ + .5)])
+    sfondo.tratto(prom, .6, .1)
+    sfondo.ombra(Polygon(prom + [(196, ORIZ)]), 0, 1.0, .2, .35)
+    for (x, w, h) in ((140, 4, 2.6), (146, 3, 2), (157, 5, 3), (164, 3.5, 2.4), (171, 4.5, 2.8)):
+        yb = 59.6 - (x - 140) * .02
+        casa = [(x, yb), (x, yb - h), (x + w, yb - h), (x + w, yb)]
+        sfondo.copri(casa)
+        sfondo.tratto(casa, .35, .1)
+        sfondo.retta(x + w * .3, yb - h * .55, x + w * .5, yb - h * .55, .25)
+
+    # ---------- COLLINA DI MACCHIA a destra: il pendio verde che scende alla spiaggia
+    profilo = catena(bezier((214, 70), (234, 62), (254, 55), (270, 51)),
+                     bezier((270, 51), (282, 48.5), (292, 47), (300, 46.5)))
+    pendio = profilo + [(300, 128), (236, 131), (224, 112), (214, 72)]
+    collina.copri(pendio)
+    collina.tratto(profilo, .7, .15)
+    punti = []
+    for gy in range(50, 126, 7):
+        for gx in range(242, 306, 8):
+            x, y = gx + rnd.uniform(-2.5, 2.5) + (gy % 12) * .3, gy + rnd.uniform(-2, 2)
+            if Polygon(pendio).contains(Polygon([(x - 1, y), (x + 1, y), (x, y - 1)])):
+                punti.append((x, y))
+    for (x, y) in sorted(punti, key=lambda q: q[1]):
+        macchia(collina, x, y, rnd.uniform(3, 4.6))
+    # ---------- EDIFICIO COLOR TERRACOTTA a gradoni (dietro)
+    gradoni = [(232, 72), (232, 64), (238, 64), (238, 57), (246, 57), (246, 50), (290, 50), (290, 72)]
+    cotto.copri(gradoni)
+    cotto.tratto(gradoni + [gradoni[0]], .65, .2)
+    forma = Polygon(gradoni)
+    finestre = []
+    for (y0, xs) in ((52, range(252, 288, 7)), (59, range(242, 288, 8)), (66, range(236, 288, 8))):
+        for x in xs:
+            finestre.append(rett(x, y0, x + 3.4, y0 + 2.6))
+    tono = forma
+    for f in finestre:
+        tono = tono.difference(f)
+    cotto.ombra(tono, 58, .7, .24, .08)                                  # tono scuro del cotto
+    for f in finestre:
+        cotto.tratto(list(f.exterior.coords), .3, .1)
+    for (x0, y0, x1) in ((230.5, 64, 291), (236.5, 57, 291), (244.5, 50, 291.5)):  # solette sporgenti
+        cotto.copri([(x0, y0 - .9), (x1, y0 - .9), (x1, y0 + .4), (x0, y0 + .4)])
+        cotto.retta(x0, y0 - .9, x1, y0 - .9, .5)
+        cotto.retta(x0, y0 + .4, x1, y0 + .4, .5)
+    cotto.retta(278, 50, 278, 46.5, .3)                                   # antenna
+
+    # ---------- EDIFICIO BIANCO con balconi e VERANDATA VETRATA in cima
+    gx0, gx1, terra, cima = 194, 258, 102, 73
+    piani = [cima + i * (terra - cima) / 4 for i in range(5)]
+    sagoma = [(180, terra), (180, 80), (gx0, 80), (gx0, cima), (gx1, cima), (gx1, terra)]
+    bianco.copri(sagoma)
+    bianco.tratto(sagoma + [sagoma[0]], .7, .2)
+    for i, y in enumerate(piani[1:-1] + [terra]):
+        x0 = 180 if y > 80 else gx0
+        bianco.copri([(x0 - .8, y - 1.1), (gx1 + .8, y - 1.1), (gx1 + .8, y + .2), (x0 - .8, y + .2)])
+        bianco.retta(x0 - .8, y - 1.1, gx1 + .8, y - 1.1, .5)              # soletta del balcone
+        bianco.retta(x0 - .8, y + .2, gx1 + .8, y + .2, .35)
+        bianco.ombra(rett(x0, y + .3, gx1, y + 1.5), 0, .4, .2, .05)        # ombra sotto la soletta
+        x = x0 + .6
+        while x < gx1:                                                       # parapetti in vetro
+            bianco.retta(x, y - 3.6, x, y - 1.2, .18)
+            x += 1.7
+        bianco.retta(x0, y - 3.6, gx1, y - 3.6, .3)
+    for y0, y1 in zip(piani[:-1], piani[1:]):                               # finestre tra i piani
+        x0 = 182 if y0 >= 80 else gx0 + 2
+        for x in [v for v in range(int(x0), gx1 - 4, 7)]:
+            bianco.tratto([(x, y0 + 1.6), (x + 3.4, y0 + 1.6), (x + 3.4, y1 - 4.2), (x, y1 - 4.2), (x, y0 + 1.6)], .25, .08)
+    bianco.ombra(rett(180, 80, gx0, terra), 90, 1.4, .2, .3)               # corpo arretrato più in ombra
+    # verandata vetrata sul tetto (la terrazza del ristorante)
+    vx0, vx1, vtop = 224, 258, 65
+    bianco.copri([(vx0, cima), (vx0, vtop), (vx1, vtop), (vx1, cima)])
+    bianco.retta(vx0 - .8, vtop, vx1 + .8, vtop, .7)
+    bianco.retta(vx0 - .8, vtop + 1, vx1 + .8, vtop + 1, .4)
+    x = vx0
+    while x <= vx1 + .1:
+        bianco.retta(x, vtop + 1, x, cima, .3 if vx0 < x < vx1 else .5)
+        x += (vx1 - vx0) / 8
+    bianco.retta(vx0, cima - 3, vx1, cima - 3, .25)
+    for i in range(0, 8, 2):                                                # riflessi sui vetri
+        xr = vx0 + i * (vx1 - vx0) / 8
+        bianco.tratto([(xr + .8, cima - .6), (xr + 2.6, vtop + 2.2)], .2, .05)
+        bianco.tratto([(xr + 1.8, cima - .6), (xr + 3.6, vtop + 2.2)], .2, .05)
+    x = gx0 + .5                                                            # parapetto della terrazza
+    while x < vx0:
+        bianco.retta(x, cima - 2.6, x, cima, .18)
+        x += 1.7
+    bianco.retta(gx0, cima - 2.6, vx0, cima - 2.6, .35)
+    for xo in (204, 211):                                                   # ombrelloni chiusi in terrazza
+        bianco.tratto([(xo, cima), (xo, cima - 6.5)], .3, .1)
+        bianco.tratto([(xo - .9, cima - 2.2), (xo, cima - 6.2), (xo + .9, cima - 2.2)], .45, .1)
+
+    # ---------- PERGOLA con tende bianche alla base dell'edificio
+    px0, px1, ptop = 190, 252, 98
+    pergola.copri([(px0, ptop - 1.6), (px1, ptop - 1.6), (px1, terra + 1.5), (px0, terra + 1.5)])
+    for i in range(10):
+        x = px0 + i * (px1 - px0) / 10
+        pergola.tratto([(x, ptop), (x + (px1 - px0) / 20, ptop - 1.5), (x + (px1 - px0) / 10, ptop)], .45, .15)
+    pergola.retta(px0, ptop, px1, ptop, .4)
+    x = px0
+    while x <= px1 + .1:
+        pergola.retta(x, ptop, x, terra + 1.5, .35)
+        x += (px1 - px0) / 5
+    for x in range(px0 + 3, px1 - 3, 6):                                    # tavolini sotto la pergola
+        pergola.retta(x, terra - 1, x + 2.6, terra - 1, .3)
+    pergola.ombra(rett(px0, ptop + .3, px1, ptop + 2.2), 0, .5, .2, .1)
+
+    # ---------- SPIAGGIA di ciottoli e PONTILE con gli ombrelloni
+    sp = [(146, 106), (176, 103.5), (194, 103.5), (240, 104.5), (252, 108), (251, 124), (214, 128),
+          (182, 125), (158, 117)]
+    riva.copri(sp)
+    riva.tratto(sp[4:] + sp[:1], .55, .1)                                    # bordo dell'acqua
+    spiaggia = Polygon(sp)
+    for k in range(260):                                                    # ciottoli
+        x, y = rnd.uniform(146, 252), rnd.uniform(103.5, 128)
+        if spiaggia.contains(Polygon([(x - .4, y), (x + .4, y), (x, y + .3)])):
+            r = rnd.uniform(.25, .55)
+            riva.tratto([(x + math.cos(a) * r, y + math.sin(a) * r * .7) for a in
+                         [2 * math.pi * j / 6 for j in range(7)]], .18, .1)
+    for (x, y) in ((150, 112), (160, 120), (176, 126.5), (198, 129.5), (226, 128)):  # schiuma
+        riva.tratto(bezier((x - 3, y + 1), (x - 1, y - .2), (x + 1, y - .2), (x + 3, y + 1), 8), .3, .05)
+    pontile = [(96, 96.5), (150, 99), (154, 104.5), (100, 101.6)]
+    riva.copri(pontile)
+    riva.tratto(pontile + [pontile[0]], .6, .15)
+    riva.ombra(Polygon([(100, 101.6), (154, 104.5), (154, 105.8), (100, 102.9)]), 0, .45, .22, .05)
+    riva.retta(100, 101.6, 100, 103, .4)
+    riva.retta(154, 104.5, 154, 105.9, .4)
+    for fila, (dy, passo) in enumerate(((0, 5.2), (2.4, 5.2))):            # due file di ombrelloni
+        x = 101 + fila * 2.6
+        while x < 150:
+            yb = 97.8 + (x - 96) * .046 + dy
+            ombrellone(riva, x, yb, 3.4)
+            x += passo
+    molo = [(62, 92.5), (96, 96.5), (96, 97.6), (62, 93.6)]                 # passerella per le barche
+    riva.copri(molo)
+    riva.tratto(molo + [molo[0]], .45, .1)
+    for x in range(64, 96, 4):
+        riva.retta(x, 93 + (x - 62) * .118, x, 95 + (x - 62) * .118, .25)
+
+    # ---------- PRIMO PIANO: macchia che incornicia la vista (come nelle foto)
+    for (cx, cy, r) in ((236, 130, 6.5), (250, 125, 7.5), (264, 120, 8), (279, 114, 8), (293, 107, 7.5),
+                        (272, 128, 6), (26, 124, 6.5), (14, 118, 6), (40, 128, 5.5)):
+        macchia(primo, cx, cy, r)
+    for (x, y) in ((226, 126), (246, 116), (32, 116), (6, 110)):           # fili d'erba
+        for k in range(4):
+            primo.tratto(bezier((x + k * 1.4, y + 6), (x + k * 1.4 + .3, y + 3), (x + k * 1.6 - .4, y + 1),
+                                (x + k * 1.8 - 1.2, y - 1 - k * .6), 8), .35, .05)
+
+    sposta = lambda st: f'<g transform="translate(-18 0)">{st.svg()}</g>'
+    corpo = (cielo.svg() + mare.svg() + sfondo.svg() + collina.svg() +
+             "".join(sposta(st) for st in (cotto, bianco, pergola, riva)) + primo.svg())
+    ovale = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in vignetta()) + "Z"
+    return (f'<svg viewBox="0 0 {W} {H}" class="ill" aria-hidden="true">'
+            f'<defs><clipPath id="vignetta"><path d="{ovale}"/></clipPath></defs>'
+            f'<g stroke="none" clip-path="url(#vignetta)">{corpo}</g></svg>')
+
+
+COSTA_INCHIOSTRO = disegna_antignano()
 
 if __name__ == "__main__":
     import sys
