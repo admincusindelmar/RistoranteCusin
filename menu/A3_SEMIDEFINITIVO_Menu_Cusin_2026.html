@@ -122,7 +122,10 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .fascia-deg .portata h5 { margin: .5mm 0 0; font-size: 8.5pt; letter-spacing: .18em; }
 .fascia-deg .portata li { font-size: 11pt; line-height: 1.2; margin-bottom: .6mm; }
 .nota-deg { text-align: center; font-size: 10.5pt; font-weight: 600; margin-top: 1mm; }
-.testa .nome { display: flex; align-items: baseline; gap: 6mm; }
+.testa .nome { display: flex; align-items: center; gap: 6mm; text-align: center; }
+.testa .nome p { margin-top: .6mm; }
+.logo { width: 18mm; height: 18mm; border: .4mm dashed var(--tenue); display: flex; align-items: center; justify-content: center;
+  font-size: 8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); }
 .testa .qr { justify-self: end; margin: 0; padding: 0; border: 0; gap: 3mm; }
 .testa .qr-box { width: 21mm; height: 21mm; font-size: 7.5pt; }
 .testa .qr-testo p { font-size: 9.5pt; line-height: 1.2; }
@@ -132,7 +135,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 .foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
-.testa { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 4mm;
+.testa { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 8mm; align-items: center; margin-bottom: 4mm;
   padding-bottom: 2mm; border-bottom: .53mm solid var(--filo-testa); }
 .testa h1 { font-size: 26pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; padding-left: .32em; }
 .testa .filo { width: 80mm; height: .53mm; background: var(--filo-testa); margin: 1.6mm auto 1.4mm; }
@@ -213,7 +216,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
   text-align: center; line-height: 1.3; }
 </style></head><body><div class="bozza">BOZZA · in giallo i punti da definire</div>
 <main class="foglio">
-  <header class="testa"><div></div><div class="nome"><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div><section class="qr">
+  <header class="testa"><div></div><div class="nome"><div class="logo"><span>logo</span></div><div><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div></div><section class="qr">
   <div class="qr-box"><span>spazio per il<br>QR code</span></div>
   <div class="qr-testo">
     <p class="qr-it">Il menù nella tua lingua</p>
