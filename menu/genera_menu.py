@@ -49,10 +49,18 @@ ALLERGENI = {
 }
 
 
-def piatto(nome, desc, en, allergeni=(), prezzo=None, chef=False, nota=None, cottura=False, extra=()):
-    """extra = salse o aggiunte a pagamento: [(nome, en, prezzo, allergeni)]"""
-    return dict(nome=nome, desc=desc, en=en, allergeni=allergeni,
-                prezzo=prezzo, chef=chef, nota=nota, cottura=cottura, extra=extra)
+def piatto(nome, desc, en, allergeni=(), prezzo=None, chef=False, nota=None, cottura=False, extra=(),
+           etichetta=None):
+    """extra = salse o aggiunte a pagamento: [(nome, en, prezzo, allergeni)]
+    etichetta = (italiano, inglese): segnalazione del piatto diversa dal consiglio dello Chef"""
+    return dict(nome=nome, desc=desc, en=en, allergeni=allergeni, prezzo=prezzo, chef=chef,
+                nota=nota, cottura=cottura, extra=extra, etichetta=etichetta)
+
+
+NOVITA = ("Novità di stagione", "New this season")
+CLASSICO = ("Un classico della casa", "A house classic")
+FAMIGLIA = ("La ricetta di famiglia", "Family recipe")
+TRADIZIONE = ("Tradizione toscana", "Tuscan tradition")
 
 
 # ---------------------------------------------------------------------------
@@ -67,24 +75,26 @@ DEGUSTAZIONI = [
         prezzo=65,
         portate=[
             ("Antipasti", "Starters", [
-                piatto("Scampo e pera",
-                       "Scampo con brunoise di pera, sedano croccante e colatura di fico",
-                       "Langoustine, pear brunoise, crunchy celery and fig glaze", (2, 9)),
-                piatto("Sfera di gambero",
-                       "Sfera di gambero ripiena di crema di sedano rapa al timo limonato",
-                       "Prawn sphere filled with lemon-thyme celeriac cream", (2, 9)),
+                piatto("Nido con uovo livornese",
+                       "Nido con uovo livornese, gambero rosso, crema di fichi e olio alla liquirizia",
+                       "Nest with Livorno-style egg, red prawn, fig cream and liquorice oil", (2, 3)),
+                piatto("Sfera di mazzancolle",
+                       "Sfera di mazzancolle ripiena di battuto di sedano rapa, "
+                       "su crema di sedano rapa, passion fruit e lime",
+                       "King prawn sphere filled with chopped celeriac, "
+                       "on celeriac cream with passion fruit and lime", (2, 9)),
                 piatto("Seppia e cipolla dorata",
                        "Seppia su crema di cipolla dorata dolce",
                        "Cuttlefish on sweet golden onion cream", (14,)),
             ]),
             ("Primi", "First courses", [
+                piatto("Gnocchi al Calasole",
+                       "Gnocchi di riso con calamari, totani, seppia e tartufo",
+                       "Rice gnocchi with squid, flying squid, cuttlefish and truffle", (14,)),
                 piatto("Paccheri ripieni",
                        "Paccheri ripieni di ricotta senza lattosio, mazzancolle e colatura di cachi",
                        "Paccheri filled with lactose-free ricotta, king prawns and persimmon glaze",
                        (1, 2, 7)),
-                piatto("Gnocchi al Calasole",
-                       "Gnocchi di riso con calamari, totani, seppia e tartufo",
-                       "Rice gnocchi with squid, flying squid, cuttlefish and truffle", (14,)),
             ]),
             ("Secondo", "Main course", [
                 piatto("Dentice e cardo",
@@ -92,9 +102,11 @@ DEGUSTAZIONI = [
                        "Dentex fillet, cardoon carpaccio with white wine and coffee oil", (4, 12)),
             ]),
             ("Pre-dessert", "Pre-dessert", [
-                piatto("Cioccolatino al vino",
-                       "Cioccolatino fondente ripieno di marmellata di vino di nostra produzione",
-                       "Dark chocolate filled with our house-made wine jam", (12,)),
+                piatto("La nostra piccola pasticceria",
+                       "Due cioccolatini fondenti ripieni, uno di marmellata di vino e l'altro "
+                       "di crema di melone invernale, e un biscotto ai fichi",
+                       "Two dark chocolates, filled with wine jam and with winter melon cream, "
+                       "and a fig biscuit", (1, 12)),
             ]),
         ],
     ),
@@ -111,14 +123,14 @@ DEGUSTAZIONI = [
                        "Cialda di ceci, lattuga di mare, oliva taggiasca e scorza di limone",
                        "Chickpea wafer, sea lettuce, Taggiasca olive and lemon zest", ()),
                 piatto("Sfera di verza",
-                       "Sfera di cavolo verza con robiola e pera, senape e olio al finocchio di mare",
-                       "Savoy cabbage sphere with robiola and pear, mustard and sea fennel oil",
+                       "Sfera di cavolo verza con robiola e pera, senape e olio al wakame",
+                       "Savoy cabbage sphere with robiola and pear, mustard and wakame oil",
                        (7, 10)),
             ]),
             ("Primo", "First course", [
-                piatto("Raviolo di zucca",
-                       "Raviolo di zucca e burro chiarificato alla salicornia",
-                       "Pumpkin raviolo, clarified butter with samphire", (1, 3, 7)),
+                piatto("Raviolo e crema di zucca",
+                       "Raviolo [[ripieno di…]] adagiato su crema di zucca, burro chiarificato alla salicornia",
+                       "Raviolo [[filled with…]] on pumpkin cream, clarified butter with samphire", (1, 3, 7)),
             ]),
             ("Secondo", "Main course", [
                 piatto("Cacciucco vegetale",
@@ -138,26 +150,26 @@ DEGUSTAZIONI = [
         prezzo=45,
         portate=[
             ("Antipasti", "Starters", [
-                piatto("Butterfly di baccalà e pecorino",
+                piatto("Butterfly di baccalà, pecorino e Pepaya",
                        "Baccalà arrostito su crema di pecorino e Pepaya, il nostro pepe di semi di papaya",
                        "Roasted salt cod butterfly on pecorino cream with Pepaya, our papaya-seed pepper",
                        (4, 7)),
                 piatto("Calamaro e tarassaco",
-                       "Calamaro cotto a bassa temperatura su erbette di tarassaco in salsa di acciughe",
-                       "Slow-cooked squid on dandelion greens with anchovy sauce", (4, 14)),
+                       "Calamaro cotto a bassa temperatura su erbette di tarassaco, salsa di acciughe e aceto al mirtillo",
+                       "Slow-cooked squid on dandelion greens, anchovy sauce and blueberry vinegar", (4, 12, 14)),
             ]),
             ("Primo", "First course", [
                 piatto("Tagliolini al pepe e limone",
-                       "Tagliolini artigianali al pepe e limone, direttamente nell'impasto, con mazzancolle e funghi porcini",
-                       "Handmade tagliolini with pepper and lemon kneaded into the dough, king prawns and porcini mushrooms",
+                       "Tagliolini artigianali al pepe e limone con limone candito, mazzancolle e funghi porcini",
+                       "Handmade pepper and lemon tagliolini with candied lemon, king prawns and porcini mushrooms",
                        (1, 2, 3)),
             ]),
             ("Secondo", "Main course", [
                 piatto("Spigola in crosta",
                        "Spigola con carapace di patata americana e pomodorini confit, "
-                       "sale alla maggiorana e olio al ginepro",
+                       "sale alla maggiorana e olio al ribes",
                        "Sea bass in a sweet-potato crust with confit cherry tomatoes, "
-                       "marjoram salt and juniper oil", (4,)),
+                       "marjoram salt and redcurrant oil", (4,)),
             ]),
         ],
     ),
@@ -205,20 +217,21 @@ ULTIMO = dict(
 # ---------------------------------------------------------------------------
 ANTIPASTI = [
     piatto("Mare caldo",
-           "Mare caldo con cristalli di pomodoro, crema alle ostriche, citronette di limone e olio EVO",
-           "Warm seafood with tomato crystals, oyster cream, lemon citronette and extra virgin olive oil",
+           "Mare caldo con crema alle ostriche, citronette di limone e olio EVO",
+           "Warm seafood with oyster cream, lemon citronette and extra virgin olive oil",
            (2, 4, 14)),
     piatto("Cappuccino di mazzancolle",
            "Mazzancolle con crema di lenticchie e spuma di erborinato",
            "King prawns with lentil cream and blue cheese foam",
            (2, 7), chef=True),
     piatto("Sfera di verza",
-           "Sfera di cavolo verza con robiola e pera, senape e olio al finocchio di mare",
-           "Savoy cabbage sphere with robiola and pear, mustard and sea fennel oil",
+           "Sfera di cavolo verza con robiola e pera, senape e olio al wakame",
+           "Savoy cabbage sphere with robiola and pear, mustard and wakame oil",
            (7, 10), nota="Vegetariano · Vegetarian"),
     piatto("Calamaro e tarassaco",
-           "Calamaro cotto a bassa temperatura su erbette di tarassaco in salsa di acciughe",
-           "Slow-cooked squid on dandelion greens with anchovy sauce", (4, 14)),
+           "Calamaro cotto a bassa temperatura su erbette di tarassaco, salsa di acciughe e aceto al mirtillo",
+           "Slow-cooked squid on dandelion greens, anchovy sauce and blueberry vinegar", (4, 12, 14),
+           etichetta=NOVITA),
 ]
 
 # Componi il tuo Crudo: (nome, en, unità, unità_en, prezzo, allergeni)
@@ -226,15 +239,15 @@ CRUDO_PEZZI = [
     ("Ostrica del Doge", "Doge oyster", "al pezzo", "each", "8,50", (14,)),
     ("Scampo crudo", "Raw langoustine", "al pezzo", "each", "7,20", (2,)),
     ("Gambero rosso crudo", "Raw red prawn", "al pezzo", "each", "7,40", (2,)),
-    ("Mazzancolla cruda", "Raw king prawn", "al pezzo", "each", "7,90", (2,)),
+    ("[[Gambero rosa o viola]] crudo", "Raw [[pink or purple]] prawn", "al pezzo", "each", None, (2,)),
     ("Tartare di tonno", "Tuna tartare", "la porzione", "portion", "18", (4,)),
     ("Carpaccio di pescato", "Catch of the day carpaccio", "la porzione", "portion", "15", (4,)),
 ]
 CRUDO_SALSE_INCLUSE = ["Maionese all'arancia", "Maionese kiwi e lime"]
 CRUDO_SALSE_INCLUSE_EN = "Orange mayonnaise and kiwi & lime mayonnaise"
 CRUDO_SALSE_EXTRA = [  # (nome, en, prezzo, allergeni)
-    ("Maionese al melone invernale", "Winter melon mayonnaise", "4", (3,)),
-    ("Maionese all'ostrica", "Oyster mayonnaise", "4", (3, 14)),
+    ("Maionese al melone invernale", "Winter melon mayonnaise", "4", ()),
+    ("Maionese all'ostrica", "Oyster mayonnaise", "4", (14,)),
 ]
 
 PRIMI = [
@@ -244,24 +257,30 @@ PRIMI = [
            (1, 2, 7), chef=True, cottura=True,
            nota="Provalo con una spolverata di pepe del Madagascar · Try it with a dusting of Madagascar pepper"),
     piatto("Tagliolini al pepe e limone",
-           "Tagliolini artigianali al pepe e limone, direttamente nell'impasto, con mazzancolle e funghi porcini",
-           "Handmade tagliolini with pepper and lemon kneaded into the dough, king prawns and porcini mushrooms", (1, 2, 3)),
+           "Tagliolini artigianali al pepe e limone con limone candito, mazzancolle e funghi porcini",
+           "Handmade pepper and lemon tagliolini with candied lemon, king prawns and porcini mushrooms", (1, 2, 3)),
     piatto("Spaghetto Benedetto Cavalieri",
            "Alle vongole veraci, fiocchi di pomodoro e olio al lime",
            "Spaghetti with clams, tomato flakes and lime oil", (1, 14), cottura=True),
-    piatto("Risotto calamari e totani",
-           "Risotto con calamari e totani al tartufo",
-           "Risotto with squid, flying squid and truffle", (14,)),
+    piatto("Spaghetto al pomodoro",
+           "Spaghetto con salsa di pomodoro",
+           "Spaghetti with tomato sauce", (1,), prezzo=15),
+    piatto("Risotto al Calasole",
+           "Risotto con calamari, totani, seppia e tartufo",
+           "Risotto with squid, flying squid, cuttlefish and truffle", (14,), etichetta=NOVITA),
     piatto("Risotto al dentice",
            "Risotto al dentice con finocchietto selvatico, cipollotto fresco e carpaccio di finocchio",
            "Dentex risotto with wild fennel, fresh spring onion and fennel carpaccio", (4,)),
-    piatto("Ravioli di zucca",
-           "Ravioli di zucca e burro chiarificato alla salicornia",
-           "Pumpkin ravioli, clarified butter with samphire", (1, 3, 7),
+    piatto("Ravioli e crema di zucca",
+           "Ravioli [[ripieni di…]] adagiati su crema di zucca, burro chiarificato alla salicornia",
+           "Ravioli [[filled with…]] on pumpkin cream, clarified butter with samphire", (1, 3, 7),
            nota="Vegetariano · Vegetarian"),
 ]
 
 SECONDI = [
+    piatto("Spigola alla griglia",
+           "Spigola alla griglia con verdure spicchiate",
+           "Grilled sea bass with roasted vegetable wedges", (4,), chef=True),
     piatto("Grigliata di mare",
            "Mazzancolle, gambero rosso, scampi, tonno e spiedino di calamari, "
            "servita con due salse incluse: basilico e arancia",
@@ -271,25 +290,22 @@ SECONDI = [
            extra=[("Salsa all'ostrica", "Oyster sauce", "4", (14,)),
                   ("Salsa al tartufo", "Truffle sauce", "4", ())]),
     piatto("Scaloppata di tonno alla nocciola",
-           "Tonno in crosta di nocciola, crema alla barbabietola, olio al prezzemolo e verdure scottate",
-           "Tuna in hazelnut crust, beetroot cream, parsley oil and seared vegetables",
+           "Tonno in crosta di nocciola, crema di acetosella, olio al prezzemolo e verdure scottate",
+           "Tuna in hazelnut crust, sorrel cream, parsley oil and seared vegetables",
            (4, 8)),
     piatto("Il fritto mare della zia",
            "Frittura di mare e verdure in farina di riso, leggera e croccante",
            "Light, crispy fried seafood and vegetables in rice flour",
-           (2, 4, 14), prezzo=21, chef=True),
+           (2, 4, 14), prezzo=21, etichetta=FAMIGLIA),
     piatto("Cacciucco vegetale",
            "Brodo di alga kombu e funghi, pomodoro e cialda di pane croccante, "
            "con cipollotto, melone invernale e cavolo nero",
            "Kombu seaweed and mushroom broth, tomato and crispy bread wafer, "
            "with spring onion, winter melon and black cabbage",
            (1,), nota="Vegetariano · Vegetarian"),
-    piatto("Spigola alla griglia",
-           "Spigola alla griglia con verdure spicchiate",
-           "Grilled sea bass with roasted vegetable wedges", (4,)),
     piatto("Tagliata toscana",
            "Tagliata di manzo con patate arrosto",
-           "Sliced Tuscan beef steak with roast potatoes", (), prezzo=24),
+           "Sliced Tuscan beef steak with roast potatoes", (), prezzo=24, etichetta=TRADIZIONE),
 ]
 
 CONTORNI = [
@@ -486,7 +502,10 @@ def testata(titolo, sotto, icona=""):
 
 def riga_piatto(p):
     chef = '<span class="chef">il consiglio dello Chef</span>' if p["chef"] else ""
-    cott = (f'<span class="cottura">{FRECCIA}<span>18 minuti di cottura<br><em>18 min cooking time</em></span></span>'
+    if p["etichetta"]:
+        chef += f'<span class="etichetta">{p["etichetta"][0]} <em>{p["etichetta"][1]}</em></span>'
+
+    cott = (f'<span class="cottura">{FRECCIA}<span>18 minuti<br>di cottura<br><em>18 min cooking</em></span></span>'
             if p["cottura"] else "")
     desc = f'<p class="desc">{t(p["desc"])}</p>' if p["desc"] else ""
     en = f'<p class="en">{t(p["en"])}{allerg_riga(p["allergeni"])}</p>' if p["en"] else ""
@@ -565,9 +584,9 @@ def pagina_carta(titolo, sotto, icona, intro, corpo_extra, n, classe=""):
 
 def pagina_crudo(n):
     pezzi = "".join(f"""<div class="voce">
-  <div class="testo"><h3>{nome} <span class="unita">{unita}</span></h3>
-  <p class="en">{en} · {unita_en}{allerg_riga(al)}</p></div>
-  <div class="prezzo">{pr}</div></div>""" for nome, en, unita, unita_en, pr, al in CRUDO_PEZZI)
+  <div class="testo"><h3>{t(nome)} <span class="unita">{unita}</span></h3>
+  <p class="en">{t(en)} · {unita_en}{allerg_riga(al)}</p></div>
+  <div class="prezzo">{prezzo(pr)}</div></div>""" for nome, en, unita, unita_en, pr, al in CRUDO_PEZZI)
     salse = "".join(f"<li>{t(s)}</li>" for s in CRUDO_SALSE_INCLUSE)
     extra = "".join(f"""<div class="voce"><div class="testo"><h3>+ {t(nome)}</h3>
   <p class="en">{en}{allerg_riga(al)}</p></div><div class="prezzo">{pr}</div></div>""" for nome, en, pr, al in CRUDO_SALSE_EXTRA)
@@ -603,15 +622,13 @@ def pagina_crudo(n):
 
 def pagina_primi(n):
     nota = """<div class="nota-pasta">
-  <p>Usiamo la pasta <b>Benedetto Cavalieri</b> – artigianale, trafilata al bronzo, essiccata per 30 ore
+  <p class="spiega">Usiamo la pasta Benedetto Cavalieri – artigianale, trafilata al bronzo, essiccata per 30 ore
   con il “Metodo delicato” dal 1918. Il lungo tempo di cottura è la misura della sua qualità.</p>
   <p class="en">We use Benedetto Cavalieri pasta – artisanal, bronze-drawn and dried for 30 hours
   with the “Metodo delicato” since 1918. Its long cooking time is the measure of its quality.</p>
 </div>"""
-    return pagina_carta("Primi Piatti", "First Courses", SPIGA,
-                        "Pasta artigianale e risotti mantecati al momento · "
-                        "<em>Handmade pasta and freshly made risotti</em>",
-                        elenco(PRIMI) + nota, n, "p-primi")
+    corpo = f"""{testata("Primi Piatti", "First Courses", SPIGA)}{elenco(PRIMI)}{nota}"""
+    return pagina(corpo, n, "p-primi riempi")
 
 
 def pagina_secondi(n):
@@ -707,11 +724,11 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
   font-family: 'Caveat', cursive; font-size: 14pt; line-height: .95; color: var(--oro); }
 .cottura em { font-style: normal; font-size: 11.5pt; opacity: .85; }
 .voce.firma .cottura { right: 0; }
-.p-primi .elenco { gap: 3.4mm; }
+.p-primi .elenco { gap: 2.6mm; }
 .p-primi .intro { margin-bottom: 4.5mm; }
-.voce.con-cottura .testo > p { max-width: calc(100% - 47mm); }
-.voce.con-cottura.firma .testo > p { max-width: calc(100% - 44mm); }
-.freccia { width: 16mm; height: 7mm; color: var(--oro); flex: none; }
+.voce.con-cottura .testo > p:not(.nota) { max-width: calc(100% - 36mm); }
+.voce.con-cottura.firma .testo > p:not(.nota) { max-width: calc(100% - 33mm); }
+.freccia { width: 10mm; height: 6mm; color: var(--oro); flex: none; }
 .nota-pasta { margin-top: 4.5mm; padding-top: 3mm; border-top: 1px solid var(--filo); max-width: 136mm; }
 .nota-pasta p { font-size: 12pt; line-height: 1.3; }
 .nota-pasta p.en { font-size: 11pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
@@ -780,6 +797,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 /* aria: --aria viene calcolata pagina per pagina per riempire il foglio senza sforare */
 .riempi { --aria: 0mm; }
 .riempi .elenco { gap: calc(4.2mm + var(--aria)); }
+.p-primi.riempi .elenco { gap: calc(2.6mm + var(--aria)); }
 .riempi .voce .testo > * + * { margin-top: calc(var(--aria) * .09); }
 .riempi .voce .testo > .all { margin-top: calc(.6mm + var(--aria) * .09); }
 .riempi .elenco.compatto { gap: calc(2.6mm + var(--aria) * .5); }
@@ -816,6 +834,11 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .cit-en { margin-top: 6mm; font-size: 12.5pt; font-style: italic; color: var(--tenue); line-height: 1.3; }
 .nome-rist { position: absolute; top: 266mm; left: var(--sx); right: var(--dx); text-align: center;
   font-size: 15pt; font-weight: 600; letter-spacing: .4em; text-transform: uppercase; }
+.etichetta { display: block; font-size: 10pt; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--oro); line-height: 1; margin-bottom: 1.2mm; }
+.etichetta::before { content: "✦"; letter-spacing: 0; margin-right: 1.8mm; font-size: 9pt; }
+.etichetta em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1mm; }
+.nota-pasta p.spiega { font-weight: 700; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
 
@@ -853,7 +876,7 @@ SOVRAPPOSIZIONI_JS = """() => {
   const tocca = (a, b) => a.l < b.r - .5 && b.l < a.r - .5 && a.t < b.b - .5 && b.t < a.b - .5;
   document.querySelectorAll('.pagina').forEach((p, ip) => {
     const grafici = [], testi = [];
-    p.querySelectorAll('.icona svg, .cop-ill svg, .autore, .nome-rist, .riga, .cottura, .chef, .freccia, .passi .n, .salse li, .num').forEach(e =>
+    p.querySelectorAll('.icona svg, .cop-ill svg, .autore, .nome-rist, .riga, .cottura, .chef, .etichetta, .freccia, .passi .n, .salse li, .num').forEach(e =>
       grafici.push({...box(e.getBoundingClientRect(), e.className.baseVal ?? e.className), el: e}));
     p.querySelectorAll('.elenco').forEach(e => {         // filetto verticale dei prezzi
       const r = e.getBoundingClientRect(), x = r.left + 139.7 * MM;

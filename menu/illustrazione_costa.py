@@ -120,21 +120,122 @@ def offset_curva(curva, dy, rumore=.6, x_min=None):
     return pts
 
 
-def vignetta(cx=150, cy=84, rx=150, ry=72):
+def vignetta(cx=150, cy=82, rx=158, ry=80):
     pts = []
     for i in range(120):
         a = 2 * math.pi * i / 120
         r = 1 + .035 * math.sin(a * 5 + 1) + .02 * math.sin(a * 13)
         # più piatta sopra (cielo aperto), più ampia sotto
-        ky = .92 if math.sin(a) > 0 else 1.2
+        ky = .8 if math.sin(a) > 0 else 1.0
         pts.append((cx + math.cos(a) * rx * r, cy + math.sin(a) * ry * r * ky))
     return pts
 
 
-def dentro(px, py, cx=150, cy=84, rx=150, ry=72):
+def dentro(px, py, cx=150, cy=82, rx=158, ry=80):
     """0 al centro, 1 sul bordo della vignetta."""
-    ky = .92 if py > cy else 1.2
+    ky = .8 if py > cy else 1.0
     return math.hypot((px - cx) / rx, (py - cy) / (ry * ky))
+
+
+def quota(x):
+    """Altezza del terreno in cima alla scogliera."""
+    return 93 - (x - 203) * .041
+
+
+def rett(x0, y0, x1, y1):
+    return Polygon([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
+
+
+def ristorante(tratti, ombre):
+    L = lambda pts, w=.7, p=.15: tratti.append(penna(pts, w, p))
+    dritta = lambda x0, y0, x1, y1, w=.6: L(linea_mossa(x0, y0, x1, y1, 6, .06), w, .2)
+
+    # --- casa dietro: due piani, tetto a coppi, persiane
+    cx0, cx1, gronda, colmo = 236, 276, 63.5, 55.5
+    base_casa = quota(cx1)
+    for x in (cx0, cx1):
+        dritta(x, gronda, x, quota(x), .85)
+    dritta(cx0 - 2.2, gronda, cx1 + 2.2, gronda, .9)
+    tetto = [(cx0 - 2.2, gronda), ((cx0 + cx1) / 2, colmo), (cx1 + 2.2, gronda)]
+    L(tetto, 1.0, .3)
+    ombre.append(tratteggio(Polygon(tetto), 102, .75, .28, .05))          # coppi
+    for k in range(4):                                                     # file di coppi
+        y = gronda - 1.6 - k * 1.8
+        dx = (y - colmo) / (gronda - colmo) * ((cx1 - cx0) / 2 + 2.2)
+        dritta((cx0 + cx1) / 2 - dx + .6, y, (cx0 + cx1) / 2 + dx - .6, y, .3)
+    ombre.append(tratteggio(rett(cx0, gronda, cx1, gronda + 2.2), 0, .55, .26, .05))  # ombra di gronda
+    # comignolo
+    L([(266, 59.6), (266, 54.5), (269.5, 54.5), (269.5, 61.2)], .7)
+    dritta(265.3, 54.5, 270.2, 54.5, .8)
+    ombre.append(tratteggio(rett(267.8, 54.8, 269.4, 60.5), 90, .5, .22, .05))
+    # parete in ombra sul lato destro
+    ombre.append(tratteggio(rett(268, gronda + 2.2, cx1, base_casa), 75, 1.1, .24, .25))
+    # finestre con persiane (piano alto e piano terra) e porta
+    def finestra(x, y, w=4.2, h=6.2):
+        L([(x, y), (x + w, y), (x + w, y + h), (x, y + h), (x, y)], .55, .2)
+        for k in range(1, 7):
+            dritta(x + .3, y + k * h / 7, x + w - .3, y + k * h / 7, .22)
+        dritta(x - .6, y + h + .3, x + w + .6, y + h + .3, .5)                 # davanzale
+    for x in (240.5, 251.5, 262.5):
+        finestra(x, 67.5)
+    for x in (240.5, 262.5):
+        finestra(x, 78.5)
+    L([(251.6, quota(251.6)), (251.6, 79), (256.6, 79), (256.6, quota(256.6))], .6, .2)  # porta
+    ombre.append(tratteggio(rett(251.8, 79.3, 256.4, quota(256)), 90, .55, .25, .05))
+    L(bezier((250.8, 79), (252, 76.6), (256.2, 76.6), (257.4, 79), 10), .5)   # arco sopra la porta
+
+    # --- verandata vetrata sul mare
+    vx0, vx1, vtop, vbase = 207, 236, 74.5, 89.6
+    dritta(vx0 - 2, vtop - 2.2, vx1 + 1.2, vtop - 2.2, .9)                  # tetto della veranda
+    dritta(vx0 - 2, vtop, vx1 + 1.2, vtop, .7)
+    dritta(vx0 - 2, vtop - 2.2, vx0 - 2, vtop, .6)
+    ombre.append(tratteggio(rett(vx0 - 2, vtop - 2.2, vx1 + 1.2, vtop), 0, .5, .24, .05))
+    for i in range(14):                                                   # mantovana smerlata
+        x = vx0 - 2 + i * 2.4
+        L(bezier((x, vtop), (x + .4, vtop + 1.3), (x + 2, vtop + 1.3), (x + 2.4, vtop), 6), .4, .1)
+    montanti = [vx0 + i * (vx1 - vx0) / 5 for i in range(6)]
+    for x in montanti:
+        dritta(x, vtop + .2, x, vbase, .55 if x in (vx0, vx1) else .42)
+    dritta(vx0, 79.5, vx1, 79.5, .35)                                       # traverso
+    dritta(vx0, 86.3, vx1, 86.3, .45)                                       # zoccolo
+    ombre.append(tratteggio(rett(vx0, 86.4, vx1, vbase), 90, .9, .24, .05))
+    for i, x in enumerate(montanti[:-1]):                                    # riflessi sui vetri
+        if i % 2 == 0:
+            L([(x + 1.2, 85.5), (x + 3.4, 81)], .22, .05)
+            L([(x + 2.2, 85.5), (x + 4.4, 81)], .22, .05)
+    for x in (211, 222.5):                                                  # tavoli e sedie dentro
+        dritta(x, 83.6, x + 4, 83.6, .45)
+        dritta(x + 2, 83.6, x + 2, 86.2, .35)
+        L([(x - 1.2, 86.2), (x - 1.2, 82.6), (x - .4, 84.4), (x - .4, 86.2)], .3, .1)
+        L([(x + 5.2, 86.2), (x + 5.2, 82.6), (x + 4.4, 84.4), (x + 4.4, 86.2)], .3, .1)
+    # ombra della veranda sul terreno
+    ombre.append(tratteggio(rett(vx0, vbase + .6, vx1 + 3, vbase + 2.4), 0, .6, .24, .1))
+
+    # --- terrazza a sbalzo con ringhiera, tavolino e ombrellone
+    tx0 = 192.5
+    dritta(tx0, vbase, vx0, vbase, .9)
+    dritta(tx0, vbase + 1.5, vx0, vbase + 1.5, .6)
+    ombre.append(tratteggio(rett(tx0, vbase, vx0, vbase + 1.5), 0, .45, .24, .05))
+    for (x0, x1, y1) in ((195, 197.2, 99.5), (201, 201.6, quota(201.6) + .4)):
+        dritta(x0, vbase + 1.5, x1, y1, .7)                                  # sostegni
+    dritta(tx0, 85.6, vx0, 85.6, .55)                                       # corrimano
+    x = tx0
+    while x <= vx0:
+        dritta(x, 85.6, x, vbase, .3)
+        x += 1.5
+    dritta(197.3, 86.2, 202.3, 86.2, .55)                                   # tavolino
+    dritta(199.8, 86.2, 199.8, vbase, .4)
+    dritta(199.8, 86.2, 199.8, 77, .45)                                      # palo dell'ombrellone
+    tenda = catena(bezier((191.5, 79), (194, 76.2), (197, 74.6), (199.8, 74.2)),
+                   bezier((199.8, 74.2), (202.6, 74.6), (205.6, 76.2), (208.1, 79)))
+    L(tenda, .8, .2)
+    for i in range(7):
+        x = 191.5 + i * 2.37
+        L(bezier((x, 79), (x + .4, 80.1), (x + 2, 80.1), (x + 2.37, 79), 6), .35, .1)
+    lato = Polygon(tenda[len(tenda) // 2:] + [(199.8, 79)])
+    ombre.append(tratteggio(lato, 70, .65, .24, .1))
+    for x in (195.7, 203.9):
+        L(bezier((199.8, 74.4), (x - (x - 199.8) * .4, 75.4), (x, 77), (x, 79), 8), .3, .05)
 
 
 def disegna():
@@ -143,9 +244,8 @@ def disegna():
 
     # ---------------- SCOGLIERA ----------------
     # ciglio: pianoro con macchia che sale verso destra
-    ciglio = catena(bezier((203, 93), (214, 88), (226, 86), (238, 85)),
-                    bezier((238, 85), (252, 84), (262, 80), (274, 78)),
-                    bezier((274, 78), (284, 76), (292, 74), (300, 73)))
+    ciglio = catena(bezier((203, 93), (222, 91.6), (250, 91.2), (272, 90.6)),
+                    bezier((272, 90.6), (284, 90.2), (292, 89.6), (300, 89)))
     # parete a picco con sporgenze, dal ciglio fino al mare
     parete = [(203, 93), (199, 95.5), (196.5, 100), (197.5, 104), (193.5, 108), (192, 114),
               (194, 118), (189.5, 123), (187, 129), (188.5, 133), (183.5, 138), (181, 143),
@@ -213,7 +313,7 @@ def disegna():
         tratti.append(penna(pts, .65, .1))
         ombre.append(tratteggio(Polygon(pts).buffer(0), 75, .7, .22, .2))
 
-    for x in (207, 214, 221, 229, 247, 258, 266, 280, 287, 295):
+    for x in (281, 292, 298):
         y = min((abs(px - x), py) for px, py in ciglio)[1]
         cespuglio(x, y + .3, rnd.uniform(1.4, 2.4))
 
@@ -269,8 +369,8 @@ def disegna():
                 y = my + rnd.uniform(-.4, .1) * altezza * .4
                 tratti.append(penna(bezier((x - 1.6, y + .6), (x - .6, y - .7), (x + .6, y - .7), (x + 1.6, y + .6), 6), .35, .05))
 
-    pino(244, 84.6, 232, 46, 52, 17)
-    pino(272, 78.2, 278, 55, 36, 12.5)
+    pino(284, 90.4, 279, 51, 38, 12.5)
+    ristorante(tratti, ombre)
 
     # ---------------- ORIZZONTE, ISOLA, VELA ----------------
     isola = catena(bezier((16, ORIZ), (26, ORIZ - 7), (38, ORIZ - 11), (50, ORIZ - 10)),
