@@ -24,12 +24,16 @@ def voce(p):
     seg = ""
     if p["chef"]:
         seg += '<span class="chef">il consiglio dello Chef</span>'
-    if p["etichetta"]:
-        seg += f'<span class="etichetta">{p["etichetta"][0]}</span>'
+    # etichette e "Vegetariano" sulla stessa riga del nome, per risparmiare spazio
     cott = '<span class="cottura">18 minuti di cottura</span>' if p["cottura"] else ""
+    if p["etichetta"]:
+        cott += f'<span class="etichetta">{p["etichetta"][0]}</span>'
+    vegetariano = bool(p["nota"]) and p["nota"].startswith("Vegetariano")
+    if vegetariano:
+        cott += '<span class="etichetta veg">Vegetariano</span>'
     desc = f'<p>{t(p["desc"])}{allergeni(p["allergeni"])}</p>' if p["desc"] else ""
     nota = ""
-    if p["nota"]:
+    if p["nota"] and not vegetariano:
         nota = f'<p class="nota">{t(p["nota"].split(" · ")[0])}</p>'
     extra = "".join(
         f'<div class="tx extra">{"<span class=extra-tit>Salse in aggiunta</span>" if i == 0 else ""}'
@@ -50,31 +54,32 @@ def sezione(titolo, corpo, classe=""):
 
 
 def degustazione(d):
+    """Degustazione compatta per la fascia in alto: prezzo accanto al nome, portata a sinistra dei piatti."""
     portate = ""
     for nome_portata, _, piatti in d["portate"]:
-        # nelle degustazioni basta la descrizione completa, che contiene già il nome del piatto
-        voci = "".join(f'<li><p>{t(p["desc"] or p["nome"])}{allergeni(p["allergeni"])}</p></li>' for p in piatti)
+        # basta la descrizione completa, che contiene già il nome del piatto
+        voci = "".join(f'<li>{t(p["desc"] or p["nome"])}{allergeni(p["allergeni"])}</li>' for p in piatti)
         portate += f'<div class="portata"><h5>{nome_portata}</h5><ul>{voci}</ul></div>'
     return f"""<section class="deg">
-  <h3>{t(d['nome'])}</h3>
+  <div class="deg-testa"><h3>{t(d['nome'])}</h3>
+    <div class="deg-prezzo"><span>{d['prezzo']}</span><em>a persona</em></div></div>
   {portate}
-  <div class="deg-piede"><div class="deg-prezzo"><span>{d['prezzo']}</span><em>a persona</em></div>
-  <p class="deg-nota">Servito per<br>l'intero tavolo</p></div>
 </section>"""
 
 
 def crudo():
-    """Il crudo in due blocchi (uno per passo), così può continuare nella colonna successiva.
+    """Il crudo in blocchi brevi, così può continuare nella colonna successiva.
     Nell'A3 non ci sono i calici di bollicine."""
-    pezzi = "".join(riga(n, prezzo(pr), al, unita) for n, _, unita, _, pr, al in CRUDO_PEZZI)
+    righe = [riga(n, prezzo(pr), al, unita) for n, _, unita, _, pr, al in CRUDO_PEZZI]
+    meta = len(righe) // 2
     extra = "".join(riga("+ " + n, pr, al) for n, _, pr, al in CRUDO_SALSE_EXTRA)
     incluse = " e ".join(CRUDO_SALSE_INCLUSE)
-    passo1 = (f'<section class="sez apre"><h2>Il Crudo</h2><div class="riga"></div>'
-              f'<p class="crudo-tit">Componi il tuo Crudo</p>'
-              f'<p class="passo"><span>1</span> Scegli i tuoi pezzi</p><div class="elenco">{pezzi}</div></section>')
+    passo1a = (f'<section class="sez apre"><p class="crudo-tit">Componi il tuo Crudo</p>'
+               f'<p class="passo"><span>1</span> Scegli i tuoi pezzi</p><div class="elenco">{"".join(righe[:meta])}</div></section>')
+    passo1b = f'<div class="elenco">{"".join(righe[meta:])}</div>'
     passo2 = (f'<div class="chiude"><p class="passo"><span>2</span> Abbina le salse</p>'
               f'<p class="incluse">Incluse: {incluse.lower()}{allergeni((3,))}</p><div class="elenco">{extra}</div></div>')
-    return [(passo1, "Il Crudo", False), (passo2, "Il Crudo", True)]
+    return [(passo1a, "Il Crudo", False), (passo1b, "Il Crudo", True), (passo2, "Il Crudo", True)]
 
 
 def sezione_divisibile(titolo, voci, coda=""):
@@ -90,12 +95,7 @@ def sezione_divisibile(titolo, voci, coda=""):
     return out
 
 
-def blocchi():
-    """Le sezioni del menù, nell'ordine di lettura: (html, sezione, è_continuazione)."""
-    nota_pasta = ('<p class="nota-pasta">Usiamo la pasta Benedetto Cavalieri – artigianale, trafilata al bronzo, '
-                  'essiccata per 30 ore con il “Metodo delicato” dal 1918. Il lungo tempo di cottura è la misura '
-                  'della sua qualità.</p>')
-    qr = """<section class="qr">
+QR = """<section class="qr">
   <div class="qr-box"><span>spazio per il<br>QR code</span></div>
   <div class="qr-testo">
     <p class="qr-it">Il menù nella tua lingua</p>
@@ -103,15 +103,17 @@ def blocchi():
     <p class="qr-em">Inquadra il codice con la fotocamera · Scan the code with your camera</p>
   </div>
 </section>"""
-    deg = [degustazione(d) for d in DEGUSTAZIONI]
-    return ([(sezione("Degustazioni", deg[0], "degustazioni"), "Degustazioni", False)] +
-            [(d, "Degustazioni", True) for d in deg[1:]] +
-            sezione_divisibile("Antipasti", [voce(p) for p in ANTIPASTI]) +
+
+
+def blocchi():
+    """Le sezioni della carta, nell'ordine di lettura: (html, sezione, è_continuazione).
+    Le degustazioni stanno a parte, nella fascia in alto."""
+    return (sezione_divisibile("Antipasti", [voce(p) for p in ANTIPASTI]) +
             crudo() +
-            sezione_divisibile("Primi Piatti", [voce(p) for p in PRIMI], nota_pasta) +
+            sezione_divisibile("Primi Piatti", [voce(p) for p in PRIMI]) +
             sezione_divisibile("Secondi Piatti", [voce(p) for p in SECONDI]) +
             [(sezione("Contorni", f'<div class="elenco">{"".join(riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI)}</div>'), "Contorni", False),
-             (qr, "QR", False)])
+             ])
 
 
 def documento(colonne):
@@ -119,7 +121,7 @@ def documento(colonne):
     font = (QUI / "fonts.css").read_text()
     def colonna(c):
         html_c = "".join(h for h, _, _ in c)
-        if c and c[0][2] and c[0][1] != "Degustazioni":          # la sezione continua da sinistra
+        if c and c[0][2]:                                          # la sezione continua da sinistra
             html_c = f'<p class="segue">{c[0][1]} <em>segue</em></p>' + html_c
         return f'<div class="col">{html_c}</div>'
     html_col = "".join(colonna(c) for c in colonne)
@@ -128,7 +130,11 @@ def documento(colonne):
     return f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Ristorante Cusin A3</title>
 <style>{font}{CSS}</style></head><body>{bozza}
 <main class="foglio">
-  <header class="testa"><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></header>
+  <header class="testa"><div></div><div class="nome"><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div>{QR}</header>
+  <section class="fascia-deg"><h2>Le Degustazioni</h2>
+    <div class="tre">{"".join(degustazione(d) for d in DEGUSTAZIONI)}</div>
+    <p class="nota-deg">I menù degustazione sono serviti per l'intero tavolo</p></section>
+  <h2 class="tit-carta">La Carta</h2>
   <div class="colonne" style="grid-template-columns: repeat({len(colonne)}, 1fr)">{html_col}</div>
   <footer class="piede"><p class="servizio"><b>Servizio</b>{servizio}</p><p>I numeri accanto ai piatti indicano gli allergeni (Reg. UE 1169/2011): legenda e informazioni
   complete sono disponibili presso il nostro personale. Il pesce servito crudo è sottoposto ad abbattimento
@@ -176,10 +182,34 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .segue em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; }
 .sez.apre { margin-bottom: 0; }
 .chiude { margin-bottom: 3.5mm; }
+/* fascia delle degustazioni in alto, una accanto all'altra */
+.fascia-deg h2, .tit-carta { text-align: center; font-size: 14pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
+.fascia-deg h2 { margin-bottom: 2mm; }
+.fascia-deg .tre { display: grid; grid-template-columns: 1.3fr 1fr 1fr; column-gap: 8mm; }
+.fascia-deg .qr { margin: 2mm 0 1mm 0; padding: 2.4mm; }
+.fascia-deg .qr-box { width: 26mm; height: 26mm; }
+.fascia-deg .deg { border-bottom: 0; margin-bottom: 0; padding: 0 2mm 2mm; }
+.fascia-deg .tre > * + * { border-left: .3mm solid #d6d6da; margin-left: -4mm; padding-left: 6mm; }
+.fascia-deg .deg { text-align: left; }
+.deg-testa { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.6mm;
+  padding-bottom: 1mm; border-bottom: .3mm solid #d6d6da; }
+.deg-testa h3 { font-size: 18pt; margin: 0; }
+.deg-testa .deg-prezzo span { font-size: 17pt; }
+.fascia-deg .portata { display: grid; grid-template-columns: 21mm 1fr; column-gap: 2mm; margin-bottom: 1mm; }
+.fascia-deg .portata h5 { margin: .5mm 0 0; font-size: 8.5pt; letter-spacing: .18em; }
+.fascia-deg .portata li { font-size: 11pt; line-height: 1.2; margin-bottom: .6mm; }
+.nota-deg { text-align: center; font-size: 10.5pt; font-weight: 600; margin-top: 1mm; }
+.testa .nome { display: flex; align-items: baseline; gap: 6mm; }
+.testa .qr { justify-self: end; margin: 0; padding: 0; border: 0; gap: 3mm; }
+.testa .qr-box { width: 21mm; height: 21mm; font-size: 7.5pt; }
+.testa .qr-testo p { font-size: 9.5pt; line-height: 1.2; }
+.testa .qr-testo .qr-it { font-size: 14pt; }
+.testa .qr-testo .qr-em { font-size: 8.5pt; }
+.tit-carta { margin: 2mm 0 3mm; padding-top: 3mm; border-top: .53mm solid var(--filo-testa); }
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 .foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
-.testa { display: flex; justify-content: center; align-items: baseline; gap: 6mm; margin-bottom: 4mm;
+.testa { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 4mm;
   padding-bottom: 2mm; border-bottom: .53mm solid var(--filo-testa); }
 .testa h1 { font-size: 26pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; padding-left: .32em; }
 .testa .filo { width: 80mm; height: .53mm; background: var(--filo-testa); margin: 1.6mm auto 1.4mm; }
@@ -198,7 +228,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .elenco.due { display: grid; grid-template-columns: 1fr 1fr; column-gap: 4mm; }
 .elenco.due h4 { font-size: 11pt; }
 .v { display: grid; grid-template-columns: 1fr 12mm; break-inside: avoid; }
-.v .tx { padding: 0 3mm 1.5mm 0; }
+.v .tx { padding: 0 3mm 1.1mm 0; }
 .v .pr { border-left: .45mm solid var(--filo); padding-left: 2.6mm; font-size: 12pt; font-weight: 700; padding-top: .4mm; }
 .v.corta .tx { padding-bottom: .5mm; }
 .v h4 { font-size: 12pt; font-weight: 700; line-height: 1.2; }
@@ -208,7 +238,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .al { font-size: 8.5pt; letter-spacing: .04em; color: var(--tenue); margin-left: 1.6mm; white-space: nowrap; font-weight: 400; }
 .al::before { content: "·"; margin-right: 1.2mm; }
 .chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 13pt; color: var(--oro); line-height: 1; margin-bottom: .6mm; }
-.etichetta { display: block; font-size: 8.5pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--oro); line-height: 1; margin-bottom: .8mm; }
+.etichetta { display: inline-block; font-size: 8pt; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--oro); line-height: 1; margin-left: 2mm; white-space: nowrap; }
 .etichetta::before { content: "✦"; margin-right: 1.4mm; letter-spacing: 0; }
 .cottura { font-family: 'Caveat', cursive; font-weight: 600; font-size: 12pt; color: var(--oro); margin-left: 2mm; white-space: nowrap; }
 .v.firma .tx { border: .3mm solid #c9bb95; padding: 1.6mm 2.4mm; margin: 0 2.4mm 2.6mm -2.4mm; }
@@ -282,7 +312,7 @@ def main(n_colonne=4):
         # 1) misura ogni blocco alla larghezza di una colonna
         prova = [tutti] + [[] for _ in range(n_colonne - 1)]
         segue_mm = 7                                                        # la scritta "segue" in cima alla colonna
-        extra = [segue_mm if cont and sez != "Degustazioni" else 0 for _, sez, cont in tutti]
+        extra = [segue_mm if cont else 0 for _, sez, cont in tutti]
         f_html.write_text(documento(prova), encoding="utf-8")
         pg.goto(f_html.resolve().as_uri())
         pg.wait_for_load_state("networkidle")
