@@ -275,7 +275,7 @@ PRIMI = [
     piatto("Risotto al dentice",
            "Risotto al dentice con finocchietto selvatico, cipollotto fresco e carpaccio di finocchio",
            "Dentex risotto with wild fennel, fresh spring onion and fennel carpaccio", (4,),
-           nota="Senza lattosio · Lactose free"),
+           prezzo="19,30", nota="Senza lattosio · Lactose free"),
     piatto("Ravioli e crema di zucca",
            "Ravioli ripieni di ricotta senza lattosio, adagiati su crema di zucca, burro chiarificato alla salicornia",
            "Ravioli filled with lactose-free ricotta, on pumpkin cream, clarified butter with samphire", (1, 3, 7),
