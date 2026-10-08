@@ -50,11 +50,11 @@ ALLERGENI = {
 
 
 def piatto(nome, desc, en, allergeni=(), prezzo=None, chef=False, nota=None, cottura=False, extra=(),
-           etichetta=None):
+           etichetta=None, tracce=()):
     """extra = salse o aggiunte a pagamento: [(nome, en, prezzo, allergeni)]
     etichetta = (italiano, inglese): segnalazione del piatto diversa dal consiglio dello Chef"""
     return dict(nome=nome, desc=desc, en=en, allergeni=allergeni, prezzo=prezzo, chef=chef,
-                nota=nota, cottura=cottura, extra=extra, etichetta=etichetta)
+                nota=nota, cottura=cottura, extra=extra, etichetta=etichetta, tracce=tracce)
 
 
 NOVITA = ("Novità di stagione", "New this season")
@@ -325,6 +325,32 @@ SERVIZIO = [
     ("Servizio tappo", "Corkage fee", "16"),
 ]
 
+
+# ---------------------------------------------------------------------------
+# REGOLE GENERALI SUGLI ALLERGENI (indicazioni della cucina)
+# ---------------------------------------------------------------------------
+SEDANO, SOIA, SENAPE = 9, 6, 10
+
+
+def _aggiungi(p, *numeri):
+    p["allergeni"] = tuple(sorted(set(p["allergeni"]) | set(numeri)))
+
+
+# il sedano è presente in tutte le preparazioni di antipasti e primi
+for _d in DEGUSTAZIONI + [ULTIMO]:
+    for _portata, _, _piatti in _d["portate"]:
+        if _portata in ("Antipasti", "Primi", "Primo"):
+            for _p in _piatti:
+                _aggiungi(_p, SEDANO)
+for _p in ANTIPASTI + PRIMI:
+    _aggiungi(_p, SEDANO)
+
+# pasta Benedetto Cavalieri: senza uova, può contenere tracce di soia e senape
+for _p in PRIMI:
+    if "Benedetto Cavalieri" in _p["nome"]:
+        _p["allergeni"] = tuple(a for a in _p["allergeni"] if a != 3)
+        _p["tracce"] = (SOIA, SENAPE)
+
 # ---------------------------------------------------------------------------
 # RENDER
 # ---------------------------------------------------------------------------
@@ -350,11 +376,12 @@ def allerg(a):
     return f'<span class="all">Allergeni · Allergens&nbsp; {" · ".join(str(x) for x in a)}</span>'
 
 
-def allerg_riga(a):
-    """Allergeni sulla stessa riga della traduzione (pagine degustazione)."""
-    if not a:
+def allerg_riga(a, tracce=()):
+    """Allergeni sulla stessa riga della traduzione; le tracce sono indicate a parte."""
+    if not a and not tracce:
         return ""
-    return f'<span class="all-riga">Allergeni {" · ".join(str(x) for x in a)}</span>'
+    tr = f' · tracce {" · ".join(map(str, tracce))}' if tracce else ""
+    return f'<span class="all-riga">Allergeni {" · ".join(str(x) for x in a)}{tr}</span>'
 
 
 # --- Illustrazioni a tratto, in stile incisione ------------------------------
@@ -510,7 +537,7 @@ def riga_piatto(p):
     cott = (f'<span class="cottura">{FRECCIA}<span>18 minuti<br>di cottura<br><em>18 min cooking</em></span></span>'
             if p["cottura"] else "")
     desc = f'<p class="desc">{t(p["desc"])}</p>' if p["desc"] else ""
-    en = f'<p class="en">{t(p["en"])}{allerg_riga(p["allergeni"])}</p>' if p["en"] else ""
+    en = f'<p class="en">{t(p["en"])}{allerg_riga(p["allergeni"], p["tracce"])}</p>' if p["en"] else ""
     nota = f'<p class="nota">{t(p["nota"])}</p>' if p["nota"] else ""
     classi = "voce" + (" firma" if p["chef"] else "") + (" con-cottura" if p["cottura"] else "")
     return f"""<div class="{classi}">
@@ -559,7 +586,7 @@ def pagina_degustazione(d, n):
         voci = "".join(
             f"""<li><h3>{t(p['nome'])}</h3>
             {f'<p class="desc">{t(p["desc"])}</p>' if p['desc'] else ''}
-            <p class="en">{t(p['en'])}{allerg_riga(p['allergeni'])}</p></li>"""
+            <p class="en">{t(p['en'])}{allerg_riga(p['allergeni'], p['tracce'])}</p></li>"""
             for p in piatti)
         blocchi.append(f'<div class="portata"><h2>{it} <span>{en}</span></h2><ul>{voci}</ul></div>')
     corpo = f"""
@@ -658,9 +685,11 @@ def pagina_servizio_allergeni(n):
   <ul class="legenda">{leg}</ul>
   <p>Il numero accanto a ogni piatto indica le sostanze che possono causare allergie o intolleranze
   (Reg. UE 1169/2011). Per qualsiasi esigenza alimentare rivolgetevi al nostro personale:
-  la documentazione completa è disponibile su richiesta.</p>
+  la documentazione completa è disponibile su richiesta. La dicitura «tracce» indica allergeni
+  che possono essere presenti in tracce.</p>
   <p class="en">The numbers next to each dish refer to the allergens listed above (EU Reg. 1169/2011).
-  Please inform our staff of any food allergy or intolerance; full documentation is available on request.</p>
+  Please inform our staff of any food allergy or intolerance; full documentation is available on request.
+  «Tracce» means the product may contain traces.</p>
   <p>Il pesce destinato al consumo crudo o praticamente crudo è sottoposto a trattamento di bonifica
   preventiva mediante abbattimento, come previsto dal Reg. CE 853/2004.</p>
   <p class="en">Fish served raw or nearly raw has been blast-frozen in accordance with EC Reg. 853/2004.</p>
@@ -799,13 +828,13 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 /* aria: --aria viene calcolata pagina per pagina per riempire il foglio senza sforare */
 .riempi { --aria: 0mm; }
 .riempi .elenco { gap: calc(4.2mm + var(--aria)); }
-.p-primi.riempi .elenco { gap: calc(2.6mm + var(--aria)); }
+.p-primi.riempi .elenco { gap: calc(1.8mm + var(--aria)); }
 .riempi .voce .testo > * + * { margin-top: calc(var(--aria) * .09); }
 .riempi .voce .testo > .all { margin-top: calc(.6mm + var(--aria) * .09); }
 .riempi .elenco.compatto { gap: calc(2.6mm + var(--aria) * .5); }
 .riempi .intro { margin-bottom: calc(6mm + var(--aria)); }
 .riempi .sezione { margin-top: calc(8mm + var(--aria)); margin-bottom: calc(3.5mm + var(--aria) * .5); }
-.riempi .nota-pasta { margin-top: calc(4.5mm + var(--aria)); }
+.riempi .nota-pasta { margin-top: calc(3mm + var(--aria)); }
 .riempi .passi > li { margin-bottom: calc(6mm + var(--aria)); }
 .riempi .crudo-titolo { margin-bottom: calc(5mm + var(--aria)); }
 .p-deg.riempi .deg { justify-content: flex-start; }

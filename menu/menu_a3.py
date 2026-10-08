@@ -15,8 +15,11 @@ from genera_menu import (ANTIPASTI, CONTORNI, CRUDO_PEZZI, CRUDO_SALSE_EXTRA, CR
                          DEGUSTAZIONI, FINALE, PRIMI, QUI, SECONDI, SERVIZIO, t, prezzo)
 
 
-def allergeni(a):
-    return f'<span class="al">{" · ".join(map(str, a))}</span>' if a else ""
+def allergeni(a, tracce=()):
+    if not a and not tracce:
+        return ""
+    tr = f' · tracce {" · ".join(map(str, tracce))}' if tracce else ""
+    return f'<span class="al">{" · ".join(map(str, a))}{tr}</span>'
 
 
 def voce(p):
@@ -31,7 +34,7 @@ def voce(p):
     vegetariano = bool(p["nota"]) and p["nota"].startswith(("Vegetariano", "Senza lattosio"))
     if vegetariano:
         cott += f'<span class="etichetta veg">{p["nota"].split(" · ")[0]}</span>'
-    desc = f'<p>{t(p["desc"])}{allergeni(p["allergeni"])}</p>' if p["desc"] else ""
+    desc = f'<p>{t(p["desc"])}{allergeni(p["allergeni"], p["tracce"])}</p>' if p["desc"] else ""
     nota = ""
     if p["nota"] and not vegetariano and not p["nota"].startswith("Provalo"):
         nota = f'<p class="nota">{t(p["nota"].split(" · ")[0])}</p>'
@@ -58,7 +61,7 @@ def degustazione(d):
     portate = ""
     for nome_portata, _, piatti in d["portate"]:
         # basta la descrizione completa, che contiene già il nome del piatto
-        voci = "".join(f'<li>{t(p["desc"] or p["nome"])}{allergeni(p["allergeni"])}</li>' for p in piatti)
+        voci = "".join(f'<li>{t(p["desc"] or p["nome"])}{allergeni(p["allergeni"], p["tracce"])}</li>' for p in piatti)
         portate += f'<div class="portata"><h5>{nome_portata}</h5><ul>{voci}</ul></div>'
     return f"""<section class="deg">
   <div class="deg-testa"><h3>{t(d['nome'])}</h3>
@@ -150,8 +153,8 @@ def documento(colonne):
     <p class="nota-deg">I menù degustazione sono serviti per l'intero tavolo</p></section>
   <h2 class="tit-carta">La Carta</h2>
   <div class="colonne" style="grid-template-columns: repeat({len(colonne)}, 1fr)">{html_col}</div>
-  <footer class="piede"><p class="servizio"><b>Servizio</b>{servizio}</p><p>I numeri accanto ai piatti indicano gli allergeni (Reg. UE 1169/2011): legenda e informazioni
-  complete sono disponibili presso il nostro personale. Il pesce servito crudo è sottoposto ad abbattimento
+  <footer class="piede"><p class="servizio"><b>Servizio</b>{servizio}</p><p>I numeri accanto ai piatti indicano gli allergeni (Reg. UE 1169/2011): «tracce»: può contenerne tracce. Legenda e
+  informazioni complete presso il nostro personale. Il pesce servito crudo è sottoposto ad abbattimento
   (Reg. CE 853/2004).</p></footer>
 </main></body></html>"""
 
