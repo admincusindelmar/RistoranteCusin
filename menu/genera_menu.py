@@ -285,7 +285,7 @@ PRIMI = [
 SECONDI = [
     piatto("Spigola alla griglia",
            "Spigola alla griglia con verdure spicchiate",
-           "Grilled sea bass with roasted vegetable wedges", (4,), prezzo=24, chef=True),
+           "Grilled sea bass with roasted vegetable wedges", (4,), prezzo="24,30", chef=True),
     piatto("Grigliata di mare",
            "Mazzancolle, gambero rosso, scampi, tonno e spiedino di calamari, "
            "servita con due salse incluse: basilico e arancia",
