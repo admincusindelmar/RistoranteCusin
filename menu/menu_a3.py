@@ -116,6 +116,12 @@ def blocchi():
              ])
 
 
+def logo():
+    """Il sigillo del ristorante (estratto dal file vettoriale con estrai_logo.py)."""
+    f = QUI / "logo" / "logo_cusin_sigillo_scuro.svg"
+    return f.read_text() if f.exists() else "<span>logo</span>"
+
+
 def documento(colonne):
     """colonne: liste di blocchi, una per colonna."""
     font = (QUI / "fonts.css").read_text()
@@ -130,7 +136,7 @@ def documento(colonne):
     return f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Ristorante Cusin A3</title>
 <style>{font}{CSS}</style></head><body>{bozza}
 <main class="foglio">
-  <header class="testa"><div></div><div class="nome"><div class="logo"><span>logo</span></div><div><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div></div>{QR}</header>
+  <header class="testa"><div></div><div class="nome"><div class="logo">{logo()}</div><div><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div></div>{QR}</header>
   <section class="fascia-deg"><h2>Le Degustazioni</h2>
     <div class="tre">{"".join(degustazione(d) for d in DEGUSTAZIONI)}</div>
     <p class="nota-deg">I menù degustazione sono serviti per l'intero tavolo</p></section>
@@ -201,7 +207,9 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .nota-deg { text-align: center; font-size: 10.5pt; font-weight: 600; margin-top: 1mm; }
 .testa .nome { display: flex; align-items: center; gap: 6mm; text-align: center; }
 .testa .nome p { margin-top: .6mm; }
-.logo { width: 18mm; height: 18mm; border: .4mm dashed var(--tenue); display: flex; align-items: center; justify-content: center;
+.logo svg { height: 19mm; width: auto; display: block; }
+.logo:has(span) { width: 18mm; height: 18mm; border: .4mm dashed var(--tenue); }
+.logo { display: flex; align-items: center; justify-content: center;
   font-size: 8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); }
 .testa .qr { justify-self: end; margin: 0; padding: 0; border: 0; gap: 3mm; }
 .testa .qr-box { width: 21mm; height: 21mm; font-size: 7.5pt; }
