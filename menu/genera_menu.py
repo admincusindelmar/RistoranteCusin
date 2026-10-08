@@ -90,7 +90,7 @@ DEGUSTAZIONI = [
             ]),
             ("Primi", "First courses", [
                 piatto("Gnocchi al Calasole",
-                       "Gnocchi di riso con calamari, totani, seppia e tartufo",
+                       "Gnocchi di riso con calamari, totani, seppie e tartufo",
                        "Rice gnocchi with squid, flying squid, cuttlefish and truffle", (3, 14)),
                 piatto("Paccheri farciti",
                        "Paccheri con farcitura di ricotta senza lattosio, mazzancolle e colatura di cachi",
@@ -297,7 +297,7 @@ SECONDI = [
            "Tonno in crosta di nocciola, crema di acetosella, olio al prezzemolo e verdure scottate",
            "Tuna in hazelnut crust, sorrel cream, parsley oil and seared vegetables",
            (4, 8), prezzo=25),
-    piatto("Il fritto mare della zia",
+    piatto("Il fritto di mare della Zia",
            "Frittura di mare e verdure in farina di riso, leggera e croccante",
            "Light, crispy fried seafood and vegetables in rice flour",
            (2, 4, 14), prezzo=21, etichetta=FAMIGLIA),
