@@ -307,7 +307,7 @@ SECONDI = [
            "con cipollotto, melone invernale e cavolo nero",
            "Kombu seaweed and mushroom broth, tomato and crispy bread wafer, "
            "with spring onion, winter melon and black cabbage",
-           (1,), prezzo=24, nota="Vegetariano · Vegetarian"),
+           (1,), prezzo="22,70", nota="Vegetariano · Vegetarian"),
     piatto("Tagliata toscana",
            "Tagliata di manzo con patate arrosto",
            "Sliced Tuscan beef steak with roast potatoes", (), prezzo=25, etichetta=TRADIZIONE),
