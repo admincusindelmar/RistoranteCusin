@@ -23,6 +23,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from a_capo import SISTEMA_A_CAPO_JS
 from illustrazione_costa import COSTA_INCHIOSTRO
 
 QUI = Path(__file__).parent
@@ -384,7 +385,8 @@ def allerg_riga(a, tracce=()):
     if not a and not tracce:
         return ""
     tr = f' · tracce {" · ".join(map(str, tracce))}' if tracce else ""
-    return f'<span class="all-riga">Allergeni {" · ".join(str(x) for x in a)}{tr}</span>'
+    # lo spazio prima permette di mandare a capo gli allergeni interi, senza spezzare il testo
+    return f' <span class="all-riga">Allergeni {" · ".join(str(x) for x in a)}{tr}</span>'
 
 
 # --- Illustrazioni a tratto, in stile incisione ------------------------------
@@ -763,7 +765,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .voce.con-cottura .testo > p:not(.nota) { max-width: calc(100% - 36mm); }
 .voce.con-cottura.firma .testo > p:not(.nota) { max-width: calc(100% - 33mm); }
 .freccia { width: 10mm; height: 6mm; color: var(--oro); flex: none; }
-.nota-pasta { margin-top: 4.5mm; padding-top: 3mm; border-top: 1px solid var(--filo); max-width: 136mm; }
+.nota-pasta { margin-top: 4.5mm; padding-top: 2mm; border-top: 1px solid var(--filo); max-width: 136mm; }
 .nota-pasta p { font-size: 12pt; line-height: 1.3; }
 .nota-pasta p.en { font-size: 11pt; font-style: italic; color: var(--tenue); margin-top: 1mm; }
 
@@ -810,6 +812,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .portata .en { font-size: 11.3pt; font-style: italic; color: var(--tenue); line-height: 1.2; }
 .all-riga { font-style: normal; font-size: 9.5pt; letter-spacing: .05em; margin-left: 2.5mm; white-space: nowrap; }
 .all-riga::before { content: '·'; margin-right: 2.5mm; }
+.all-riga.a-capo::before { content: none; }
 .deg-prezzo { align-self: center; display: inline-flex; align-items: center; gap: 4mm; margin-top: 1.5mm; padding: 0 7mm;
   border-left: .53mm solid var(--filo); border-right: .53mm solid var(--filo); }
 .deg-prezzo .cifra { font-size: 31pt; font-weight: 600; }
@@ -831,13 +834,13 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 /* aria: --aria viene calcolata pagina per pagina per riempire il foglio senza sforare */
 .riempi { --aria: 0mm; }
 .riempi .elenco { gap: calc(4.2mm + var(--aria)); }
-.p-primi.riempi .elenco { gap: calc(1.8mm + var(--aria)); }
+.p-primi.riempi .elenco { gap: calc(1.2mm + var(--aria)); }
 .riempi .voce .testo > * + * { margin-top: calc(var(--aria) * .09); }
 .riempi .voce .testo > .all { margin-top: calc(.6mm + var(--aria) * .09); }
 .riempi .elenco.compatto { gap: calc(2.6mm + var(--aria) * .5); }
 .riempi .intro { margin-bottom: calc(6mm + var(--aria)); }
 .riempi .sezione { margin-top: calc(8mm + var(--aria)); margin-bottom: calc(3.5mm + var(--aria) * .5); }
-.riempi .nota-pasta { margin-top: calc(3mm + var(--aria)); }
+.riempi .nota-pasta { margin-top: calc(2mm + var(--aria)); }
 .riempi .passi > li { margin-bottom: calc(6mm + var(--aria)); }
 .riempi .crudo-titolo { margin-bottom: calc(5mm + var(--aria)); }
 .p-deg.riempi .deg { justify-content: flex-start; }
@@ -873,6 +876,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .etichetta::before { content: "✦"; letter-spacing: 0; margin-right: 1.8mm; font-size: 9pt; }
 .etichetta em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1mm; }
 .nota-pasta p.spiega { font-weight: 700; }
+p, h3, h4, li { text-wrap: pretty; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
 
@@ -983,6 +987,7 @@ def main():
             pagina_web.goto(f_html.resolve().as_uri())
             pagina_web.wait_for_load_state("networkidle")
             pagina_web.evaluate("document.fonts.ready")
+            print("  a capo sistemati:", pagina_web.evaluate(SISTEMA_A_CAPO_JS))
             aria = pagina_web.evaluate(RIEMPI_JS)
             print("  aria aggiunta (mm) per pagina da riempire:", aria)
             errori = pagina_web.evaluate(SOVRAPPOSIZIONI_JS)

@@ -11,6 +11,7 @@ Uso:
 """
 from playwright.sync_api import sync_playwright
 
+from a_capo import SISTEMA_A_CAPO_JS
 from genera_menu import (ANTIPASTI, CONTORNI, CRUDO_PEZZI, CRUDO_SALSE_EXTRA, CRUDO_SALSE_INCLUSE,
                          DEGUSTAZIONI, FINALE, PRIMI, QUI, SECONDI, SERVIZIO, t, prezzo)
 
@@ -19,7 +20,7 @@ def allergeni(a, tracce=()):
     if not a and not tracce:
         return ""
     tr = f' · tracce {" · ".join(map(str, tracce))}' if tracce else ""
-    return f'<span class="al">{" · ".join(map(str, a))}{tr}</span>'
+    return f' <span class="al">{" · ".join(map(str, a))}{tr}</span>'
 
 
 def voce(p):
@@ -28,7 +29,7 @@ def voce(p):
     if p["chef"]:
         seg += '<span class="chef">il consiglio dello Chef</span>'
     # etichette e "Vegetariano" sulla stessa riga del nome, per risparmiare spazio
-    cott = '<span class="cottura">18 minuti di cottura</span>' if p["cottura"] else ""
+    cott = '<span class="cottura">18 min</span>' if p["cottura"] else ""
     if p["etichetta"]:
         cott += f'<span class="etichetta">{p["etichetta"][0]}</span>'
     vegetariano = bool(p["nota"]) and p["nota"].startswith(("Vegetariano", "Senza lattosio"))
@@ -231,6 +232,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .testa .qr-testo .qr-it { font-size: 14pt; }
 .testa .qr-testo .qr-em { display: none; }
 .tit-carta { margin: 1.5mm 0 2mm; padding-top: 2.2mm; border-top: .53mm solid var(--filo-testa); }
+p, h3, h4, li { text-wrap: pretty; }
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 .foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
@@ -262,6 +264,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .v p.nota { font-style: italic; color: var(--oro); font-size: 10.5pt; }
 .al { font-size: 8.5pt; letter-spacing: .04em; color: var(--tenue); margin-left: 1.6mm; white-space: nowrap; font-weight: 400; }
 .al::before { content: "·"; margin-right: 1.2mm; }
+.al.a-capo::before { content: none; }
 .chef { display: block; font-family: 'Caveat', cursive; font-weight: 600; font-size: 13pt; color: var(--oro); line-height: 1; margin-bottom: .6mm; }
 .etichetta { display: inline-block; font-size: 8pt; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--oro); line-height: 1; margin-left: 2mm; white-space: nowrap; }
 .etichetta::before { content: "✦"; margin-right: 1.4mm; letter-spacing: 0; }
@@ -343,6 +346,7 @@ def main(n_colonne=4):
         pg.goto(f_html.resolve().as_uri())
         pg.wait_for_load_state("networkidle")
         pg.evaluate("document.fonts.ready")
+        pg.evaluate(SISTEMA_A_CAPO_JS)
         misure = pg.evaluate(MISURA_JS)
         print("  altezze blocchi (mm):", [round(h) for h in misure["altezze"]], "totale", round(sum(misure["altezze"])))
         alto, gruppi = dividi(misure["altezze"], n_colonne, extra)
@@ -354,6 +358,7 @@ def main(n_colonne=4):
         pg.goto(f_html.resolve().as_uri())
         pg.wait_for_load_state("networkidle")
         pg.evaluate("document.fonts.ready")
+        pg.evaluate(SISTEMA_A_CAPO_JS)
         pg.pdf(path=str(QUI / f"{nome}.pdf"), format="A3", landscape=True, print_background=True,
                prefer_css_page_size=True)
         browser.close()
