@@ -232,7 +232,7 @@ ANTIPASTI = [
     piatto("Calamaro e tarassaco",
            "Calamaro cotto a bassa temperatura su erbette di tarassaco, salsa di acciughe e aceto al mirtillo",
            "Slow-cooked squid on dandelion greens, anchovy sauce and blueberry vinegar", (4, 12, 14),
-           etichetta=NOVITA),
+           prezzo="17,90", etichetta=NOVITA),
 ]
 
 # Componi il tuo Crudo: (nome, en, unità, unità_en, prezzo, allergeni)
