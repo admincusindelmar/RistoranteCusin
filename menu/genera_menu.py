@@ -240,10 +240,11 @@ CRUDO_PEZZI = [
     ("Ostrica del Doge", "Doge oyster", "al pezzo", "each", "8,50", (14,)),
     ("Scampo crudo", "Raw langoustine", "al pezzo", "each", "7,20", (2,)),
     ("Gambero rosso crudo", "Raw red prawn", "al pezzo", "each", "7,40", (2,)),
-    ("[[Gambero rosa o viola]] crudo", "Raw [[pink or purple]] prawn", "al pezzo", "each", None, (2,)),
     ("Tartare di tonno", "Tuna tartare", "la porzione", "portion", "18", (4,)),
     ("Carpaccio di pescato", "Catch of the day carpaccio", "la porzione", "portion", "15", (4,)),
 ]
+CRUDO_FUORI_MENU = ("Eventuali proposte di crudo fuori menù vi saranno comunicate dal nostro personale",
+                    "Any off-menu raw specials will be presented by our staff")
 CRUDO_SALSE_INCLUSE = ["Maionese all'arancia", "Maionese kiwi e lime"]
 CRUDO_SALSE_INCLUSE_EN = "Orange mayonnaise and kiwi & lime mayonnaise"
 CRUDO_SALSE_EXTRA = [  # (nome, en, prezzo, allergeni)
@@ -633,6 +634,7 @@ def pagina_crudo(n):
   <li><span class="n">1</span>
     <h4>Scegli i tuoi pezzi <em>Pick your pieces</em></h4>
     <div class="elenco">{pezzi}</div>
+    <p class="fuori-menu">{CRUDO_FUORI_MENU[0]}<br><em>{CRUDO_FUORI_MENU[1]}</em></p>
   </li>
   <li><span class="n">2</span>
     <h4>Abbina le nostre salse <em>Pair them with our sauces</em></h4>
@@ -877,6 +879,8 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 3px; border-radius: 2px; 
 .etichetta em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; color: var(--tenue); margin-left: 1mm; }
 .nota-pasta p.spiega { font-weight: 700; }
 p, h3, h4, li { text-wrap: pretty; }
+.fuori-menu { font-size: 11.5pt; font-style: italic; color: var(--oro); margin-top: 2.4mm; line-height: 1.3; max-width: 136mm; }
+.fuori-menu em { color: var(--tenue); font-size: 10.5pt; }
 .bozza { position: fixed; top: 3mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 """
 

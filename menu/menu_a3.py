@@ -12,7 +12,7 @@ Uso:
 from playwright.sync_api import sync_playwright
 
 from a_capo import SISTEMA_A_CAPO_JS
-from genera_menu import (ANTIPASTI, CONTORNI, CRUDO_PEZZI, CRUDO_SALSE_EXTRA, CRUDO_SALSE_INCLUSE,
+from genera_menu import (CRUDO_FUORI_MENU, ANTIPASTI, CONTORNI, CRUDO_PEZZI, CRUDO_SALSE_EXTRA, CRUDO_SALSE_INCLUSE,
                          DEGUSTAZIONI, FINALE, PRIMI, QUI, SECONDI, SERVIZIO, t, prezzo)
 
 
@@ -80,7 +80,8 @@ def crudo():
     incluse = " e ".join(CRUDO_SALSE_INCLUSE)
     passo1a = (f'<section class="sez apre"><p class="crudo-tit">Componi il tuo Crudo</p>'
                f'<p class="passo"><span>1</span> Scegli i tuoi pezzi</p><div class="elenco">{"".join(righe[:meta])}</div></section>')
-    passo1b = f'<div class="elenco">{"".join(righe[meta:])}</div>'
+    passo1b = (f'<div><div class="elenco">{"".join(righe[meta:])}</div>'
+               f'<p class="fuori-menu">{CRUDO_FUORI_MENU[0]}</p></div>')
     passo2 = (f'<div class="chiude"><p class="passo"><span>2</span> Abbina le salse</p>'
               f'<p class="incluse">Incluse: {incluse.lower()}{allergeni((3,))}</p><div class="elenco">{extra}</div></div>')
     return [(passo1a, "Il Crudo", False), (passo1b, "Il Crudo", True), (passo2, "Il Crudo", True)]
@@ -233,6 +234,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .testa .qr-testo .qr-em { display: none; }
 .tit-carta { margin: 1.5mm 0 2mm; padding-top: 2.2mm; border-top: .53mm solid var(--filo-testa); }
 p, h3, h4, li { text-wrap: pretty; }
+.fuori-menu { font-size: 10.5pt; font-style: italic; color: var(--oro); margin: .6mm 0 1.4mm; line-height: 1.2; }
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 .foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
