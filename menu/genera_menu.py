@@ -264,7 +264,7 @@ PRIMI = [
            prezzo="17,80"),
     piatto("Spaghetto Benedetto Cavalieri",
            "Alle vongole veraci, fiocchi di pomodoro e olio al lime",
-           "Spaghetti with clams, tomato flakes and lime oil", (1, 14), prezzo="19,70", cottura=True),
+           "Spaghetti with clams, tomato flakes and lime oil", (1, 14), prezzo="19,30", cottura=True),
     piatto("Spaghetto Benedetto Cavalieri al pomodoro",
            "Spaghetto con salsa di pomarola fresca",
            "Spaghetti with fresh pomarola sauce", (1,), prezzo=15),
