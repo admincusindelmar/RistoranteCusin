@@ -224,7 +224,7 @@ ANTIPASTI = [
     piatto("Cappuccino di mazzancolle",
            "Mazzancolle con crema di lenticchie e spuma di erborinato",
            "King prawns with lentil cream and blue cheese foam",
-           (2, 7), chef=True),
+           (2, 7), prezzo="17,80", chef=True),
     piatto("Sfera di verza",
            "Sfera di cavolo verza con robiola e pera, senape e olio al wakame",
            "Savoy cabbage sphere with robiola and pear, mustard and wakame oil",
