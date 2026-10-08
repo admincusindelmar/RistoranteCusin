@@ -129,7 +129,7 @@ def qr_code():
 
 def logo():
     """Il sigillo del ristorante (estratto dal file vettoriale con estrai_logo.py)."""
-    f = QUI / "logo" / "logo_cusin_sigillo_scuro.svg"
+    f = QUI / "logo" / "logo_cusin_sigillo_champagne.svg"           # colore originale del logo
     return f.read_text() if f.exists() else "<span>logo</span>"
 
 
@@ -216,6 +216,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .fascia-deg .portata h5 { margin: .5mm 0 0; font-size: 8.5pt; letter-spacing: .18em; }
 .fascia-deg .portata li { font-size: 11pt; line-height: 1.2; margin-bottom: .6mm; }
 .nota-deg { text-align: center; font-size: 10.5pt; font-weight: 600; margin-top: 1mm; }
+.testa h1 { color: #DEC38D; }
 .testa .nome { display: flex; align-items: center; gap: 6mm; text-align: center; }
 .testa .nome p { margin-top: .6mm; }
 .logo svg { height: 16mm; width: auto; display: block; }
