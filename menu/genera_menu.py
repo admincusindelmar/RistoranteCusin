@@ -346,10 +346,13 @@ for _p in ANTIPASTI + PRIMI:
     _aggiungi(_p, SEDANO)
 
 # pasta Benedetto Cavalieri: senza uova, può contenere tracce di soia e senape
-for _p in PRIMI:
-    if "Benedetto Cavalieri" in _p["nome"]:
-        _p["allergeni"] = tuple(a for a in _p["allergeni"] if a != 3)
-        _p["tracce"] = (SOIA, SENAPE)
+# (anche i paccheri farciti della Stella di Mare sono Benedetto Cavalieri)
+_cavalieri = [p for p in PRIMI if "Benedetto Cavalieri" in p["nome"]]
+_cavalieri += [p for _, _, ps in DEGUSTAZIONI[0]["portate"] for p in ps if p["nome"] == "Paccheri farciti"]
+assert len(_cavalieri) == 4
+for _p in _cavalieri:
+    _p["allergeni"] = tuple(a for a in _p["allergeni"] if a != 3)
+    _p["tracce"] = (SOIA, SENAPE)
 
 # ---------------------------------------------------------------------------
 # RENDER
