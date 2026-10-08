@@ -96,7 +96,7 @@ def sezione_divisibile(titolo, voci, coda=""):
 
 
 QR = """<section class="qr">
-  <div class="qr-box"><span>spazio per il<br>QR code</span></div>
+  <div class="qr-box">{qr_img}</div>
   <div class="qr-testo">
     <p class="qr-it">Il menù nella tua lingua</p>
     <p>Menu in English · Deutsch · Français · Español</p>
@@ -113,6 +113,15 @@ def blocchi():
             sezione_divisibile("Primi Piatti", [voce(p) for p in PRIMI]) +
             sezione_divisibile("Secondi Piatti", [voce(p) for p in SECONDI]) +
             sezione_divisibile("Contorni", [riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI]))
+
+
+def qr_code():
+    """QR del menù nelle altre lingue (https://menu.cooperto.it/3db5ce48-20f6-4875-925b-bf8afc0415e9)."""
+    import base64
+    f = QUI / "qr" / "qr_menu_lingue.png"
+    if not f.exists():
+        return "<span>spazio per il<br>QR code</span>"
+    return f'<img alt="QR code menù" src="data:image/png;base64,{base64.b64encode(f.read_bytes()).decode()}">'
 
 
 def logo():
@@ -135,7 +144,7 @@ def documento(colonne):
     return f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Menu Ristorante Cusin A3</title>
 <style>{font}{CSS}</style></head><body>{bozza}
 <main class="foglio">
-  <header class="testa"><div></div><div class="nome"><div class="logo">{logo()}</div><div><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div></div>{QR}</header>
+  <header class="testa"><div></div><div class="nome"><div class="logo">{logo()}</div><div><h1>Ristorante Cusin</h1><p>La Carta · Stagione 2026</p></div></div>{QR.replace("{qr_img}", qr_code())}</header>
   <section class="fascia-deg"><h2>Le Degustazioni</h2>
     <div class="tre">{"".join(degustazione(d) for d in DEGUSTAZIONI)}</div>
     <p class="nota-deg">I menù degustazione sono serviti per l'intero tavolo</p></section>
@@ -212,6 +221,8 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
   font-size: 8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); }
 .testa .qr { justify-self: end; margin: 0; padding: 0; border: 0; gap: 3mm; }
 .testa .qr-box { width: 19mm; height: 19mm; font-size: 7.5pt; }
+.qr-box:has(img) { border: 0; }
+.qr-box img { width: 100%; height: 100%; image-rendering: pixelated; display: block; }
 .testa .qr-testo p { font-size: 9.5pt; line-height: 1.2; }
 .testa .qr-testo .qr-it { font-size: 14pt; }
 .testa .qr-testo .qr-em { display: none; }
