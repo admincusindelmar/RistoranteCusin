@@ -291,7 +291,7 @@ SECONDI = [
            "servita con due salse incluse: basilico e arancia",
            "King prawns, red prawn, langoustines, tuna and squid skewer, "
            "served with two sauces: basil and orange",
-           (2, 4, 14), prezzo=42,
+           (2, 4, 14), prezzo="42,60",
            extra=[("Salsa all'ostrica", "Oyster sauce", "5", (14,)),
                   ("Salsa al tartufo", "Truffle sauce", "5", ())]),
     piatto("Scaloppata di tonno alla nocciola",
