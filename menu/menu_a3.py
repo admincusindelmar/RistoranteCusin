@@ -28,12 +28,12 @@ def voce(p):
     cott = '<span class="cottura">18 minuti di cottura</span>' if p["cottura"] else ""
     if p["etichetta"]:
         cott += f'<span class="etichetta">{p["etichetta"][0]}</span>'
-    vegetariano = bool(p["nota"]) and p["nota"].startswith("Vegetariano")
+    vegetariano = bool(p["nota"]) and p["nota"].startswith(("Vegetariano", "Senza lattosio"))
     if vegetariano:
-        cott += '<span class="etichetta veg">Vegetariano</span>'
+        cott += f'<span class="etichetta veg">{p["nota"].split(" · ")[0]}</span>'
     desc = f'<p>{t(p["desc"])}{allergeni(p["allergeni"])}</p>' if p["desc"] else ""
     nota = ""
-    if p["nota"] and not vegetariano:
+    if p["nota"] and not vegetariano and not p["nota"].startswith("Provalo"):
         nota = f'<p class="nota">{t(p["nota"].split(" · ")[0])}</p>'
     extra = "".join(
         f'<div class="tx extra">{"<span class=extra-tit>Salse in aggiunta</span>" if i == 0 else ""}'
@@ -112,8 +112,7 @@ def blocchi():
             crudo() +
             sezione_divisibile("Primi Piatti", [voce(p) for p in PRIMI]) +
             sezione_divisibile("Secondi Piatti", [voce(p) for p in SECONDI]) +
-            [(sezione("Contorni", f'<div class="elenco">{"".join(riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI)}</div>'), "Contorni", False),
-             ])
+            sezione_divisibile("Contorni", [riga(c["nome"], prezzo(c["prezzo"])) for c in CONTORNI]))
 
 
 def logo():
@@ -184,14 +183,14 @@ CSS = """
 html, body { background: none; color: var(--inchiostro); font-family: 'Cormorant Garamond', Georgia, serif;
   -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; font-style: normal; }
-.segue { font-size: 10pt; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tenue); margin-bottom: 2mm; }
+.segue { font-size: 9.5pt; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--tenue); margin-bottom: .8mm; line-height: 1.1; }
 .segue em { font-weight: 400; font-style: italic; letter-spacing: .06em; text-transform: none; }
 .sez.apre { margin-bottom: 0; }
 .chiude { margin-bottom: 3.5mm; }
 /* fascia delle degustazioni in alto, una accanto all'altra */
 .fascia-deg h2, .tit-carta { text-align: center; font-size: 14pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
 .fascia-deg h2 { margin-bottom: 2mm; }
-.fascia-deg .tre { display: grid; grid-template-columns: 1.3fr 1fr 1fr; column-gap: 8mm; }
+.fascia-deg .tre { display: grid; grid-template-columns: 1.42fr 1fr 1fr; column-gap: 8mm; }
 .fascia-deg .qr { margin: 2mm 0 1mm 0; padding: 2.4mm; }
 .fascia-deg .qr-box { width: 26mm; height: 26mm; }
 .fascia-deg .deg { border-bottom: 0; margin-bottom: 0; padding: 0 2mm 2mm; }
@@ -207,16 +206,16 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .nota-deg { text-align: center; font-size: 10.5pt; font-weight: 600; margin-top: 1mm; }
 .testa .nome { display: flex; align-items: center; gap: 6mm; text-align: center; }
 .testa .nome p { margin-top: .6mm; }
-.logo svg { height: 19mm; width: auto; display: block; }
+.logo svg { height: 16mm; width: auto; display: block; }
 .logo:has(span) { width: 18mm; height: 18mm; border: .4mm dashed var(--tenue); }
 .logo { display: flex; align-items: center; justify-content: center;
   font-size: 8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); }
 .testa .qr { justify-self: end; margin: 0; padding: 0; border: 0; gap: 3mm; }
-.testa .qr-box { width: 21mm; height: 21mm; font-size: 7.5pt; }
+.testa .qr-box { width: 19mm; height: 19mm; font-size: 7.5pt; }
 .testa .qr-testo p { font-size: 9.5pt; line-height: 1.2; }
 .testa .qr-testo .qr-it { font-size: 14pt; }
-.testa .qr-testo .qr-em { font-size: 8.5pt; }
-.tit-carta { margin: 2mm 0 3mm; padding-top: 3mm; border-top: .53mm solid var(--filo-testa); }
+.testa .qr-testo .qr-em { display: none; }
+.tit-carta { margin: 1.5mm 0 2mm; padding-top: 2.2mm; border-top: .53mm solid var(--filo-testa); }
 .bozza { position: fixed; top: 4mm; left: 6mm; font-size: 8pt; letter-spacing: .2em; color: #a08400; }
 .foglio { width: 420mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; display: flex; flex-direction: column; }
 
@@ -239,7 +238,7 @@ mark { background: #fff1a8; color: #6b5200; padding: 0 2px; border-radius: 2px; 
 .elenco.due { display: grid; grid-template-columns: 1fr 1fr; column-gap: 4mm; }
 .elenco.due h4 { font-size: 11pt; }
 .v { display: grid; grid-template-columns: 1fr 12mm; break-inside: avoid; }
-.v .tx { padding: 0 3mm 1.1mm 0; }
+.v .tx { padding: 0 3mm .8mm 0; }
 .v .pr { border-left: .45mm solid var(--filo); padding-left: 2.6mm; font-size: 12pt; font-weight: 700; padding-top: .4mm; }
 .v.corta .tx { padding-bottom: .5mm; }
 .v h4 { font-size: 12pt; font-weight: 700; line-height: 1.2; }
@@ -323,7 +322,7 @@ def main(n_colonne=4):
         pg = browser.new_page()
         # 1) misura ogni blocco alla larghezza di una colonna
         prova = [tutti] + [[] for _ in range(n_colonne - 1)]
-        segue_mm = 7                                                        # la scritta "segue" in cima alla colonna
+        segue_mm = 5                                                        # la scritta "segue" in cima alla colonna
         extra = [segue_mm if cont else 0 for _, sez, cont in tutti]
         f_html.write_text(documento(prova), encoding="utf-8")
         pg.goto(f_html.resolve().as_uri())
