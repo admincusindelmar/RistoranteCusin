@@ -228,7 +228,7 @@ ANTIPASTI = [
     piatto("Sfera di verza",
            "Sfera di cavolo verza con robiola e pera, senape e olio al wakame",
            "Savoy cabbage sphere with robiola and pear, mustard and wakame oil",
-           (7, 10), nota="Vegetariano · Vegetarian"),
+           (7, 10), prezzo="16,40", nota="Vegetariano · Vegetarian"),
     piatto("Calamaro e tarassaco",
            "Calamaro cotto a bassa temperatura su erbette di tarassaco, salsa di acciughe e aceto al mirtillo",
            "Slow-cooked squid on dandelion greens, anchovy sauce and blueberry vinegar", (4, 12, 14),
