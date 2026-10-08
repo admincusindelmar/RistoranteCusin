@@ -271,7 +271,7 @@ PRIMI = [
     piatto("Risotto al Calasole",
            "Risotto con battuto toscano, calamari, totani, seppie e tartufo",
            "Risotto with Tuscan soffritto, squid, flying squid, cuttlefish and truffle", (9, 14),
-           etichetta=NOVITA, nota="Senza lattosio · Lactose free"),
+           prezzo="18,40", etichetta=NOVITA, nota="Senza lattosio · Lactose free"),
     piatto("Risotto al dentice",
            "Risotto al dentice con finocchietto selvatico, cipollotto fresco e carpaccio di finocchio",
            "Dentex risotto with wild fennel, fresh spring onion and fennel carpaccio", (4,),
