@@ -247,8 +247,8 @@ CRUDO_PEZZI = [
 CRUDO_SALSE_INCLUSE = ["Maionese all'arancia", "Maionese kiwi e lime"]
 CRUDO_SALSE_INCLUSE_EN = "Orange mayonnaise and kiwi & lime mayonnaise"
 CRUDO_SALSE_EXTRA = [  # (nome, en, prezzo, allergeni)
-    ("Maionese al melone invernale", "Winter melon mayonnaise", "4", ()),
-    ("Maionese all'ostrica", "Oyster mayonnaise", "4", (14,)),
+    ("Maionese al melone invernale", "Winter melon mayonnaise", "5", ()),
+    ("Maionese all'ostrica", "Oyster mayonnaise", "5", (14,)),
 ]
 
 PRIMI = [
@@ -290,8 +290,8 @@ SECONDI = [
            "King prawns, red prawn, langoustines, tuna and squid skewer, "
            "served with two sauces: basil and orange",
            (2, 4, 14), prezzo=42,
-           extra=[("Salsa all'ostrica", "Oyster sauce", "4", (14,)),
-                  ("Salsa al tartufo", "Truffle sauce", "4", ())]),
+           extra=[("Salsa all'ostrica", "Oyster sauce", "5", (14,)),
+                  ("Salsa al tartufo", "Truffle sauce", "5", ())]),
     piatto("Scaloppata di tonno alla nocciola",
            "Tonno in crosta di nocciola, crema di acetosella, olio al prezzemolo e verdure scottate",
            "Tuna in hazelnut crust, sorrel cream, parsley oil and seared vegetables",

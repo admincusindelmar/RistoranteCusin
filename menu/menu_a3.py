@@ -271,7 +271,7 @@ p, h3, h4, li { text-wrap: pretty; }
 .cottura { font-family: 'Caveat', cursive; font-weight: 600; font-size: 12pt; color: var(--oro); margin-left: 2mm; white-space: nowrap; }
 .v.firma .tx { border: .3mm solid #c9bb95; padding: 1.6mm 2.4mm; margin: 0 2.4mm 2.6mm -2.4mm; }
 .tx.extra { font-size: 11pt; padding-bottom: .6mm; }
-.extra-tit { display: block; font-size: 8.5pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--oro); margin-top: -1.4mm; }
+.extra-tit { display: block; font-size: 8.5pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--oro); margin-top: 1.8mm; }
 .pr.extra { font-size: 11pt; font-weight: 600; display: flex; align-items: flex-end; padding-bottom: .6mm; }
 .nota-pasta { font-size: 10.5pt; font-weight: 700; line-height: 1.3; margin-top: 2mm; }
 
