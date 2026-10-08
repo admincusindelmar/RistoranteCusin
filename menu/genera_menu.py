@@ -297,7 +297,7 @@ SECONDI = [
     piatto("Scaloppata di tonno alla nocciola",
            "Tonno in crosta di nocciola, crema di acetosella, olio al prezzemolo e verdure scottate",
            "Tuna in hazelnut crust, sorrel cream, parsley oil and seared vegetables",
-           (4, 8), prezzo=25),
+           (4, 8), prezzo="25,80"),
     piatto("Il fritto di mare della Zia",
            "Frittura di mare e verdure in farina di riso, leggera e croccante",
            "Light, crispy fried seafood and vegetables in rice flour",
