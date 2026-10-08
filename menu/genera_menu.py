@@ -279,7 +279,7 @@ PRIMI = [
     piatto("Ravioli e crema di zucca",
            "Ravioli ripieni di ricotta senza lattosio, adagiati su crema di zucca, burro chiarificato alla salicornia",
            "Ravioli filled with lactose-free ricotta, on pumpkin cream, clarified butter with samphire", (1, 3, 7),
-           nota="Vegetariano · Vegetarian"),
+           prezzo="16,80", nota="Vegetariano · Vegetarian"),
 ]
 
 SECONDI = [
