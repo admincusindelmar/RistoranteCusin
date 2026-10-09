@@ -5,8 +5,7 @@ Il menù è completo nella struttura. Restano i punti in giallo: sono domande, n
 ## Da chiudere
 Tutti i punti della mail di Carmine sono chiusi il 09.10.2026 (vedi `DECISIONI.md` §5).
 
-Resta in giallo:
-- **Antipasto toscano**: allergeni da confermare. In giallo c'è 7 (pecorino); si chiede se c'è altro, per esempio pane, miele o confetture servite insieme. Nell'A3 il giallo non si vede: va chiuso prima di stampare anche l'A3.
+**Nel menù non resta nessun giallo.**
 
 ## Monogramma della copertina
 Posizionato il 09.10.2026 con le misure date dal ristorante (vedi `DECISIONI.md` §6). Resta da controllare: si stampa la copertina su carta comune, la si monta e si apre la cartella un paio di volte.
