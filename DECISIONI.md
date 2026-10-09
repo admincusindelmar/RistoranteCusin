@@ -81,7 +81,7 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
 - 09.10.2026 · Chef · calamaro: la verdura è **bietola a coste rosse**, non tarassaco. Il piatto si chiama ora «Calamaro e bietola» (Primo Fiore e carta).
 
 ## 6. Modifiche del 09.10.2026 (richieste dal ristorante)
-- **Copertina**: il sigillo è alto 80 mm e largo 35 mm. Il bordo alto sta a 100 mm dal bordo superiore del foglio, il bordo destro a 80 mm dal bordo destro, quindi l'asse è a 112,5 mm da sinistra. La citazione scende sotto il sigillo ed è 2 punti più piccola (da 35 a 32,3 px).
+- **Copertina**: il sigillo è alto 80 mm e largo 35 mm. Il bordo alto sta a 100 mm dal bordo superiore del foglio, il bordo destro a 80 mm dal bordo destro, quindi l'asse è a 112,5 mm da sinistra. La citazione scende sotto il sigillo ed è 2 punti più piccola (da 35 a 32,3 px). Citazione, traduzione, firma e «CUSIN» sono centrati sull'asse del sigillo (112,5 mm), non sul centro dell'area di testo (116,5 mm), perché il sigillo non sta al centro dell'area di testo.
 - **Un solo carattere in tutto il menù**: Cormorant Garamond anche per descrizioni, allergeni, note, prezzi ed etichette. Montserrat non si usa più, e questo supera il punto 3 «Montserrat per i testi piccoli». I corpi sono stati ricalcolati, perché Cormorant è più piccolo a parità di corpo: descrizione 15,5 px, allergeni 13,5 px, prezzi 17,5 px. Le cifre sono allineate (lining).
 - **Nome del piatto** un punto più piccolo: da 22 a 20,7 px.
 - **Allergeni e diciture non più in maiuscolo**: «Allergeni/Allergens 2 · 9», «Vegetariano/Vegetarian». Le etichette di sezione restano maiuscole e spaziate.

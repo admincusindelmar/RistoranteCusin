@@ -114,7 +114,7 @@
   .cop { padding-top: 30mm; }
   .cop .corpo { align-items: center; text-align: center; }
   .citazione { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 32.3px; line-height: 31.5px; letter-spacing: -.005em; margin: 16mm 0 0; }
-  .autore { font-size: 12.5px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; margin: 9mm 0 0; }
+  .autore { font-size: 12.5px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; margin: 9mm 0 0; padding-left: .32em; }
   .autore::before { content: ""; display: block; width: 48px; height: 1px; background: var(--champagne); margin: 0 auto 6mm; }
   .cit-en { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 18px; color: var(--secondario); margin: 4mm 0 0; }
   .lockup { margin-top: auto; text-align: center; }
@@ -154,6 +154,8 @@
   .cA .mono { position: absolute; top: var(--mono-top); left: var(--mono-asse); height: var(--mono-h); transform: translateX(-50%); display: block; margin: 0; }
   .cA .corpo { padding-top: calc(var(--mono-top) + var(--mono-h) - 11mm); }
   .cA .citazione { margin-top: 14mm; }
+  /* Testi della copertina centrati sull'asse del sigillo: l'area di testo va da 40 a 193 mm (centro 116,5 mm), quindi si stringe a destra del doppio dello scarto */
+  .cA .corpo { padding-right: calc(2 * (116.5mm - var(--mono-asse))); }
   .cA .fondo { margin-top: auto; text-align: center; }
   .nome-cusin { font-family: var(--display); font-weight: 500; font-size: 24px; letter-spacing: .5em; margin: 0 0 0 .5em; }
   .stagione { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin: 4mm 0 0; }
