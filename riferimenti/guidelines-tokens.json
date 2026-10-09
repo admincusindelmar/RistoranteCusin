@@ -1,0 +1,77 @@
+{
+  "name": "Cusin",
+  "version": 1,
+  "color": {
+    "themes": [
+      {"id": "sera", "name": "Sera"},
+      {"id": "carta", "name": "Carta"}
+    ],
+    "tokens": [
+      {"name": "blu-cusin", "value": "#152b61", "usage": "Colore primario della Marca. Sulla Carta: testo, titoli, fondi pieni, bottone Prenota (avorio sopra, 11,7:1). Sulla Sera non va usato come testo (1,4:1 sul nero): solo come fondo pieno con champagne o avorio sopra."},
+      {"name": "champagne", "value": "#d6c6a5", "usage": "L'oro di Cusin. Sulla Sera: monogramma, titoli e testi (11,6:1 sul nero, 10,4:1 sulla superficie). Su blu-cusin: monogramma e testo (8,1:1). Sull'avorio mai come testo (1,5:1): solo filetti e decori."},
+      {"name": "nero", "value": "#0d0c0e", "usage": "Fondo della Sera: sito, social, sala di sera. Testo sul champagne (11,6:1) e sull'avorio (16,8:1)."},
+      {"name": "avorio", "value": "#f4ede2", "usage": "Fondo della Carta: menù, biglietti, stampa. Testo principale sulla Sera (16,8:1 sul nero) e su blu-cusin (11,7:1)."},
+      {"name": "grigio-caldo", "value": "#a89e91", "usage": "Testo secondario sulla Sera: note, traduzioni, allergeni (7,4:1 sul nero). Sull'avorio non si legge (2,3:1): lì si usa grigio-caldo-scuro."},
+      {"name": "grigio-caldo-scuro", "value": "#675e53", "usage": "Testo secondario sulla Carta: traduzioni, allergeni, note (5,5:1 sull'avorio, 5,0:1 sulla superficie Carta). Ricavato da grigio-caldo per la stampa."},
+      {"name": "blu-chiaro", "value": "#96a0b8", "usage": "Accento, con parsimonia. Sulla Sera anche come testo (7,5:1 sul nero); sull'avorio solo come fondo o decoro (2,3:1)."},
+      {"name": "fondo", "value": {"sera": "{nero}", "carta": "{avorio}"}, "usage": "Fondo della pagina o del foglio."},
+      {"name": "superficie", "value": {"sera": "#19191f", "carta": "#ebe2d3"}, "usage": "Riquadri appena staccati dal fondo: box nel menù, sezioni del sito. Mai per separare con l'ombra."},
+      {"name": "testo", "value": {"sera": "{avorio}", "carta": "{blu-cusin}"}, "usage": "Testo principale, su fondo e superficie."},
+      {"name": "testo-secondario", "value": {"sera": "{grigio-caldo}", "carta": "{grigio-caldo-scuro}"}, "usage": "Traduzioni inglesi, descrizioni lunghe, allergeni, note di servizio, su fondo e superficie."},
+      {"name": "oro", "value": {"sera": "{champagne}", "carta": "{blu-cusin}"}, "usage": "Il colore del monogramma e dei titoli che devono spiccare: champagne di sera, blu sulla carta."},
+      {"name": "filetto", "value": {"sera": "rgba(214, 198, 165, 0.35)", "carta": "rgba(21, 43, 97, 0.25)"}, "usage": "Filetti sottili da 1px fra sezioni e piatti. Separano senza ombre."},
+      {"name": "azione", "value": {"sera": "{champagne}", "carta": "{blu-cusin}"}, "usage": "Fondo del bottone principale (Prenota)."},
+      {"name": "su-azione", "value": {"sera": "{nero}", "carta": "{avorio}"}, "usage": "Testo sul bottone principale: 11,6:1 di sera, 11,7:1 sulla carta."},
+      {"name": "focus", "value": {"sera": "{champagne}", "carta": "{blu-cusin}"}, "usage": "Anello di focus da tastiera: 2px pieni a 2px di distanza dall'elemento. Sopra il 3:1 su fondo e superficie in entrambi i temi."}
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "display": "\"Cormorant Garamond\", Cormorant, Garamond, \"Times New Roman\", serif",
+      "testo": "Montserrat, \"Helvetica Neue\", Arial, sans-serif"
+    },
+    "groups": [
+      {
+        "name": "Titoli",
+        "family": "display",
+        "note": "Cormorant Garamond, Google Fonts, pesi 500 e 600 e corsivo 500.",
+        "styles": [
+          {"name": "titolo-xl", "fontSize": "56px", "lineHeight": "60px", "fontWeight": 500, "letterSpacing": "0.01em", "sample": "Tradizione in Evoluzione", "usage": "Un titolo per pagina: copertina del menù, apertura del sito, post."},
+          {"name": "titolo-l", "fontSize": "36px", "lineHeight": "42px", "fontWeight": 500, "sample": "Stella di Mare", "usage": "Nomi delle degustazioni, titoli di sezione del sito."},
+          {"name": "titolo-m", "fontSize": "24px", "lineHeight": "30px", "fontWeight": 600, "letterSpacing": "0.04em", "sample": "Le nostre serate", "usage": "Sottotitoli, nomi delle serate."},
+          {"name": "piatto", "fontSize": "21px", "lineHeight": "26px", "fontWeight": 500, "sample": "Scampo e pera", "usage": "Il nome del piatto nel menù."},
+          {"name": "sottotitolo", "fontSize": "18px", "lineHeight": "24px", "fontWeight": 500, "fontStyle": "italic", "sample": "Il nostro viaggio nel mare, in sette tempi", "usage": "La riga sotto il titolo di una degustazione o di una serata. Corsivo."}
+        ]
+      },
+      {
+        "name": "Testo",
+        "family": "testo",
+        "note": "Montserrat, Google Fonts, pesi 400, 500 e 600.",
+        "styles": [
+          {"name": "etichetta", "fontSize": "12px", "lineHeight": "16px", "fontWeight": 500, "letterSpacing": "0.18em", "sample": "ANTIPASTI · STARTERS", "usage": "Sezioni del menù, voci di navigazione, sopratitoli. Sempre in maiuscolo, spaziato."},
+          {"name": "testo", "fontSize": "15px", "lineHeight": "24px", "fontWeight": 400, "sample": "Fondato nel 1994, Cusin è una cucina di mare costruita nel tempo.", "usage": "Testo corrente del sito e dei documenti."},
+          {"name": "descrizione", "fontSize": "13px", "lineHeight": "20px", "fontWeight": 400, "sample": "Scampo con brunoise di pera, sedano croccante e colatura di fico", "usage": "La descrizione del piatto, sotto il nome."},
+          {"name": "nota", "fontSize": "11px", "lineHeight": "16px", "fontWeight": 400, "letterSpacing": "0.02em", "sample": "Langoustine, pear brunoise, crunchy celery and fig glaze · Allergeni 2 · 9", "usage": "Traduzione inglese, allergeni, note di servizio. In testo-secondario."},
+          {"name": "prezzo", "fontSize": "15px", "lineHeight": "20px", "fontWeight": 500, "sample": "65 €", "usage": "Prezzi, sempre nello stesso formato: cifra intera o con due decimali in tutta la carta, mai misti."}
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "tokens": [
+      {"name": "spazio-1", "value": "4px", "usage": "Fra il nome del piatto e la sua descrizione."},
+      {"name": "spazio-2", "value": "8px", "usage": "Fra descrizione, traduzione e allergeni; distanza dell'anello di focus."},
+      {"name": "spazio-3", "value": "16px", "usage": "Margine minimo intorno al logo nei formati piccoli; padding dei bottoni in verticale."},
+      {"name": "spazio-4", "value": "24px", "usage": "Fra un piatto e il successivo; padding dei bottoni in orizzontale."},
+      {"name": "spazio-5", "value": "40px", "usage": "Fra le sezioni di una pagina del menù."},
+      {"name": "spazio-6", "value": "64px", "usage": "Margini di pagina in stampa e aperture di sezione del sito."}
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {"name": "raggio-0", "value": "0px", "usage": "Tutto: bottoni, riquadri, immagini, biglietti. Cusin ha spigoli vivi."},
+      {"name": "raggio-1", "value": "2px", "usage": "Solo i campi dei moduli, per distinguerli dai bottoni."}
+    ]
+  }
+}
