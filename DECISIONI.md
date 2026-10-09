@@ -58,6 +58,14 @@ Valori completi in `riferimenti/guidelines-tokens.json`.
   - i dolci li presenta la sala, e c'è una riga che lo dice nella pagina dei contorni;
   - coperto e servizio dolce sono «a persona», il servizio tappo «a bottiglia».
 
+## 4b. Menù A3 (09.10.2026)
+- **A3 orizzontale, solo fronte, solo in italiano**, con la grafica del menù A4: un solo carattere (Cormorant), testo in blu, champagne solo per filetti e decori, monogramma blu in testa, piede «Cusin · Autunno 2026».
+- Dal vecchio A3 (`menu/A3_DEFINITIVO_Menu_Cusin_2026.pdf`) restano **il QR code** del menù nelle altre lingue, in alto a destra, e **le degustazioni in una fascia in alto**, una accanto all'altra. Sotto c'è la carta in cinque colonne bilanciate.
+- Il QR è ricolorato in blu Cusin con il fondo trasparente, e il suo testo è al «voi»: «Il menù nella vostra lingua».
+- Nelle degustazioni, se la descrizione comincia già col nome del piatto si scrive solo la descrizione; altrimenti si scrivono nome e descrizione.
+- Gli allergeni sono solo numeri, accanto alla descrizione; la legenda e le note di legge stanno nel piede, insieme al servizio.
+- Il testo viene da `sorgenti/menu.html`, quindi A4 e A3 dicono sempre le stesse cose.
+
 ## 5. Conferme ricevute dopo il passaggio
 Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · Chef · maionese al melone invernale: 3 · 10».
 

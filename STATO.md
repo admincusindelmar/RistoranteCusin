@@ -12,7 +12,8 @@ Posizionato il 09.10.2026 con le misure date dal ristorante (vedi `DECISIONI.md`
 1. Provare la copertina nella cartella.
 2. Rigenerare con `./genera.sh` e controllare le 9 pagine.
 3. Fare una prova su un foglio di carta avorio martellata: leggibilità dei grigi e dei corsivi piccoli, con la luce della sala.
-4. Stampare la versione definitiva da `pdf/Menu-Autunno-2026_Stampa.pdf`. Prima va verificato che nel menù non resti nessun giallo.
+4. Stampare la versione definitiva da `pdf/Menu-Autunno-2026_Stampa.pdf`.
+5. Stampare l'A3 da `pdf/Menu-Autunno-2026_A3_Stampa.pdf` (prima `python3 genera_a3.py`, se `menu.html` è cambiato). Prima va verificato che nel menù non resti nessun giallo.
 
 ## Fuori da questa cartella
 La **carta dei vini** ha una sua cartella di legno (foto in `riferimenti/cartelle/`), ma non fa parte di questo lavoro.

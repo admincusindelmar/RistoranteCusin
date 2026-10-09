@@ -11,8 +11,11 @@ Chi lavora qui deve sapere tutto ciò che sapeva Carmine. Le decisioni e il loro
 - `sorgenti/cusin-monogramma-blu.png` — il monogramma usato nel menù.
 - `genera.sh` — rigenera i due PDF in `pdf/` con Chrome headless. Serve la connessione, perché i caratteri arrivano da Google Fonts.
 - `genera_cloud.py` — la stessa cosa nell'ambiente cloud di Claude Code, dove Chrome non scarica da solo i caratteri: `python3 genera_cloud.py`.
+- `genera_a3.py` — genera il **menù A3** orizzontale, solo fronte e solo in italiano, leggendo piatti, prezzi e allergeni da `sorgenti/menu.html`: `python3 genera_a3.py`. L'A3 non si modifica a mano: si corregge `menu.html` e si rilanciano tutti e due gli script. `sorgenti/menu-a3.generato.html` lo riscrive lo script ogni volta.
+- `sorgenti/qr-menu-lingue.png` — il QR code del menù nelle altre lingue (in blu Cusin), usato nell'A3.
 - `pdf/Menu-Autunno-2026_Schermo.pdf` — con l'avorio simulato, per vederlo a video.
 - `pdf/Menu-Autunno-2026_Stampa.pdf` — senza fondo, da stampare sulla carta avorio.
+- `pdf/Menu-Autunno-2026_A3_Stampa.pdf` e `_A3_Schermo.pdf` — il menù A3, senza fondo e con l'avorio simulato.
 - `riferimenti/`:
   - `2026-10-08_Menu-Semidefinitivo-Noemi.pdf` — la versione di partenza;
   - `2026-10-08_Mail-Carmine-a-Noemi.txt` — la mail che spiega tutte le modifiche;
