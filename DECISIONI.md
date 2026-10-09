@@ -75,7 +75,7 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - sedano (9): resta su tutti i piatti dove era segnato, perché lo Chef a volte usa il brodo;
   - il Vegetop non contiene soia.
 - 09.10.2026 · Chef · gnocchi al Calasole con uovo (3), tagliolini di pasta all'uovo (3), sugo di pomodoro su base di verdure con sedano (9): erano già segnati, nessuna modifica. **Raviolo e ravioli**: uovo, latte senza lattosio e tracce di soia, sesamo e senape → 1 · 3 · 7 · 9 · tracce 6 · 10 · 11.
-- 09.10.2026 · Chef · **piccola pasticceria**: biscotto di frolla (glutine, uova, burro senza lattosio), cioccolato fondente al 70% senza lattosio → 1 · 3 · 7 · 12. Il 7 resta perché anche il burro senza lattosio è un derivato del latte; il 12 (marmellata di vino) era già segnato.
+- 09.10.2026 · Chef · **piccola pasticceria**: biscotto di frolla (glutine, uova, burro senza lattosio), cioccolato fondente al 70% senza lattosio, con lecitina di soia (conferma successiva dello stesso giorno) → 1 · 3 · 6 · 7 · 12. Il 7 resta perché anche il burro senza lattosio è un derivato del latte; il 12 (marmellata di vino) era già segnato.
 - 09.10.2026 · Chef · **salse della grigliata**, tutte con latte senza lattosio, olio di girasole e sale, senza uova: basilico → 7; ostrica → 7 · 14; tartufo (con pepe) → 7. La grigliata, con basilico e arancia incluse, diventa 2 · 3 · 4 · 7 · 14.
 - 09.10.2026 · Chef · **pepe del Madagascar**: non si paga a parte, la riga resta senza supplemento. **Acqua in vetro**: 70 cl.
 - 09.10.2026 · Chef · calamaro: la verdura è **bietola a coste rosse**, non tarassaco. Il piatto si chiama ora «Calamaro e bietola» (Primo Fiore e carta).
