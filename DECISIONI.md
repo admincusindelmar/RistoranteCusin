@@ -65,6 +65,7 @@ Valori completi in `riferimenti/guidelines-tokens.json`.
 - Nelle degustazioni, se la descrizione comincia già col nome del piatto si scrive solo la descrizione; altrimenti si scrivono nome e descrizione.
 - Gli allergeni sono solo numeri, accanto alla descrizione; la legenda e le note di legge stanno nel piede, insieme al servizio.
 - Il testo viene da `sorgenti/menu.html`, quindi A4 e A3 dicono sempre le stesse cose.
+- **Nuovo antipasto** (09.10.2026, richiesta del ristorante): «Antipasto toscano», prosciutto crudo toscano e pecorini, 18. È in fondo agli antipasti, nel menù A4 e nell'A3.
 
 ## 5. Conferme ricevute dopo il passaggio
 Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · Chef · maionese al melone invernale: 3 · 10».
