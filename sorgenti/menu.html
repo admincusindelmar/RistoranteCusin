@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Cusin · Menù Autunno 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
 <style>
   /* Token delle brand guidelines v0.1, Modo Carta */
   :root {
@@ -15,12 +15,12 @@
     --filetto: rgba(21, 43, 97, 0.25);
     --giallo: #fff0a0;              /* solo per i punti da verificare */
     --display: "Cormorant Garamond", Garamond, serif;
-    --testo: Montserrat, "Helvetica Neue", Arial, sans-serif;
+    --testo: "Cormorant Garamond", Garamond, serif;   /* carattere unico (09.10.2026): prima Montserrat */
   }
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: var(--testo); color: var(--blu); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: var(--testo); font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   /* Versione schermo: simula l'avorio della carta. In stampa il fondo resta vuoto. */
   body.schermo { background: #d9d3c8; }
   body.schermo .pag { background: var(--avorio); margin: 0 auto 8mm; }
@@ -31,7 +31,7 @@
 
   .testa { text-align: center; }
   .testa img { height: 9mm; width: auto; display: block; margin: 0 auto 4mm; }
-  .eti { font-size: 10px; line-height: 14px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; margin: 0; }
+  .eti { font-size: 12.5px; line-height: 15px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; margin: 0; }
   .eti > span { font-family: var(--display); font-style: italic; font-size: 14px; font-weight: 500; color: var(--secondario); letter-spacing: .02em; text-transform: none; margin-left: 1mm; }
   h1 { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 40px; margin: 3mm 0 0; letter-spacing: .005em; }
   .sotto { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 19px; line-height: 23px; margin: 2.5mm 0 0; }
@@ -39,13 +39,13 @@
   .intro { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 17px; line-height: 21px; margin: 5mm 0 0; }
 
   .corpo { flex: 1; display: flex; flex-direction: column; }
-  .piede { display: flex; justify-content: space-between; font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); border-top: 1px solid var(--filetto); padding-top: 3mm; margin-top: 4mm; }
+  .piede { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); border-top: 1px solid var(--filetto); padding-top: 3mm; margin-top: 4mm; }
 
   /* Testi del piatto: nome stretto, descrizione ariosa, traduzione corsiva attaccata, allergeni staccati */
   .tr { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 16.5px; color: var(--secondario); margin: -.6mm 0 0; }
   .tr-in { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14.5px; color: var(--secondario); letter-spacing: 0; text-transform: none; margin-left: 1mm; }
-  .all { font-size: 8.5px; line-height: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--secondario); margin: 1.6mm 0 0; }
-  .all-in { font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--secondario); margin-left: 1.5mm; }
+  .all { font-size: 13.5px; line-height: 15px; letter-spacing: .02em; color: var(--secondario); margin: 1.6mm 0 0; }
+  .all-in { font-size: 13.5px; letter-spacing: .02em; color: var(--secondario); margin-left: 1.5mm; }
   .all .dieta { margin-left: 3mm; }
   /* Traduzione e allergeni su righe proprie; solo nel crudo (.voce.breve) stanno sulla stessa riga */
   .voce .tr { text-wrap: pretty; }
@@ -61,7 +61,7 @@
   .deg .voce h2 { margin: 0; }
   .prezzo-deg { display: inline-flex; align-items: baseline; gap: 3mm; margin: 0 auto; padding: 0 0 0; }
   .prezzo-deg b { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 40px; }
-  .prezzo-deg > span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; text-align: left; line-height: 14px; }
+  .prezzo-deg > span { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; text-align: left; line-height: 14px; }
   .prezzo-deg span em { font-family: var(--display); font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--secondario); font-weight: 500; }
   .deg .corpo { padding-top: 6mm; }
   .deg.lunga { padding-top: 11mm; }
@@ -75,11 +75,11 @@
   .filetto-corto { width: 48px; height: 1px; background: var(--champagne); margin: 0 auto; }
 
   /* Voci */
-  .voce h2 { font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 22px; margin: 0; letter-spacing: .005em; }
-  .desc { font-size: 12px; line-height: 19px; margin: 1.8mm 0 0; }
-  .nota { font-size: 11px; line-height: 16px; color: var(--secondario); margin: .8mm 0 0; }
-  .dieta { font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--blu); font-weight: 600; }
-  .chef { font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin: 0 0 1mm; display: flex; align-items: center; gap: 2mm; }
+  .voce h2 { font-family: var(--display); font-weight: 600; font-size: 20.7px; line-height: 21px; margin: 0; letter-spacing: .005em; }
+  .desc { font-size: 15.5px; line-height: 19px; margin: 1.8mm 0 0; }
+  .nota { font-size: 14px; line-height: 17px; color: var(--secondario); margin: .8mm 0 0; }
+  .dieta { font-size: 13.5px; letter-spacing: .02em; color: var(--blu); font-weight: 700; }
+  .chef { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin: 0 0 1mm; display: flex; align-items: center; gap: 2mm; }
   .chef::before { content: ""; width: 6mm; height: 1px; background: var(--champagne); display: inline-block; }
   .deg .chef { justify-content: center; }
 
@@ -93,13 +93,13 @@
   .carta.densa .desc { line-height: 17.5px; margin-top: 1.4mm; }
 
   .riga { display: grid; grid-template-columns: 1fr 14mm; column-gap: 4mm; align-items: start; }
-  .prezzo { font-size: 14px; line-height: 22px; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+  .prezzo { font-size: 17.5px; line-height: 22px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
   .chefbox { border-left: 1px solid var(--champagne); padding-left: 4mm; margin-left: calc(-4mm - 1px); }
-  .cottura { display: table; margin-top: 1.2mm !important; font-family: var(--testo); font-size: 8.5px; line-height: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blu); border: 1px solid var(--champagne); padding: .6mm 2mm .5mm; margin-left: 0; white-space: nowrap; }
+  .cottura { display: table; margin-top: 1.2mm !important; font-family: var(--testo); font-size: 10.5px; line-height: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blu); border: 1px solid var(--champagne); padding: .6mm 2mm .5mm; margin-left: 0; white-space: nowrap; }
   .cottura i { font-family: var(--display); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--secondario); margin-left: 1mm; }
   .marca { display: inline-block; width: 1.6mm; height: 1.6mm; background: var(--blu); transform: rotate(45deg); margin: 0 0 .9mm 2.5mm; vertical-align: middle; font-size: 0; }
 
-  .sottosez { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; font-weight: 500; margin: 2mm 0 0; display: flex; align-items: baseline; gap: 3mm; }
+  .sottosez { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin: 2mm 0 0; display: flex; align-items: baseline; gap: 3mm; }
   .sottosez i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14.5px; letter-spacing: 0; text-transform: none; color: var(--secondario); }
   .num { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: 0; }
   .salse { display: flex; gap: 3mm; flex-wrap: wrap; margin-top: 1.5mm; }
@@ -113,8 +113,8 @@
   /* Copertina */
   .cop { padding-top: 30mm; }
   .cop .corpo { align-items: center; text-align: center; }
-  .citazione { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 35px; line-height: 34px; letter-spacing: -.005em; margin: 16mm 0 0; }
-  .autore { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; margin: 9mm 0 0; }
+  .citazione { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 32.3px; line-height: 31.5px; letter-spacing: -.005em; margin: 16mm 0 0; }
+  .autore { font-size: 12.5px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; margin: 9mm 0 0; }
   .autore::before { content: ""; display: block; width: 48px; height: 1px; background: var(--champagne); margin: 0 auto 6mm; }
   .cit-en { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 18px; color: var(--secondario); margin: 4mm 0 0; }
   .lockup { margin-top: auto; text-align: center; }
@@ -125,18 +125,18 @@
   .tab { display: grid; grid-template-columns: 1fr 20mm; column-gap: 6mm; row-gap: 2.2mm; margin-top: 3mm; }
   .tab .n { font-family: var(--display); font-weight: 600; font-size: 17px; line-height: 22px; }
   .tab .n i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; color: var(--secondario); margin-left: 2.5mm; }
-  .tab .p { font-size: 14px; line-height: 22px; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
-  .allerg { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: .6mm; margin-top: 3mm; font-size: 11.5px; line-height: 16px; }
+  .tab .p { font-size: 17.5px; line-height: 22px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+  .allerg { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: .6mm; margin-top: 3mm; font-size: 15px; line-height: 16px; }
   .allerg b { font-family: var(--display); font-size: 15px; font-weight: 600; display: inline-block; width: 7mm; }
   .allerg i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14px; color: var(--secondario); }
-  .legale { font-size: 10.5px; line-height: 15px; margin: 2.5mm 0 0; color: var(--secondario); }
+  .legale { font-size: 13.5px; line-height: 16px; margin: 2.5mm 0 0; color: var(--secondario); }
   .legale.en2 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 13.5px; line-height: 16px; color: var(--secondario); margin-top: 1mm; }
   /* Etichette di sezione: con filetti, per non confondersi col sopratitolo di pagina */
   .deg .sez > .eti { display: flex; align-items: center; justify-content: center; gap: 3mm; }
   .deg .sez > .eti::before, .deg .sez > .eti::after { content: ""; width: 9mm; height: 1px; background: var(--champagne); }
   .sottosez::after, .eti.sezione::after { content: ""; flex: 1; height: 1px; background: var(--champagne); align-self: center; }
   .eti.sezione { display: flex; align-items: baseline; gap: 3mm; }
-  .eti-mini { font-size: 9px; line-height: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--blu); margin: 0; }
+  .eti-mini { font-size: 11px; line-height: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--blu); margin: 0; }
   /* Nomi composti e unità che non vanno spezzati a fine riga */
   .nb { white-space: nowrap; }
   .all, .all-in { white-space: nowrap; }
@@ -148,15 +148,17 @@
      --mono-top  = distanza incisione dal bordo alto della cartella − distanza foglio dal bordo alto della cartella
      --mono-asse = asse incisione dal bordo sinistro della cartella − distanza foglio dal bordo sinistro della cartella
      --mono-h    = altezza dell'incisione */
-  .cA { --mono-top: 45mm; --mono-asse: 116.5mm; --mono-h: 42mm; }
+  /* 09.10.2026: sigillo alto 80 mm e largo 35 mm, bordo alto a 100 mm dal bordo superiore del foglio, bordo destro a 80 mm dal bordo destro (asse a 210 − 80 − 17,5 = 112,5 mm).
+     Il PNG ha un po' di trasparenza attorno al segno (558 px di altezza, segno da 24 a 534 px): l'immagine è alta 80 × 558/510 = 87,53 mm e parte 3,76 mm più in alto. */
+  .cA { --mono-top: 96.24mm; --mono-asse: 112.5mm; --mono-h: 87.53mm; }
   .cA .mono { position: absolute; top: var(--mono-top); left: var(--mono-asse); height: var(--mono-h); transform: translateX(-50%); display: block; margin: 0; }
   .cA .corpo { padding-top: calc(var(--mono-top) + var(--mono-h) - 11mm); }
-  .cA .citazione { margin-top: 24mm; }
+  .cA .citazione { margin-top: 14mm; }
   .cA .fondo { margin-top: auto; text-align: center; }
   .nome-cusin { font-family: var(--display); font-weight: 500; font-size: 24px; letter-spacing: .5em; margin: 0 0 0 .5em; }
-  .stagione { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin: 4mm 0 0; }
+  .stagione { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin: 4mm 0 0; }
 
-  .unita { font-family: var(--testo); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; color: var(--secondario); margin-left: 1.5mm; }
+  .unita { font-family: var(--testo); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; color: var(--secondario); margin-left: 1.5mm; }
 </style>
 <script>
   if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');
@@ -196,21 +198,21 @@
       <div class="voce"><h2>Nido con <span class="nb">Uovo Livornese</span></h2>
         <p class="desc">Nido con <span class="nb">Uovo Livornese</span>, <span class="nb">gambero rosso</span>, <span class="nb">crema di fichi</span> e <span class="nb">olio alla liquirizia</span></p>
         <p class="tr">Nest with <span class="nb">Livorno-style egg</span>, <span class="nb">red prawn</span>, <span class="nb">fig cream</span> and <span class="nb">liquorice oil</span></p><p class="all"><span class="tbd">Allergeni/Allergens 2 · 3 · 9</span></p></div>
-      <div class="voce"><h2>Sfera di mazzancolle</h2>
-        <p class="desc">Sfera di mazzancolle ripiena di battuto di <span class="nb">sedano rapa</span>, su <span class="nb">crema di castagne</span> e zenzero, <span class="nb">passion fruit</span> e lime</p>
-        <p class="tr"><span class="nb">King prawn</span> sphere filled with <span class="nb">chopped celeriac</span>, on <span class="nb">chestnut and ginger cream</span> with <span class="nb">passion fruit</span> and lime</p><p class="all"><span class="tbd">Allergeni/Allergens 2 · 9</span></p></div>
+      <div class="voce"><h2>Perla di mazzancolle</h2>
+        <p class="desc">Perla di mazzancolle ripiena di <span class="nb">sedano rapa</span>, <span class="nb">crema di castagne</span> e zenzero</p>
+        <p class="tr"><span class="nb">King prawn</span> pearl filled with celeriac, <span class="nb">chestnut cream</span> and ginger</p><p class="all"><span class="tbd">Allergeni/Allergens 2 · 9</span></p></div>
       <div class="voce"><h2>Seppia e <span class="nb">cipolla dorata</span></h2>
-        <p class="desc">Seppia su crema di <span class="nb">cipolla dorata</span> dolce e <span class="nb">croccante di cipolla</span></p>
-        <p class="tr">Cuttlefish on sweet <span class="nb">golden onion cream</span> with <span class="nb">crispy onion</span></p><p class="all">Allergeni/Allergens 9 · 14</p></div>
+        <p class="desc">Seppia su <span class="nb">fondo bruno</span> di <span class="nb">cipolla dorata</span> in <span class="nb">due consistenze</span></p>
+        <p class="tr">Cuttlefish on a <span class="nb">golden onion</span> <span class="nb">brown jus</span>, in <span class="nb">two textures</span></p><p class="all">Allergeni/Allergens 9 · 14</p></div>
     </div>
     <div class="sez">
       <p class="eti">Primi <span>First courses</span></p>
       <div class="voce"><h2>Gnocchi al Calasole</h2>
-        <p class="desc">Gnocchi di riso con calamari, totani, seppie e tartufo</p>
-        <p class="tr">Rice gnocchi with squid, <span class="nb">flying squid</span>, cuttlefish and truffle</p><p class="all">Allergeni/Allergens 3 · 9 · 14</p></div>
+        <p class="desc">Gnocchi di riso, calamari, totani, seppie e tartufo</p>
+        <p class="tr">Rice gnocchi, squid, <span class="nb">flying squid</span>, cuttlefish and truffle</p><p class="all">Allergeni/Allergens 3 · 9 · 14</p></div>
       <div class="voce"><h2>Paccheri farciti</h2>
-        <p class="desc">Paccheri con farcitura di <span class="nb">ricotta senza lattosio</span>, mazzancolle e <span class="nb">colatura di cachi</span></p>
-        <p class="tr">Paccheri filled with <span class="nb">lactose-free ricotta</span>, <span class="nb">king prawns</span> and <span class="nb">persimmon glaze</span></p><p class="all">Allergeni/Allergens 1 · 2 · 7 · 9 · tracce/traces 6 · 10</p></div>
+        <p class="desc">Paccheri con farcitura di <span class="nb">ricotta (senza lattosio)</span>, mazzancolle e <span class="nb">colatura di cachi</span></p>
+        <p class="tr">Paccheri filled with <span class="nb">ricotta (lactose-free)</span>, <span class="nb">king prawns</span> and <span class="nb">persimmon glaze</span></p><p class="all">Allergeni/Allergens 1 · 2 · 7 · 9 · tracce/traces 6 · 10</p></div>
     </div>
     <div class="sez">
       <p class="eti">Secondo <span>Main course</span></p>
@@ -221,8 +223,8 @@
     <div class="sez">
       <p class="eti">Per finire <span>To finish</span></p>
       <div class="voce"><h2>La nostra piccola pasticceria</h2>
-        <p class="desc">Due <span class="nb">cioccolatini fondenti</span>, uno ripieno di <span class="nb">marmellata di vino</span> e l'altro di crema di <span class="nb">melone invernale</span>, e un <span class="nb">biscotto ai fichi</span></p>
-        <p class="tr">Two <span class="nb">dark chocolates</span>, filled with <span class="nb">wine jam</span> and with <span class="nb">winter melon</span> cream, and a <span class="nb">fig biscuit</span></p><p class="all"><span class="tbd">Allergeni/Allergens 1 · 3 · 7 · 12</span></p></div>
+        <p class="desc"><span class="nb">Cioccolatini fondenti</span> ripieni di <span class="nb">marmellata di vino</span> e crema di <span class="nb">melone invernale</span> e <span class="nb">biscotto ai fichi</span></p>
+        <p class="tr"><span class="nb">Dark chocolates</span> filled with <span class="nb">wine jam</span> and <span class="nb">winter melon</span> cream, and a <span class="nb">fig biscuit</span></p><p class="all"><span class="tbd">Allergeni/Allergens 1 · 3 · 7 · 12</span></p></div>
     </div>
     <div class="filetto-corto"></div>
     <div>
@@ -256,14 +258,14 @@
     <div class="sez">
       <p class="eti">Primo <span>First course</span></p>
       <div class="voce"><h2>Raviolo e <span class="nb">crema di zucca</span></h2>
-        <p class="desc">Raviolo ripieno di <span class="nb">ricotta senza lattosio</span>, adagiato su <span class="nb">crema di zucca</span>, <span class="nb">burro chiarificato</span> alla salicornia</p>
-        <p class="tr">Raviolo filled with <span class="nb">lactose-free ricotta</span>, on <span class="nb">pumpkin cream</span>, <span class="nb">clarified butter</span> with samphire</p><p class="all">Allergeni/Allergens 1 · 3 · 7 · 9</p></div>
+        <p class="desc">Raviolo ripieno di <span class="nb">ricotta (senza lattosio)</span>, adagiato su <span class="nb">crema di zucca</span>, <span class="nb">burro chiarificato</span> alla salicornia</p>
+        <p class="tr">Raviolo filled with <span class="nb">ricotta (lactose-free)</span>, on <span class="nb">pumpkin cream</span>, <span class="nb">clarified butter</span> with samphire</p><p class="all">Allergeni/Allergens 1 · 3 · 7 · 9</p></div>
     </div>
     <div class="sez">
       <p class="eti">Secondo <span>Main course</span></p>
       <div class="voce"><h2>Cacciucco vegetale</h2>
-        <p class="desc">Brodo di <span class="nb">alga kombu</span> e funghi, pomodoro e cialda di <span class="nb">pane croccante</span>, con cipollotto, <span class="nb">melone invernale</span> e <span class="nb">cavolo nero</span></p>
-        <p class="tr"><span class="nb">Kombu seaweed</span> and <span class="nb">mushroom broth</span>, tomato and crispy <span class="nb">bread wafer</span>, with <span class="nb">spring onion</span>, <span class="nb">winter melon</span> and <span class="nb">cavolo nero</span> (<span class="nb">Tuscan kale</span>)</p><p class="all"><span class="tbd">Allergeni/Allergens 1</span></p></div>
+        <p class="desc">Brodo di <span class="nb">alga kombu</span>, funghi, pomodoro, cipollotto, <span class="nb">melone invernale</span> e <span class="nb">cavolo nero</span> con cialda di <span class="nb">pane croccante</span></p>
+        <p class="tr"><span class="nb">Kombu seaweed</span> broth with mushrooms, tomato, <span class="nb">spring onion</span>, <span class="nb">winter melon</span> and <span class="nb">cavolo nero</span> (<span class="nb">Tuscan kale</span>), with a crispy <span class="nb">bread wafer</span></p><p class="all"><span class="tbd">Allergeni/Allergens 1</span></p></div>
     </div>
     <div class="filetto-corto"></div>
     <div>
@@ -288,17 +290,17 @@
     <div class="sez">
       <p class="eti">Antipasti <span>Starters</span></p>
       <div class="voce"><h2>Butterfly di baccalà, pecorino e Pepaya</h2>
-        <p class="desc">Baccalà arrostito su <span class="nb">crema di pecorino</span> e Pepaya, il nostro pepe di <span class="nb">semi di papaya</span></p>
-        <p class="tr">Roasted <span class="nb">salt cod</span> butterfly on pecorino cream with Pepaya, our <span class="nb">papaya-seed pepper</span></p><p class="all">Allergeni/Allergens 4 · 7 · 9</p></div>
-      <div class="voce"><h2>Calamaro e tarassaco</h2>
+        <p class="desc">Baccalà arrostito su <span class="nb">crema di pecorino</span> e Pepaya (il nostro pepe di <span class="nb">semi di papaya</span>)</p>
+        <p class="tr">Roasted <span class="nb">salt cod</span> butterfly on pecorino cream with Pepaya (our <span class="nb">papaya-seed pepper</span>)</p><p class="all">Allergeni/Allergens 4 · 7 · 9</p></div>
+      <div class="voce"><h2>Calamaro CBT</h2>
         <p class="desc">Calamaro cotto a <span class="nb">bassa temperatura</span> su <span class="nb">erbette di tarassaco</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
         <p class="tr"><span class="nb">Slow-cooked squid</span> on <span class="nb">dandelion greens</span>, <span class="nb">anchovy sauce</span> and <span class="nb">blueberry vinegar</span></p><p class="all">Allergeni/Allergens 4 · 9 · 12 · 14</p></div>
     </div>
     <div class="sez">
       <p class="eti">Primo <span>First course</span></p>
       <div class="voce"><h2>Tagliolini al pepe e limone</h2>
-        <p class="desc">Tagliolini artigianali al pepe e limone con <span class="nb">limone candito</span>, mazzancolle e <span class="nb">funghi porcini</span></p>
-        <p class="tr">Handmade pepper and lemon tagliolini with <span class="nb">candied lemon</span>, <span class="nb">king prawns</span> and <span class="nb">porcini mushrooms</span></p><p class="all">Allergeni/Allergens 1 · 2 · 3 · 9</p></div>
+        <p class="desc">Tagliolini artigianali al pepe con <span class="nb">limone candito</span>, mazzancolle e <span class="nb">funghi porcini</span></p>
+        <p class="tr">Handmade pepper tagliolini with <span class="nb">candied lemon</span>, <span class="nb">king prawns</span> and <span class="nb">porcini mushrooms</span></p><p class="all">Allergeni/Allergens 1 · 2 · 3 · 9</p></div>
     </div>
     <div class="sez">
       <p class="eti">Secondo <span>Main course</span></p>
@@ -338,7 +340,7 @@
       <p class="desc">Sfera di <span class="nb">cavolo verza</span> con robiola e pera, senape e <span class="nb">olio al wakame</span></p>
       <p class="tr"><span class="nb">Savoy cabbage</span> sphere with robiola and pear, mustard and <span class="nb">wakame oil</span></p><p class="all"><span class="tbd">Allergeni/Allergens 7 · 9 · 10</span><span class="dieta">Vegetariano/Vegetarian</span></p></div>
       <div class="prezzo">16,40</div></div>
-    <div class="riga"><div class="voce"><h2>Calamaro e tarassaco</h2>
+    <div class="riga"><div class="voce"><h2>Calamaro CBT</h2>
       <p class="desc">Calamaro cotto a <span class="nb">bassa temperatura</span> su <span class="nb">erbette di tarassaco</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
       <p class="tr"><span class="nb">Slow-cooked squid</span> on <span class="nb">dandelion greens</span>, <span class="nb">anchovy sauce</span> and <span class="nb">blueberry vinegar</span></p><p class="all">Allergeni/Allergens 4 · 9 · 12 · 14</p></div>
       <div class="prezzo">17,90</div></div>
@@ -394,8 +396,8 @@
       <p class="tr">Paccheri cacio e pepe with <span class="nb">red prawn</span> and its bisque. <span class="tbd">Try it with a dusting of <span class="nb">Madagascar pepper</span></span></p><p class="all">Allergeni/Allergens 1 · 2 · 7 · 9 · tracce/traces 6 · 10</p></div>
       <div class="prezzo">24,80</div></div>
     <div class="riga"><div class="voce"><h2>Tagliolini al pepe e limone</h2>
-      <p class="desc">Tagliolini artigianali al pepe e limone con <span class="nb">limone candito</span>, mazzancolle e <span class="nb">funghi porcini</span></p>
-      <p class="tr">Handmade pepper and lemon tagliolini with <span class="nb">candied lemon</span>, <span class="nb">king prawns</span> and <span class="nb">porcini mushrooms</span></p><p class="all">Allergeni/Allergens 1 · 2 · 3 · 9</p></div>
+      <p class="desc">Tagliolini artigianali al pepe con <span class="nb">limone candito</span>, mazzancolle e <span class="nb">funghi porcini</span></p>
+      <p class="tr">Handmade pepper tagliolini with <span class="nb">candied lemon</span>, <span class="nb">king prawns</span> and <span class="nb">porcini mushrooms</span></p><p class="all">Allergeni/Allergens 1 · 2 · 3 · 9</p></div>
       <div class="prezzo">17,80</div></div>
     <div class="riga"><div class="voce"><h2>Spaghetto <span class="nb">Benedetto Cavalieri</span><span class="cottura"><span class="nb">18 minuti di cottura</span> <i><span class="nb">18 min cooking time</span></i></span></h2>
       <p class="desc">Alle <span class="nb">vongole veraci</span>, <span class="nb">fiocchi di pomodoro</span> e <span class="nb">olio al lime</span></p>
@@ -414,8 +416,8 @@
       <p class="tr"><span class="nb">Dentex risotto</span> with <span class="nb">wild fennel</span>, fresh <span class="nb">spring onion</span> and <span class="nb">fennel carpaccio</span></p><p class="all">Allergeni/Allergens 4 · 9<span class="dieta">Senza lattosio/<span class="nb">Lactose free</span></span></p></div>
       <div class="prezzo">19,30</div></div>
     <div class="riga"><div class="voce"><h2>Ravioli e <span class="nb">crema di zucca</span></h2>
-      <p class="desc">Ravioli ripieni di <span class="nb">ricotta senza lattosio</span>, adagiati su <span class="nb">crema di zucca</span>, <span class="nb">burro chiarificato</span> alla salicornia</p>
-      <p class="tr">Ravioli filled with <span class="nb">lactose-free ricotta</span>, on <span class="nb">pumpkin cream</span>, <span class="nb">clarified butter</span> with samphire</p><p class="all">Allergeni/Allergens 1 · 3 · 7 · 9<span class="dieta">Vegetariano/Vegetarian</span></p></div>
+      <p class="desc">Ravioli ripieni di <span class="nb">ricotta (senza lattosio)</span>, adagiati su <span class="nb">crema di zucca</span>, <span class="nb">burro chiarificato</span> alla salicornia</p>
+      <p class="tr">Ravioli filled with <span class="nb">ricotta (lactose-free)</span>, on <span class="nb">pumpkin cream</span>, <span class="nb">clarified butter</span> with samphire</p><p class="all">Allergeni/Allergens 1 · 3 · 7 · 9<span class="dieta">Vegetariano/Vegetarian</span></p></div>
       <div class="prezzo">16,80</div></div>
     <div class="box-nota" style="margin-top:auto">
       <p class="desc">Pasta <span class="nb">Benedetto Cavalieri</span>: artigianale, trafilata al bronzo, essiccata per <span class="nb">30 ore</span> con il «<span class="nb">Metodo delicato</span>» dal 1918.</p>
@@ -454,8 +456,8 @@
       <p class="tr">Our <span class="nb">family recipe</span>: light, crispy fried seafood and vegetables in <span class="nb">rice flour</span></p><p class="all">Allergeni/Allergens 2 · 4 · 14</p></div>
       <div class="prezzo">21</div></div>
     <div class="riga"><div class="voce"><h2>Cacciucco vegetale</h2>
-      <p class="desc">Brodo di <span class="nb">alga kombu</span> e funghi, pomodoro e cialda di <span class="nb">pane croccante</span>, con cipollotto, <span class="nb">melone invernale</span> e <span class="nb">cavolo nero</span></p>
-      <p class="tr"><span class="nb">Kombu seaweed</span> and <span class="nb">mushroom broth</span>, tomato and crispy <span class="nb">bread wafer</span>, with <span class="nb">spring onion</span>, <span class="nb">winter melon</span> and <span class="nb">cavolo nero</span> (<span class="nb">Tuscan kale</span>)</p><p class="all"><span class="tbd">Allergeni/Allergens 1</span><span class="dieta">Vegetariano/Vegetarian</span></p></div>
+      <p class="desc">Brodo di <span class="nb">alga kombu</span>, funghi, pomodoro, cipollotto, <span class="nb">melone invernale</span> e <span class="nb">cavolo nero</span> con cialda di <span class="nb">pane croccante</span></p>
+      <p class="tr"><span class="nb">Kombu seaweed</span> broth with mushrooms, tomato, <span class="nb">spring onion</span>, <span class="nb">winter melon</span> and <span class="nb">cavolo nero</span> (<span class="nb">Tuscan kale</span>), with a crispy <span class="nb">bread wafer</span></p><p class="all"><span class="tbd">Allergeni/Allergens 1</span><span class="dieta">Vegetariano/Vegetarian</span></p></div>
       <div class="prezzo">22,70</div></div>
     <div class="riga"><div class="voce"><h2>Tagliata toscana</h2>
       <p class="desc">Tagliata di manzo alla toscana con <span class="nb">patate arrosto</span></p>

@@ -62,3 +62,20 @@ Valori completi in `riferimenti/guidelines-tokens.json`.
 Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · Chef · maionese al melone invernale: 3 · 10».
 
 - 09.10.2026 · Noemi, prezzi aggiornati la sera dell'08.10.2026 · **prezzi**. Mancanti, ora inseriti: cappuccino di mazzancolle 17,80; sfera di verza 16,40; calamaro e tarassaco 17,90; tagliolini al pepe e limone 17,80; risotto al Calasole 18,40; risotto al dentice 19,30; ravioli e crema di zucca 16,80. Cambiati: spaghetto alle vongole 19,70 → 19,30; spigola alla griglia 24 → 24,30; grigliata di mare 42 → 42,60; scaloppata di tonno 25 → 25,80; cacciucco vegetale 24 → 22,70. Invariati: mare caldo 18,80, paccheri 24,80, spaghetto al pomodoro 15, fritto 21, tagliata 25, salse 5.
+
+## 6. Modifiche del 09.10.2026 (richieste dal ristorante)
+- **Copertina**: il sigillo è alto 80 mm e largo 35 mm. Il bordo alto sta a 100 mm dal bordo superiore del foglio, il bordo destro a 80 mm dal bordo destro, quindi l'asse è a 112,5 mm da sinistra. La citazione scende sotto il sigillo ed è 2 punti più piccola (da 35 a 32,3 px).
+- **Un solo carattere in tutto il menù**: Cormorant Garamond anche per descrizioni, allergeni, note, prezzi ed etichette. Montserrat non si usa più, e questo supera il punto 3 «Montserrat per i testi piccoli». I corpi sono stati ricalcolati, perché Cormorant è più piccolo a parità di corpo: descrizione 15,5 px, allergeni 13,5 px, prezzi 17,5 px. Le cifre sono allineate (lining).
+- **Nome del piatto** un punto più piccolo: da 22 a 20,7 px.
+- **Allergeni e diciture non più in maiuscolo**: «Allergeni/Allergens 2 · 9», «Vegetariano/Vegetarian». Le etichette di sezione restano maiuscole e spaziate.
+- **Testi**:
+  - Stella di Mare: «Sfera di mazzancolle» diventa **«Perla di mazzancolle»**, con «ripiena di sedano rapa, crema di castagne e zenzero» (senza passion fruit e lime);
+  - Stella di Mare: seppia «su fondo bruno di cipolla dorata in due consistenze»;
+  - Stella di Mare: gnocchi al Calasole «Gnocchi di riso, calamari, totani, seppie e tartufo»;
+  - Stella di Mare: piccola pasticceria «Cioccolatini fondenti ripieni di marmellata di vino e crema di melone invernale e biscotto ai fichi»;
+  - Vegetariana di Mare e carta: cacciucco vegetale «Brodo di alga kombu, funghi, pomodoro, cipollotto, melone invernale e cavolo nero con cialda di pane croccante»;
+  - Primo Fiore: «(il nostro pepe di semi di papaya)» tra parentesi;
+  - Primo Fiore e carta: «Calamaro e tarassaco» diventa **«Calamaro CBT»**, la descrizione resta;
+  - Primo Fiore e carta: tagliolini «artigianali al pepe con limone candito, mazzancolle e funghi porcini»;
+  - paccheri farciti, raviolo e ravioli: «ricotta (senza lattosio)», tra parentesi.
+
