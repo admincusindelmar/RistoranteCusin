@@ -63,6 +63,19 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
 
 - 09.10.2026 · Noemi, prezzi aggiornati la sera dell'08.10.2026 · **prezzi**. Mancanti, ora inseriti: cappuccino di mazzancolle 17,80; sfera di verza 16,40; calamaro e tarassaco 17,90; tagliolini al pepe e limone 17,80; risotto al Calasole 18,40; risotto al dentice 19,30; ravioli e crema di zucca 16,80. Cambiati: spaghetto alle vongole 19,70 → 19,30; spigola alla griglia 24 → 24,30; grigliata di mare 42 → 42,60; scaloppata di tonno 25 → 25,80; cacciucco vegetale 24 → 22,70. Invariati: mare caldo 18,80, paccheri 24,80, spaghetto al pomodoro 15, fritto 21, tagliata 25, salse 5.
 
+- 09.10.2026 · Chef (ricette in `riferimenti/2026-10-09_Ricette-Chef_menu_ottobre_2026.docx` e risposte riferite in chat) · **allergeni**:
+  - nido con Uovo Livornese: il nido è di kataifi → 1 · 2 · 3 · 9;
+  - perla di mazzancolle e sfera di verza non sono impanate → 2 · 9 e 7 · 9 · 10;
+  - cacciucco vegetale: brodo senza sedano → 1;
+  - maionesi all'arancia e kiwi e lime: solo uovo → 3; maionesi al melone invernale e all'ostrica: latte senza lattosio → 7 e 7 · 14;
+  - grigliata: aggiunto 3 per la salsa all'arancia inclusa; il pesce (4) resta perché a volte c'è il trancio di tonno;
+  - mare caldo: niente pesce → 2 · 9 · 14;
+  - tagliata toscana: nessun allergene;
+  - contorni: verdure al forno miste (zucchina, finocchio, pomodoro, sedano rapa, carota) → 9; patate arrosto in teglia da sole e insalate fatte al momento → nessuno; patatine fritte nello stesso olio del fritto → tracce 2 · 4 · 14;
+  - sedano (9): resta su tutti i piatti dove era segnato, perché lo Chef a volte usa il brodo;
+  - il Vegetop non contiene soia.
+- 09.10.2026 · Chef · calamaro: la verdura è **bietola a coste rosse**, non tarassaco. Il piatto si chiama ora «Calamaro e bietola» (Primo Fiore e carta).
+
 ## 6. Modifiche del 09.10.2026 (richieste dal ristorante)
 - **Copertina**: il sigillo è alto 80 mm e largo 35 mm. Il bordo alto sta a 100 mm dal bordo superiore del foglio, il bordo destro a 80 mm dal bordo destro, quindi l'asse è a 112,5 mm da sinistra. La citazione scende sotto il sigillo ed è 2 punti più piccola (da 35 a 32,3 px).
 - **Un solo carattere in tutto il menù**: Cormorant Garamond anche per descrizioni, allergeni, note, prezzi ed etichette. Montserrat non si usa più, e questo supera il punto 3 «Montserrat per i testi piccoli». I corpi sono stati ricalcolati, perché Cormorant è più piccolo a parità di corpo: descrizione 15,5 px, allergeni 13,5 px, prezzi 17,5 px. Le cifre sono allineate (lining).

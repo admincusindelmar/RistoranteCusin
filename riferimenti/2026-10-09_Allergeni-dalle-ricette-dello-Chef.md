@@ -1,7 +1,7 @@
 # Allergeni ricavati dalle ricette dello Chef (09.10.2026)
 
 Fonte: `riferimenti/2026-10-09_Ricette-Chef_menu_ottobre_2026.docx`, inviato dallo Chef.
-**Proposta, non ancora applicata al menù**: va confermata dallo Chef (regola degli allergeni in `CLAUDE.md`).
+Proposta del 09.10.2026. **Applicata lo stesso giorno con le risposte dello Chef**: quello che vale è in `DECISIONI.md` §5. Rispetto alla proposta il sedano (9) è rimasto su tutti i piatti, il pesce è rimasto nella grigliata e nel fritto.
 
 Numeri della legenda: 1 glutine · 2 crostacei · 3 uova · 4 pesce · 6 soia · 7 latte · 8 frutta a guscio · 9 sedano · 10 senape · 12 solfiti · 14 molluschi.
 

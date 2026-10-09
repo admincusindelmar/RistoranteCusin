@@ -3,15 +3,9 @@
 Il menù è completo nella struttura. Restano i punti in giallo: sono domande, non scelte grafiche, e **ogni punto qui sotto ha il suo giallo nel menù**. Erano già nella mail di Carmine a Noemi dell'08.10.2026.
 
 ## Da chiudere (in giallo nel menù)
-**Allergeni da confermare** (cucina o sala):
-1. **Maionesi del crudo** (arancia, kiwi e lime, melone invernale, ostrica): oltre all'uovo (3) c'è senape (10)? La maionese al melone invernale oggi non ha allergeni, quella all'ostrica solo 14.
-2. **Salse della grigliata** (basilico, arancia, ostrica, tartufo): sono a base di maionese? Quali allergeni hanno?
-3. **Piccola pasticceria**: il cioccolato fondente contiene lecitina di soia (6) o tracce di latte e frutta a guscio?
-4. **Nido con Uovo Livornese**: se il nido è di pasta o kataifi, manca il glutine (1).
-5. **Perla di mazzancolle, sfera di verza**: se sono impanate, mancano glutine (1) e uovo (3).
-6. **Cacciucco vegetale**: è l'unico piatto con un brodo senza sedano (9). È giusto?
-7. **Tagliata toscana e contorni**: quali allergeni hanno?
-8. **Patatine fritte**: se vanno nello stesso olio del fritto di mare, si indicano 2, 4 e 14.
+**Allergeni da confermare** (la numerazione segue la mail; i punti 1, 4, 5, 6, 7 e 8 sono chiusi il 09.10.2026, vedi `DECISIONI.md` §5):
+2. **Salse della grigliata**: basilico (inclusa), ostrica e tartufo (in aggiunta). Che allergeni hanno? La grigliata resta in giallo finché non si conosce la salsa al basilico.
+3. **Piccola pasticceria**: cioccolatini fondenti, marmellata di vino, crema di melone invernale, biscotto ai fichi. Nelle ricette dello Chef non c'è.
 
 **Altro** (la numerazione segue la mail; il punto 9, prezzi mancanti, è chiuso: vedi `DECISIONI.md` §5):
 10. **Acqua in vetro**: il formato (75 cl? 50 cl?). Va aggiunto accanto al nome, come «a persona» per il coperto.
@@ -21,7 +15,7 @@ Il menù è completo nella struttura. Restano i punti in giallo: sono domande, n
 Posizionato il 09.10.2026 con le misure date dal ristorante (vedi `DECISIONI.md` §6). Resta da controllare: si stampa la copertina su carta comune, la si monta e si apre la cartella un paio di volte.
 
 ## Prossimi passi
-1. Chiudere i punti 1–8, 10 e 11 e togliere il loro giallo (classe `tbd`) da `sorgenti/menu.html`.
+1. Chiudere i punti 2, 3, 10 e 11 e togliere il loro giallo (classe `tbd`) da `sorgenti/menu.html`.
 2. Provare la copertina nella cartella.
 3. Rigenerare con `./genera.sh` e controllare le 9 pagine.
 4. Fare una prova su un foglio di carta avorio martellata: leggibilità dei grigi e dei corsivi piccoli, con la luce della sala.
