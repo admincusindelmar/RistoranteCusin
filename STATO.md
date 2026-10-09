@@ -13,8 +13,7 @@ Il menù è completo nella struttura. Restano i punti in giallo: sono domande, n
 7. **Tagliata toscana e contorni**: quali allergeni hanno?
 8. **Patatine fritte**: se vanno nello stesso olio del fritto di mare, si indicano 2, 4 e 14.
 
-**Altro**:
-9. **Prezzi mancanti**: cappuccino di mazzancolle, sfera di verza, calamaro e tarassaco, tagliolini, risotto al Calasole, risotto al dentice, ravioli.
+**Altro** (la numerazione segue la mail; il punto 9, prezzi mancanti, è chiuso: vedi `DECISIONI.md` §5):
 10. **Acqua in vetro**: il formato (75 cl? 50 cl?). Va aggiunto accanto al nome, come «a persona» per il coperto.
 11. **Pepe del Madagascar** sui paccheri: è un supplemento? Se sì, va scritto con il prezzo.
 
@@ -38,7 +37,7 @@ I tre valori si calcolano così:
 Dopo il calcolo: si stampa la copertina su carta comune, la si monta e si apre la cartella un paio di volte per controllare.
 
 ## Prossimi passi
-1. Chiudere i punti 1–11 e togliere il loro giallo (classe `tbd`) da `sorgenti/menu.html`.
+1. Chiudere i punti 1–8, 10 e 11 e togliere il loro giallo (classe `tbd`) da `sorgenti/menu.html`.
 2. Allineare il monogramma con le misure.
 3. Rigenerare con `./genera.sh` e controllare le 9 pagine.
 4. Fare una prova su un foglio di carta avorio martellata: leggibilità dei grigi e dei corsivi piccoli, con la luce della sala.

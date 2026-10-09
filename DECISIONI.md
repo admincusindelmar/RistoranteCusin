@@ -1,6 +1,6 @@
 # Decisioni sul menù d'autunno 2026
 
-Ogni voce dice cosa è stato deciso e perché. Rispetto al semidefinitivo di Noemi (`riferimenti/2026-10-08_Menu-Semidefinitivo-Noemi.pdf`) **piatti e prezzi non sono cambiati**: il lavoro riguarda grafica, leggibilità, tono e alcune correzioni di testo, elencate al punto 4. La stessa spiegazione, scritta per Noemi, è in `riferimenti/2026-10-08_Mail-Carmine-a-Noemi.txt`.
+Ogni voce dice cosa è stato deciso e perché. Rispetto al semidefinitivo di Noemi (`riferimenti/2026-10-08_Menu-Semidefinitivo-Noemi.pdf`) **piatti e prezzi non sono cambiati** (i prezzi sono stati poi aggiornati il 09.10.2026, vedi §5): il lavoro riguarda grafica, leggibilità, tono e alcune correzioni di testo, elencate al punto 4. La stessa spiegazione, scritta per Noemi, è in `riferimenti/2026-10-08_Mail-Carmine-a-Noemi.txt`.
 
 ## 1. Linee guida della Marca (provvisorie, v0.1 del 03.10.2026)
 Valori completi in `riferimenti/guidelines-tokens.json`.
@@ -60,3 +60,5 @@ Valori completi in `riferimenti/guidelines-tokens.json`.
 
 ## 5. Conferme ricevute dopo il passaggio
 Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · Chef · maionese al melone invernale: 3 · 10».
+
+- 09.10.2026 · Noemi, prezzi aggiornati la sera dell'08.10.2026 · **prezzi**. Mancanti, ora inseriti: cappuccino di mazzancolle 17,80; sfera di verza 16,40; calamaro e tarassaco 17,90; tagliolini al pepe e limone 17,80; risotto al Calasole 18,40; risotto al dentice 19,30; ravioli e crema di zucca 16,80. Cambiati: spaghetto alle vongole 19,70 → 19,30; spigola alla griglia 24 → 24,30; grigliata di mare 42 → 42,60; scaloppata di tonno 25 → 25,80; cacciucco vegetale 24 → 22,70. Invariati: mare caldo 18,80, paccheri 24,80, spaghetto al pomodoro 15, fritto 21, tagliata 25, salse 5.
