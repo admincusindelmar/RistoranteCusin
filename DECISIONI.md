@@ -75,7 +75,7 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - Stella di Mare: piccola pasticceria «Cioccolatini fondenti ripieni di marmellata di vino e crema di melone invernale e biscotto ai fichi»;
   - Vegetariana di Mare e carta: cacciucco vegetale «Brodo di alga kombu, funghi, pomodoro, cipollotto, melone invernale e cavolo nero con cialda di pane croccante»;
   - Primo Fiore: «(il nostro pepe di semi di papaya)» tra parentesi;
-  - Primo Fiore e carta: «Calamaro e tarassaco» diventa **«Calamaro CBT»**, la descrizione resta;
+  - Primo Fiore e carta: calamaro e tarassaco, «cotto a bassa temperatura» diventa **«Calamaro CBT»** nella descrizione. Il nome del piatto resta (correzione del 09.10.2026). In inglese resta «Slow-cooked squid»;
   - Primo Fiore e carta: tagliolini «artigianali al pepe con limone candito, mazzancolle e funghi porcini»;
   - paccheri farciti, raviolo e ravioli: «ricotta (senza lattosio)», tra parentesi.
 
