@@ -74,6 +74,7 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - contorni: verdure al forno miste (zucchina, finocchio, pomodoro, sedano rapa, carota) → 9; patate arrosto in teglia da sole e insalate fatte al momento → nessuno; patatine fritte nello stesso olio del fritto → tracce 2 · 4 · 14;
   - sedano (9): resta su tutti i piatti dove era segnato, perché lo Chef a volte usa il brodo;
   - il Vegetop non contiene soia.
+- 09.10.2026 · Chef · gnocchi al Calasole con uovo (3), tagliolini di pasta all'uovo (3), sugo di pomodoro su base di verdure con sedano (9): erano già segnati, nessuna modifica. **Raviolo e ravioli**: uovo, latte senza lattosio e tracce di soia, sesamo e senape → 1 · 3 · 7 · 9 · tracce 6 · 10 · 11.
 - 09.10.2026 · Chef · calamaro: la verdura è **bietola a coste rosse**, non tarassaco. Il piatto si chiama ora «Calamaro e bietola» (Primo Fiore e carta).
 
 ## 6. Modifiche del 09.10.2026 (richieste dal ristorante)
