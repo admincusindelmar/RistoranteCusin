@@ -105,3 +105,4 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - Primo Fiore e carta: tagliolini «artigianali al pepe con limone candito, mazzancolle e funghi porcini»;
   - paccheri farciti, raviolo e ravioli: «ricotta (senza lattosio)», tra parentesi.
 - 09.10.2026 · ristorante (risposta in chat) · **antipasto toscano**: prosciutto crudo toscano e pecorini, senza pane, crostini, miele o confetture → 7.
+- 10.10.2026 · Chef · calamaro: non è bietola ma **barbabietola a coste rosse** (le foglie della barbabietola). Il piatto si chiama ora «Calamaro e barbabietola», nel Primo Fiore e alla carta; in inglese «red-stemmed beet greens». Allergeni invariati.
