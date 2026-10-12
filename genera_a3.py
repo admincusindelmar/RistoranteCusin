@@ -8,6 +8,7 @@ si corregge il menù A4 e si rilancia questo script.
 
     pdf/Menu-Autunno-2026_A3_Stampa.pdf    senza fondo, per la carta avorio
     pdf/Menu-Autunno-2026_A3_Schermo.pdf   avorio simulato, per vederlo a video
+    pdf/Menu-Autunno-2026_A3_Montserrat_*.pdf  la variante con i testi piccoli in Montserrat
 
 Uso: python3 genera_a3.py   (serve la connessione per i caratteri di Google Fonts)
 """
@@ -191,9 +192,10 @@ def documento(dati, colonne, servizio):
     return f"""<!doctype html>
 <!-- GENERATO da genera_a3.py a partire da menu.html: non modificarlo a mano -->
 <html lang="it"><head><meta charset="utf-8"><title>Cusin · Menù A3 Autunno 2026</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600&display=swap">
 <style>{CSS}</style>
-<script>if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');</script>
+<script>if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');
+if (location.search.indexOf('montserrat') >= 0) document.documentElement.classList.add('montserrat');</script>
 </head><body>
 <main class="foglio">
   <header class="testa">
@@ -304,6 +306,30 @@ p, li, h4 { text-wrap: pretty; }
 .legenda b { font-size: 7.5pt; letter-spacing: .2em; text-transform: uppercase; color: var(--blu); margin-right: 2mm; }
 .legale { font-size: 8.5pt; color: var(--secondario); margin-top: .6mm; }
 .piede { font-size: 7.5pt; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); margin-top: 1.4mm; }
+
+/* Variante «Montserrat» (?montserrat): i testi piccoli in Montserrat, i nomi e i titoli restano in Cormorant */
+.montserrat .desc, .montserrat .al, .montserrat .dieta, .montserrat .nota, .montserrat .eti, .montserrat .chef,
+.montserrat .cottura, .montserrat .passo, .montserrat .mini, .montserrat .portata h5, .montserrat .portata li,
+.montserrat .deg-prezzo span, .montserrat .servizio, .montserrat .legenda, .montserrat .legale, .montserrat .piede,
+.montserrat .segue, .montserrat .v .pr, .montserrat .qr p:not(.qr-it), .montserrat .nota-deg, .montserrat .testa .nome p,
+.montserrat .v.aggiunta .tx { font-family: Montserrat, "Helvetica Neue", Arial, sans-serif; font-weight: 400; }
+.montserrat .portata li b, .montserrat .v.aggiunta .tx, .montserrat .dieta { font-family: var(--display); font-weight: 600; }
+.montserrat .portata li b { font-size: 11pt; }
+.montserrat .desc, .montserrat .portata li { font-size: 8.6pt; line-height: 1.3; }
+.montserrat .al { font-size: 7.6pt; }
+.montserrat .dieta { font-size: 9.5pt; }
+.montserrat .nota, .montserrat .nota-deg { font-size: 8pt; }
+.montserrat .v .pr { font-size: 10pt; font-weight: 500; }
+.montserrat .eti, .montserrat .chef, .montserrat .cottura, .montserrat .passo, .montserrat .mini, .montserrat .portata h5,
+.montserrat .deg-prezzo span, .montserrat .testa .nome p, .montserrat .segue, .montserrat .legenda b, .montserrat .servizio > b { font-weight: 500; }
+.montserrat .eti { font-size: 8.5pt; }
+.montserrat .portata h5, .montserrat .chef, .montserrat .mini { font-size: 6.5pt; }
+.montserrat .cottura { font-size: 5.6pt; }
+.montserrat .passo { font-size: 7pt; }
+.montserrat .servizio { font-size: 9.5pt; }
+.montserrat .legenda { font-size: 7.6pt; }
+.montserrat .legale { font-size: 7pt; }
+.montserrat .piede { font-size: 6.5pt; }
 """
 
 MISURA_JS = """() => {
@@ -353,6 +379,13 @@ def apri(pg, url):
 
 
 def main(n_colonne=5):
+    # la variante normale per ultima, così il file .generato.html resta quello normale
+    for variante, suffisso in (("montserrat", "_Montserrat"), ("", "")):
+        impagina(n_colonne, variante, suffisso)
+
+
+def impagina(n_colonne, variante, suffisso):
+    q = "?" + variante if variante else ""
     with sync_playwright() as pw:
         b = pw.chromium.launch(executable_path=CHROME if os.path.exists(CHROME) else None)
         pg = b.new_page()
@@ -371,7 +404,7 @@ def main(n_colonne=5):
                  blocchi_sezione("Contorni", contorni))
         # 1) misura ogni blocco alla larghezza di una colonna
         HTML_A3.write_text(documento(dati, [tutti] + [[] for _ in range(n_colonne - 1)], servizio), encoding="utf-8")
-        apri(pg, HTML_A3.as_uri())
+        apri(pg, HTML_A3.as_uri() + q)
         m = pg.evaluate(MISURA_JS)
         extra = [5 if cont else 0 for _, _, cont in tutti]
         alto, gruppi = dividi(m["altezze"], n_colonne, extra)
@@ -380,7 +413,8 @@ def main(n_colonne=5):
             raise SystemExit("STOP: la carta non sta nell'A3")
         # 2) impagina le colonne bilanciate
         HTML_A3.write_text(documento(dati, [[tutti[i] for i in g] for g in gruppi], servizio), encoding="utf-8")
-        for query, nome in (("", "Menu-Autunno-2026_A3_Stampa.pdf"), ("?schermo", "Menu-Autunno-2026_A3_Schermo.pdf")):
+        for query, nome in ((q, f"Menu-Autunno-2026_A3{suffisso}_Stampa.pdf"),
+                            ((q + "&" if q else "?") + "schermo", f"Menu-Autunno-2026_A3{suffisso}_Schermo.pdf")):
             apri(pg, HTML_A3.as_uri() + query)
             pg.pdf(path=str(QUI / "pdf" / nome), prefer_css_page_size=True, print_background=True)
             print("creato pdf/" + nome)

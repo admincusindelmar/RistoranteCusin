@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Cusin · Menù Autunno 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600&display=swap">
 <style>
   /* Token delle brand guidelines v0.1, Modo Carta */
   :root {
@@ -161,9 +161,35 @@
   .stagione { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin: 4mm 0 0; }
 
   .unita { font-family: var(--testo); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; color: var(--secondario); margin-left: 1.5mm; }
+  /* Variante «Montserrat» (?montserrat): i testi piccoli in Montserrat, come nella proposta di Carmine.
+     Restano in Cormorant titoli, nomi dei piatti, traduzioni e citazione. Allergeni sempre in minuscolo. */
+  html.montserrat { --testo: Montserrat, "Helvetica Neue", Arial, sans-serif; }
+  html.montserrat body { font-weight: 400; }
+  .montserrat .eti { font-size: 10px; line-height: 14px; font-weight: 500; }
+  .montserrat .piede { font-size: 8.5px; }
+  .montserrat .all, .montserrat .all-in { font-size: 10px; letter-spacing: .02em; }
+  .montserrat .all { line-height: 13px; }
+  .montserrat .tab .n .all-in { font-family: var(--testo); font-style: normal; font-size: 9.5px; }
+  .montserrat .dieta { font-size: 10px; font-weight: 600; }
+  .montserrat .prezzo-deg > span { font-size: 10px; font-weight: 500; }
+  .montserrat .desc { font-size: 12px; line-height: 19px; }
+  .montserrat .nota { font-size: 11px; line-height: 16px; }
+  .montserrat .chef { font-size: 9.5px; }
+  .montserrat .prezzo { font-size: 14px; font-weight: 500; }
+  .montserrat .cottura { font-size: 8.5px; font-weight: 600; }
+  .montserrat .sottosez { font-size: 10.5px; font-weight: 500; }
+  .montserrat .autore { font-size: 10px; }
+  .montserrat .tab .p { font-size: 14px; font-weight: 500; }
+  .montserrat .allerg { font-size: 11.5px; }
+  .montserrat .legale { font-size: 10.5px; line-height: 15px; }
+  .montserrat .eti-mini { font-size: 9px; }
+  .montserrat .stagione, .montserrat .unita { font-size: 9px; }
+  .montserrat .carta.densa .desc { line-height: 17.5px; }
+  .montserrat .primi .desc, .montserrat .deg.lunga .desc { line-height: 16.5px; }
 </style>
 <script>
   if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');
+  if (location.search.indexOf('montserrat') >= 0) document.documentElement.classList.add('montserrat');
   document.addEventListener('DOMContentLoaded', function () {
     if (document.documentElement.classList.contains('schermo')) {
       document.body.classList.add('schermo');
@@ -295,7 +321,7 @@
         <p class="desc">Baccalà arrostito su <span class="nb">crema di pecorino</span> e Pepaya (il nostro pepe di <span class="nb">semi di papaya</span>)</p>
         <p class="tr">Roasted <span class="nb">salt cod</span> butterfly on pecorino cream with Pepaya (our <span class="nb">papaya-seed pepper</span>)</p><p class="all">Allergeni/Allergens 4 · 7 · 9</p></div>
       <div class="voce"><h2>Calamaro e barbabietola</h2>
-        <p class="desc"><span class="nb">Calamaro CBT</span> su <span class="nb">barbabietola a coste rosse</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
+        <p class="desc">Calamaro cotto a <span class="nb">bassa temperatura</span> su <span class="nb">barbabietola a coste rosse</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
         <p class="tr"><span class="nb">Slow-cooked squid</span> on <span class="nb">red-stemmed beet greens</span>, <span class="nb">anchovy sauce</span> and <span class="nb">blueberry vinegar</span></p><p class="all">Allergeni/Allergens 4 · 9 · 12 · 14</p></div>
     </div>
     <div class="sez">
@@ -331,8 +357,8 @@
   </div>
   <div class="corpo">
     <div class="riga"><div class="voce"><h2>Mare caldo</h2>
-      <p class="desc">Mare caldo con <span class="nb">crema alle ostriche</span>, <span class="nb">citronette di limone</span> e <span class="nb">olio extravergine d'oliva</span></p>
-      <p class="tr"><span class="nb">Warm seafood</span> with <span class="nb">oyster cream</span>, <span class="nb">lemon citronette</span> and <span class="nb">extra virgin olive oil</span></p><p class="all">Allergeni/Allergens 2 · 9 · 14</p></div>
+      <p class="desc">Insalata di <span class="nb">mare caldo</span> con <span class="nb">citronette di limone</span> e <span class="nb">olio extravergine d'oliva</span>, <span class="nb">finocchio alla curcuma</span>, sedano e <span class="nb">crema di arancia e carote</span></p>
+      <p class="tr"><span class="nb">Warm seafood salad</span> with <span class="nb">lemon citronette</span> and <span class="nb">extra virgin olive oil</span>, <span class="nb">turmeric fennel</span>, celery and <span class="nb">orange and carrot cream</span></p><p class="all">Allergeni/Allergens 2 · 9 · 14</p></div>
       <div class="prezzo">18,80</div></div>
     <div class="riga"><div class="voce chefbox"><p class="chef">Il consiglio dello Chef</p><h2>Cappuccino di mazzancolle</h2>
       <p class="desc">Mazzancolle con <span class="nb">crema di lenticchie</span> e <span class="nb">spuma di erborinato</span></p>
@@ -343,7 +369,7 @@
       <p class="tr"><span class="nb">Savoy cabbage</span> sphere with robiola and pear, mustard and <span class="nb">wakame oil</span></p><p class="all">Allergeni/Allergens 7 · 9 · 10<span class="dieta">Vegetariano/Vegetarian</span></p></div>
       <div class="prezzo">16,40</div></div>
     <div class="riga"><div class="voce"><h2>Calamaro e barbabietola</h2>
-      <p class="desc"><span class="nb">Calamaro CBT</span> su <span class="nb">barbabietola a coste rosse</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
+      <p class="desc">Calamaro cotto a <span class="nb">bassa temperatura</span> su <span class="nb">barbabietola a coste rosse</span>, <span class="nb">salsa di acciughe</span> e <span class="nb">aceto al mirtillo</span></p>
       <p class="tr"><span class="nb">Slow-cooked squid</span> on <span class="nb">red-stemmed beet greens</span>, <span class="nb">anchovy sauce</span> and <span class="nb">blueberry vinegar</span></p><p class="all">Allergeni/Allergens 4 · 9 · 12 · 14</p></div>
       <div class="prezzo">17,90</div></div>
     <div class="riga"><div class="voce"><h2>Antipasto toscano</h2>
@@ -467,7 +493,7 @@
       <div class="prezzo">22,70</div></div>
     <div class="riga"><div class="voce"><h2>Tagliata toscana</h2>
       <p class="desc">Tagliata di manzo alla toscana con <span class="nb">patate arrosto</span></p>
-      <p class="tr"><span class="nb">Tuscan-style</span> <span class="nb">sliced beef steak</span> with <span class="nb">roast potatoes</span></p><p class="all">Allergeni/Allergens nessuno · none</p></div>
+      <p class="tr"><span class="nb">Tuscan-style</span> <span class="nb">sliced beef steak</span> with <span class="nb">roast potatoes</span></p></div>
       <div class="prezzo">25</div></div>
   </div>
   <div class="piede"><span>Cusin · Autunno 2026</span><span>7</span></div>
