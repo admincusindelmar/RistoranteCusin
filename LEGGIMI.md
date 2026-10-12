@@ -7,4 +7,4 @@
 
 Servono **Google Chrome** installato e la **connessione**, perché i caratteri arrivano da Google Fonts. Se Claude chiede di installare `poppler` (per controllare le pagine come immagini), si può accettare.
 
-I PDF aggiornati sono sempre in `pdf/`: `…_Schermo` per guardarlo, `…_Stampa` per stampare.
+I PDF aggiornati sono sempre in `pdf/`: sono i `…_Stampa`, senza fondo, da stampare sulla carta avorio.

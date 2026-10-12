@@ -7,7 +7,6 @@ I piatti, i prezzi e gli allergeni si leggono da sorgenti/menu.html: l'A3 non si
 si corregge il menù A4 e si rilancia questo script.
 
     pdf/Menu-Autunno-2026_A3_Stampa.pdf    senza fondo, per la carta avorio
-    pdf/Menu-Autunno-2026_A3_Schermo.pdf   avorio simulato, per vederlo a video
     pdf/Menu-Autunno-2026_A3_Montserrat_*.pdf  la variante con i testi piccoli in Montserrat
 
 Uso: python3 genera_a3.py   (serve la connessione per i caratteri di Google Fonts)
@@ -413,8 +412,7 @@ def impagina(n_colonne, variante, suffisso):
             raise SystemExit("STOP: la carta non sta nell'A3")
         # 2) impagina le colonne bilanciate
         HTML_A3.write_text(documento(dati, [[tutti[i] for i in g] for g in gruppi], servizio), encoding="utf-8")
-        for query, nome in ((q, f"Menu-Autunno-2026_A3{suffisso}_Stampa.pdf"),
-                            ((q + "&" if q else "?") + "schermo", f"Menu-Autunno-2026_A3{suffisso}_Schermo.pdf")):
+        for query, nome in ((q, f"Menu-Autunno-2026_A3{suffisso}_Stampa.pdf"),):
             apri(pg, HTML_A3.as_uri() + query)
             pg.pdf(path=str(QUI / "pdf" / nome), prefer_css_page_size=True, print_background=True)
             print("creato pdf/" + nome)
