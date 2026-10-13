@@ -7,7 +7,6 @@ I piatti, i prezzi e gli allergeni si leggono da sorgenti/menu.html: l'A3 non si
 si corregge il menù A4 e si rilancia questo script.
 
     pdf/Menu-Autunno-2026_A3_Stampa.pdf    senza fondo, per la carta avorio
-    pdf/Menu-Autunno-2026_A3_Montserrat_*.pdf  la variante con i testi piccoli in Montserrat
 
 Uso: python3 genera_a3.py   (serve la connessione per i caratteri di Google Fonts)
 """
@@ -191,10 +190,9 @@ def documento(dati, colonne, servizio):
     return f"""<!doctype html>
 <!-- GENERATO da genera_a3.py a partire da menu.html: non modificarlo a mano -->
 <html lang="it"><head><meta charset="utf-8"><title>Cusin · Menù A3 Autunno 2026</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
 <style>{CSS}</style>
-<script>if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');
-if (location.search.indexOf('montserrat') >= 0) document.documentElement.classList.add('montserrat');</script>
+<script>if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');</script>
 </head><body>
 <main class="foglio">
   <header class="testa">
@@ -306,29 +304,6 @@ p, li, h4 { text-wrap: pretty; }
 .legale { font-size: 8.5pt; color: var(--secondario); margin-top: .6mm; }
 .piede { font-size: 7.5pt; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); margin-top: 1.4mm; }
 
-/* Variante «Montserrat» (?montserrat): i testi piccoli in Montserrat, i nomi e i titoli restano in Cormorant */
-.montserrat .desc, .montserrat .al, .montserrat .dieta, .montserrat .nota, .montserrat .eti, .montserrat .chef,
-.montserrat .cottura, .montserrat .passo, .montserrat .mini, .montserrat .portata h5, .montserrat .portata li,
-.montserrat .deg-prezzo span, .montserrat .servizio, .montserrat .legenda, .montserrat .legale, .montserrat .piede,
-.montserrat .segue, .montserrat .v .pr, .montserrat .qr p:not(.qr-it), .montserrat .nota-deg, .montserrat .testa .nome p,
-.montserrat .v.aggiunta .tx { font-family: Montserrat, "Helvetica Neue", Arial, sans-serif; font-weight: 400; }
-.montserrat .portata li b, .montserrat .v.aggiunta .tx, .montserrat .dieta { font-family: var(--display); font-weight: 600; }
-.montserrat .portata li b { font-size: 11pt; }
-.montserrat .desc, .montserrat .portata li { font-size: 8.6pt; line-height: 1.3; }
-.montserrat .al { font-size: 7.6pt; }
-.montserrat .dieta { font-size: 9.5pt; }
-.montserrat .nota, .montserrat .nota-deg { font-size: 8pt; }
-.montserrat .v .pr { font-size: 10pt; font-weight: 500; }
-.montserrat .eti, .montserrat .chef, .montserrat .cottura, .montserrat .passo, .montserrat .mini, .montserrat .portata h5,
-.montserrat .deg-prezzo span, .montserrat .testa .nome p, .montserrat .segue, .montserrat .legenda b, .montserrat .servizio > b { font-weight: 500; }
-.montserrat .eti { font-size: 8.5pt; }
-.montserrat .portata h5, .montserrat .chef, .montserrat .mini { font-size: 6.5pt; }
-.montserrat .cottura { font-size: 5.6pt; }
-.montserrat .passo { font-size: 7pt; }
-.montserrat .servizio { font-size: 9.5pt; }
-.montserrat .legenda { font-size: 7.6pt; }
-.montserrat .legale { font-size: 7pt; }
-.montserrat .piede { font-size: 6.5pt; }
 """
 
 MISURA_JS = """() => {
@@ -378,9 +353,7 @@ def apri(pg, url):
 
 
 def main(n_colonne=5):
-    # la variante normale per ultima, così il file .generato.html resta quello normale
-    for variante, suffisso in (("montserrat", "_Montserrat"), ("", "")):
-        impagina(n_colonne, variante, suffisso)
+    impagina(n_colonne, "", "")
 
 
 def impagina(n_colonne, variante, suffisso):

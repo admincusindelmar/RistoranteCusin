@@ -16,7 +16,6 @@ Chi lavora qui deve sapere tutto ciò che sapeva Carmine. Le decisioni e il loro
 - `pdf/Menu-Autunno-2026_Stampa.pdf` — senza fondo, da stampare sulla carta avorio.
 - `pdf/Menu-Autunno-2026_A3_Stampa.pdf` — il menù A3, senza fondo.
 - Le versioni «Schermo» (avorio simulato) non si generano più dal 12.10.2026: se servono per guardarlo a video, si apre `menu.html?schermo` nel browser.
-- `pdf/Menu-Autunno-2026_Montserrat_Stampa.pdf` e `_A3_Montserrat_Stampa.pdf` — la variante con i testi piccoli in Montserrat (vedi `DECISIONI.md`).
 - `riferimenti/`:
   - `2026-10-08_Menu-Semidefinitivo-Noemi.pdf` — la versione di partenza;
   - `2026-10-08_Mail-Carmine-a-Noemi.txt` — la mail che spiega tutte le modifiche;

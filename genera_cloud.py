@@ -5,7 +5,6 @@ dove Chrome non raggiunge direttamente Google Fonts: i caratteri vengono scarica
 dal proxy e passati alla pagina. Sul Mac si usa invece ./genera.sh.
 
     pdf/Menu-Autunno-2026_Stampa.pdf    senza fondo, per la carta avorio
-    pdf/Menu-Autunno-2026_Montserrat_*.pdf  la variante con i testi piccoli in Montserrat
 
 Uso: python3 genera_cloud.py
 """
@@ -36,7 +35,7 @@ def main():
     with sync_playwright() as pw:
         b = pw.chromium.launch(executable_path=CHROME if os.path.exists(CHROME) else None)
         # solo le versioni di stampa: le «Schermo» non si generano più (12.10.2026)
-        for query, nome in (("", "Menu-Autunno-2026_Stampa.pdf"), ("?montserrat", "Menu-Autunno-2026_Montserrat_Stampa.pdf")):
+        for query, nome in (("", "Menu-Autunno-2026_Stampa.pdf"),):
             pg = b.new_page()
             pg.route("https://fonts.googleapis.com/**", scarica)
             pg.route("https://fonts.gstatic.com/**", scarica)
