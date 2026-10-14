@@ -1,26 +1,16 @@
-# Stato al 09.10.2026
+# Stato al 15.10.2026
 
-Il menù è completo nella struttura. Restano i punti in giallo: sono domande, non scelte grafiche, e **ogni punto qui sotto ha il suo giallo nel menù**. Erano già nella mail di Carmine a Noemi dell'08.10.2026.
+## Menù d'autunno: chiuso
+Il menù è **chiuso il 15.10.2026**: testi, prezzi e allergeni sono definitivi, e nel menù non resta nessun giallo. I file da stampare sono `pdf/Menu-Autunno-2026_Stampa.pdf` (A4, 9 pagine) e `pdf/Menu-Autunno-2026_A3_Stampa.pdf` (A3). Da qui in poi ogni modifica è una correzione: si fa in `sorgenti/menu.html`, si rigenerano A4 e A3 e si annota in `DECISIONI.md`.
 
-## Da chiudere
-Tutti i punti della mail di Carmine sono chiusi il 09.10.2026 (vedi `DECISIONI.md` §5).
-
-**Nel menù non resta nessun giallo.**
+Restano solo le prove di stampa, da fare a mano:
+1. stampare la copertina su carta comune e montarla nella cartella, per vedere se il monogramma cade sull'incisione;
+2. un foglio di prova sulla carta avorio martellata, per la leggibilità dei grigi e dei corsivi piccoli con la luce della sala;
+3. leggere col telefono il QR code dell'A3 stampato.
 
 ## Carta dei dolci e dei distillati (in giallo in `sorgenti/dolci-distillati.html`)
 1. **Allergeni dei sei dolci**: da indicare, con conferma di cucina o sala.
 2. **Supporto**: scelta la tavoletta con molla in ottone a doppia faccia (15.10.2026). Resta da ordinarla; quando arriva si prova un foglio e si controlla che la molla non copra il testo (oggi c'è margine di 32 mm in alto).
-3. Nel menù la pagina 8 dice ancora «I dolci del giorno ve li presenterà il nostro personale». Con la carta dei dolci si può cambiare.
-
-## Monogramma della copertina
-Posizionato il 09.10.2026 con le misure date dal ristorante (vedi `DECISIONI.md` §6). Resta da controllare: si stampa la copertina su carta comune, la si monta e si apre la cartella un paio di volte.
-
-## Prossimi passi
-1. Provare la copertina nella cartella.
-2. Rigenerare con `./genera.sh` e controllare le 9 pagine.
-3. Fare una prova su un foglio di carta avorio martellata: leggibilità dei grigi e dei corsivi piccoli, con la luce della sala.
-4. Stampare la versione definitiva da `pdf/Menu-Autunno-2026_Stampa.pdf`.
-5. Stampare l'A3 da `pdf/Menu-Autunno-2026_A3_Stampa.pdf` (prima `python3 genera_a3.py`, se `menu.html` è cambiato). Prima va verificato che nel menù non resti nessun giallo.
 
 ## Fuori da questa cartella
 La **carta dei vini** ha una sua cartella di legno (foto in `riferimenti/cartelle/`), ma non fa parte di questo lavoro.

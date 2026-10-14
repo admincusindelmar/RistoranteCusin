@@ -128,4 +128,5 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - la citazione è quella vera di Proust (*La prigioniera*): «Il solo vero viaggio non sarebbe andare verso nuovi paesaggi, ma avere altri occhi». Quella della vecchia carta non risulta fra le sue frasi;
   - le diciture «Senza lattosio» e «Senza glutine» dicono che il dolce è così, non che ne esiste una variante; per questo il testo d'apertura ora dice «e molti sono senza glutine e senza lattosio» invece di «con varianti…»;
   - Passito Ansonica a 8 anche fra i vini liquorosi, come nell'abbinamento.
+- 15.10.2026 · ristorante · **menù chiuso**. A4 e A3 sono definitivi. La frase della pagina 8 «I dolci del giorno ve li presenterà il nostro personale» resta com'è, anche con la carta dei dolci.
 
