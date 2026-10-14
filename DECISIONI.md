@@ -121,5 +121,6 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - B: una terza cartella in legno, A5;
   - C: un leggio da tavolo per i dolci e il carrello dei distillati;
   - D: una tavoletta con molla in ottone.
+  Il 15.10.2026 sono stati fatti i mockup realistici delle quattro proposte (`mockup/`, `pdf/Mockup-supporti-dolci-distillati.pdf`). Sono immagini ricostruite al computer: legno, ottone e strisce vengono dalle foto delle cartelle vere, il cuoio è simulato.
   Alla scelta si correggono i margini dei fogli: i 32 mm in alto servivano solo alla barra della tavoletta.
 
