@@ -9,11 +9,8 @@ Tutti i punti della mail di Carmine sono chiusi il 09.10.2026 (vedi `DECISIONI.m
 
 ## Carta dei dolci e dei distillati (in giallo in `sorgenti/dolci-distillati.html`)
 1. **Allergeni dei sei dolci**: da indicare, con conferma di cucina o sala.
-2. **Citazione di Proust** «L'unico vero viaggio è quello verso il passato»: non risulta fra le frasi di Proust. La frase vera, dalla *Recherche*, è «Il solo vero viaggio non sarebbe andare verso nuovi paesaggi, ma avere altri occhi». Da decidere: tenerla, sostituirla o toglierla.
-3. **Icone senza lattosio e senza glutine**: vogliono dire che il dolce è così, o che esiste una variante su richiesta? Il testo parla di «varianti».
-4. **Abbinamenti a 8, vini liquorosi a 5**: il Passito Ansonica costa 8 come abbinamento e 5 nella lista. Sono due misure diverse?
-5. **Supporto**: scelta la tavoletta con molla in ottone a doppia faccia (15.10.2026). Resta da ordinarla; quando arriva si prova un foglio e si controlla che la molla non copra il testo (oggi c'è margine di 32 mm in alto).
-6. Nel menù la pagina 8 dice ancora «I dolci del giorno ve li presenterà il nostro personale». Con la carta dei dolci si può cambiare.
+2. **Supporto**: scelta la tavoletta con molla in ottone a doppia faccia (15.10.2026). Resta da ordinarla; quando arriva si prova un foglio e si controlla che la molla non copra il testo (oggi c'è margine di 32 mm in alto).
+3. Nel menù la pagina 8 dice ancora «I dolci del giorno ve li presenterà il nostro personale». Con la carta dei dolci si può cambiare.
 
 ## Monogramma della copertina
 Posizionato il 09.10.2026 con le misure date dal ristorante (vedi `DECISIONI.md` §6). Resta da controllare: si stampa la copertina su carta comune, la si monta e si apre la cartella un paio di volte.
