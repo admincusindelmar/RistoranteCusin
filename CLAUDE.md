@@ -17,6 +17,7 @@ Chi lavora qui deve sapere tutto ciò che sapeva Carmine. Le decisioni e il loro
 - `pdf/Menu-Autunno-2026_A3_Stampa.pdf` — il menù A3, senza fondo.
 - `sorgenti/dolci-distillati.html` → `pdf/Dolci-Distillati_Stampa.pdf` — **la carta dei dolci e dei distillati** (dal 14.10.2026): due fogli A4 con la stessa grafica del menù, uno per faccia della tavoletta con molla in ottone (scelta il 15.10.2026). Si genera con `genera_cloud.py` insieme al menù. Margini provvisori: 32 mm in alto per la barra della tavoletta, 18 mm ai lati, 11 mm in basso.
 - `genera_mockup.py` → `mockup/*.jpg` e `pdf/Mockup-supporti-dolci-distillati.pdf` — mockup realistici dei supporti proposti, con il legno vero delle foto delle cartelle e le pagine vere della carta dei dolci: `python3 genera_mockup.py`.
+- `genera_mockup_sala.py` → `mockup/Sala_*.jpg` — la tavoletta scelta posata sui tavoli veri, nelle foto della sala (`riferimenti/sala/`), con la prospettiva ricavata da ogni foto: `python3 genera_mockup_sala.py`.
 - `sorgenti/proposte-supporto.html` → `pdf/Proposte-supporto-dolci-distillati.pdf` — quattro proposte di supporto per la carta dei dolci e dei distillati (15.10.2026), da scegliere.
 - Le versioni «Schermo» (avorio simulato) non si generano più dal 12.10.2026: se servono per guardarlo a video, si apre `menu.html?schermo` nel browser.
 - `riferimenti/`:
