@@ -9,7 +9,7 @@ pdf/Dolci-Distillati_Stampa.pdf, su carta avorio martellata simulata.
     mockup/A_cartella-cuoio-chiusa.jpg, A_cartella-cuoio-aperta.jpg
     mockup/B_trittico-cartelle.jpg
     mockup/C_leggio.jpg
-    mockup/D_tavoletta-molla.jpg
+    mockup/D_tavoletta-due-facce.jpg, D_tavoletta-fronte-dolci.jpg, D_tavoletta-retro-distillati.jpg   (versione scelta)
     pdf/Mockup-supporti-dolci-distillati.pdf   tutte le immagini, una per pagina
 
 Uso: python3 genera_mockup.py
@@ -358,15 +358,13 @@ def scena_c(pag):
     return [("C_leggio.jpg", s)]
 
 
-def scena_d(pag):
-    """Tavoletta in legno scuro con molla d'ottone in alto."""
+def tavoletta(foglio, legno):
+    """Tavoletta in legno scuro con molla d'ottone in alto e il foglio sotto la molla (una faccia)."""
     mm = PX_MM
-    menu = tavola_menu()
-    legno = pulisci_incisioni(menu.copy(), 170, 990, chiare=True)[60:-40, 240:-40]
     pw, ph = int(210 * mm), int(297 * mm)
     bw, bh = pw + int(20 * mm), ph + int(36 * mm)
     tav = cv2.resize(legno, (bw, bh)).astype(np.float32)
-    f = carta(cv2.resize(pag[0], (pw, ph), interpolation=cv2.INTER_AREA))
+    f = carta(cv2.resize(foglio, (pw, ph), interpolation=cv2.INTER_AREA))
     x0, y0 = int(10 * mm), int(26 * mm)
     ombra = np.zeros((bh, bw), np.float32)
     ombra[y0:y0 + ph, x0:x0 + pw] = 1
@@ -389,18 +387,49 @@ def scena_d(pag):
     lx, ly = (bw - leva.shape[1]) // 2, my - int(4 * mm)
     a = leva[:, :, 3:4].astype(np.float32) / 255
     tav[ly:ly + leva.shape[0], lx:lx + leva.shape[1]] = tav[ly:ly + leva.shape[0], lx:lx + leva.shape[1]] * (1 - a) + leva[:, :, :3] * a
-    tav_rgba = rgba(tav, angoli_arrotondati(np.full((bh, bw), 255, np.uint8), int(6 * mm)))
+    # bordo smussato: un filo di luce in alto a sinistra e di ombra in basso a destra
+    alfa = angoli_arrotondati(np.full((bh, bw), 255, np.uint8), int(6 * mm))
+    d = cv2.distanceTransform((alfa > 0).astype(np.uint8), cv2.DIST_L2, 5)
+    smusso = np.clip(1 - d / (2.2 * mm), 0, 1)
+    yy, xx = np.mgrid[0:bh, 0:bw].astype(np.float32)
+    lato = np.where((xx < bw * .5) & (yy < bh * .5), 1.18, .78)
+    tav *= (1 + smusso * (lato - 1))[:, :, None]
+    return rgba(tav, alfa)
 
-    W, H = 2400, 2000
-    s = tovaglia(W, H)
-    k = 1750 / bh
+
+def posa_tavoletta(s, tav, centro, altezza, gradi):
+    """Posa la tavoletta con il suo spessore (10 mm di legno visti di sbieco) e l'ombra."""
+    bh, bw = tav.shape[:2]
+    k = altezza / bh
     w, h = bw * k, bh * k
     q = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
-    a = np.radians(5)
+    a = np.radians(gradi)
     R = np.float32([[np.cos(a), -np.sin(a)], [np.sin(a), np.cos(a)]])
-    q = (q - [w / 2, h / 2]) @ R.T + [1200, 1000]
-    posa(s, tav_rgba, q, (20, 28, 26, .5))
-    return [("D_tavoletta-molla.jpg", s)]
+    q = (q - [w / 2, h / 2]) @ R.T + centro
+    spessore = tav.copy()
+    spessore[:, :, :3] = (spessore[:, :, :3].astype(np.float32) * .42).astype(np.uint8)
+    for t in (9, 6, 3):
+        posa(s, spessore, q + [t * .6, t], (22, 30, 28, .5) if t == 9 else None)
+    posa(s, tav, q, None)
+
+
+def scena_d(pag):
+    """Versione scelta: la tavoletta a due facce, dolci davanti e distillati dietro."""
+    menu = tavola_menu()
+    legno = pulisci_incisioni(menu.copy(), 170, 990, chiare=True)[60:-40, 240:-40]
+    fronte = tavoletta(pag[0], legno)
+    retro = tavoletta(pag[1], cv2.flip(legno, 1))      # l'altra faccia: lo stesso legno visto dall'altro lato
+    out = []
+    W, H = 3400, 2200
+    s = tovaglia(W, H)
+    posa_tavoletta(s, fronte, [960, 1100], 1950, -4)
+    posa_tavoletta(s, retro, [2440, 1100], 1950, 3)
+    out.append(("D_tavoletta-due-facce.jpg", s))
+    for nome, tav, g in (("D_tavoletta-fronte-dolci.jpg", fronte, 5), ("D_tavoletta-retro-distillati.jpg", retro, -4)):
+        s = tovaglia(2400, 2100)
+        posa_tavoletta(s, tav, [1200, 1040], 1850, g)
+        out.append((nome, s))
+    return out
 
 
 def main():

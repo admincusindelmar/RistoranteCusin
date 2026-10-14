@@ -122,5 +122,6 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - C: un leggio da tavolo per i dolci e il carrello dei distillati;
   - D: una tavoletta con molla in ottone.
   Il 15.10.2026 sono stati fatti i mockup realistici delle quattro proposte (`mockup/`, `pdf/Mockup-supporti-dolci-distillati.pdf`). Sono immagini ricostruite al computer: legno, ottone e strisce vengono dalle foto delle cartelle vere, il cuoio è simulato.
+  **15.10.2026, scelta del ristorante: la D, a doppia faccia.** Una tavoletta in legno scuro con una molla in ottone su ogni faccia: davanti il foglio dei dolci, dietro quello dei distillati. Mockup: `mockup/D_tavoletta-due-facce.jpg`, `D_tavoletta-fronte-dolci.jpg`, `D_tavoletta-retro-distillati.jpg`. I 32 mm liberi in alto nei fogli vanno bene anche per la molla, che copre circa i primi 15 mm del foglio.
   Alla scelta si correggono i margini dei fogli: i 32 mm in alto servivano solo alla barra della tavoletta.
 
