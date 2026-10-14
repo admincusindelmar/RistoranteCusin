@@ -5,6 +5,7 @@ dove Chrome non raggiunge direttamente Google Fonts: i caratteri vengono scarica
 dal proxy e passati alla pagina. Sul Mac si usa invece ./genera.sh.
 
     pdf/Menu-Autunno-2026_Stampa.pdf    senza fondo, per la carta avorio
+    pdf/Dolci-Distillati_Stampa.pdf     la carta dei dolci e dei distillati (da sorgenti/dolci-distillati.html)
 
 Uso: python3 genera_cloud.py
 """
@@ -31,11 +32,12 @@ def scarica(route):
 
 def main():
     (QUI / "pdf").mkdir(exist_ok=True)
-    url = (QUI / "sorgenti" / "menu.html").as_uri()
     with sync_playwright() as pw:
         b = pw.chromium.launch(executable_path=CHROME if os.path.exists(CHROME) else None)
         # solo le versioni di stampa: le «Schermo» non si generano più (12.10.2026)
-        for query, nome in (("", "Menu-Autunno-2026_Stampa.pdf"),):
+        for sorgente, query, nome in (("menu.html", "", "Menu-Autunno-2026_Stampa.pdf"),
+                                      ("dolci-distillati.html", "", "Dolci-Distillati_Stampa.pdf")):
+            url = (QUI / "sorgenti" / sorgente).as_uri()
             pg = b.new_page()
             pg.route("https://fonts.googleapis.com/**", scarica)
             pg.route("https://fonts.gstatic.com/**", scarica)

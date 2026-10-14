@@ -15,6 +15,8 @@ Chi lavora qui deve sapere tutto ciò che sapeva Carmine. Le decisioni e il loro
 - `sorgenti/qr-menu-lingue.png` — il QR code dell'A3, che porta a https://www.cusindelmar.it/it/menu/ (in blu Cusin, fondo trasparente). L'originale ricevuto è in `riferimenti/2026-10-14_QR-menu-originale.jpg`.
 - `pdf/Menu-Autunno-2026_Stampa.pdf` — senza fondo, da stampare sulla carta avorio.
 - `pdf/Menu-Autunno-2026_A3_Stampa.pdf` — il menù A3, senza fondo.
+- `sorgenti/dolci-distillati.html` → `pdf/Dolci-Distillati_Stampa.pdf` — **la carta dei dolci e dei distillati** (dal 14.10.2026): due fogli A4 con la stessa grafica del menù, uno per faccia della tavoletta. Si genera con `genera_cloud.py` insieme al menù. Margini provvisori: 32 mm in alto per la barra della tavoletta, 18 mm ai lati, 11 mm in basso.
+- `sorgenti/proposta-tavoletta.html` → `pdf/Proposta-tavoletta-dolci-distillati.pdf` — la proposta del supporto (tavoletta a due facce).
 - Le versioni «Schermo» (avorio simulato) non si generano più dal 12.10.2026: se servono per guardarlo a video, si apre `menu.html?schermo` nel browser.
 - `riferimenti/`:
   - `2026-10-08_Menu-Semidefinitivo-Noemi.pdf` — la versione di partenza;

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Cusin · Dolci e distillati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<style>
+  /* Stessa grafica del menù d'autunno (sorgenti/menu.html): Cormorant, blu Cusin, champagne solo per filetti e decori */
+  :root {
+    --blu: #152b61;
+    --champagne: #d6c6a5;
+    --avorio: #f4ede2;
+    --secondario: #675e53;
+    --filetto: rgba(21, 43, 97, 0.25);
+    --giallo: #fff0a0;
+    --display: "Cormorant Garamond", Garamond, serif;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: var(--display); font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html.schermo body { background: #d9d3c8; }
+  html.schermo .pag { background: var(--avorio); margin: 0 auto 8mm; }
+
+  /* Margini per la tavoletta: in alto la barra con le viti (32 mm), ai lati e in basso il bordo del legno.
+     Valori provvisori: si ricalcolano sulla tavoletta vera, come per le cartelle. */
+  .pag { width: 210mm; height: 297mm; padding: 32mm 18mm 11mm; position: relative; overflow: hidden; display: flex; flex-direction: column; break-after: page; background: #fff; }
+  .pag:last-child { break-after: auto; }
+
+  .testa { text-align: center; }
+  .testa img { height: 9mm; width: auto; display: block; margin: 0 auto 4mm; }
+  .eti { font-size: 12.5px; line-height: 15px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; margin: 0; }
+  .eti > span { font-style: italic; font-size: 14px; font-weight: 500; color: var(--secondario); letter-spacing: .02em; text-transform: none; margin-left: 1mm; }
+  h1 { font-weight: 500; font-size: 40px; line-height: 40px; margin: 3mm 0 0; letter-spacing: .005em; }
+  .en { font-style: italic; font-size: 15px; line-height: 17px; color: var(--secondario); margin: .5mm 0 0; }
+  .corpo { flex: 1; display: flex; flex-direction: column; }
+  .piede { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); border-top: 1px solid var(--filetto); padding-top: 3mm; margin-top: 4mm; }
+  .nb { white-space: nowrap; }
+  .tbd { background: var(--giallo); box-shadow: 0 0 0 1.5px var(--giallo); }
+  p { text-wrap: pretty; }
+
+  /* Dolci */
+  .citazione { text-align: center; margin: 8mm auto 0; max-width: 130mm; }
+  .citazione .frase { font-style: italic; font-size: 21px; line-height: 25px; margin: 0; }
+  .citazione .autore { font-size: 10.5px; letter-spacing: .3em; text-transform: uppercase; font-weight: 600; margin: 3mm 0 0; }
+  .citazione .testo { font-size: 15.5px; line-height: 20px; margin: 5mm 0 0; }
+  .citazione .testo-en { font-style: italic; font-size: 14px; line-height: 17px; color: var(--secondario); margin: 1mm 0 0; }
+  .filetto-corto { width: 48px; height: 1px; background: var(--champagne); margin: 7mm auto; }
+  .dolci { display: flex; flex-direction: column; gap: 5.5mm; }
+  .riga { display: grid; grid-template-columns: 1fr 14mm; column-gap: 4mm; align-items: start; }
+  .riga h2 { font-weight: 600; font-size: 20.7px; line-height: 21px; margin: 0; }
+  .prezzo { font-size: 17.5px; line-height: 22px; font-weight: 600; text-align: right; }
+  .abb { font-size: 15.5px; line-height: 19px; margin: 1.4mm 0 0; }
+  .abb i { color: var(--secondario); }
+  .abb .p { font-weight: 600; margin-left: 1.5mm; }
+  .all { font-size: 13.5px; line-height: 15px; letter-spacing: .02em; color: var(--secondario); margin: 1.3mm 0 0; }
+  .dieta { font-size: 13.5px; font-weight: 700; color: var(--blu); margin-left: 3mm; }
+  .all .dieta:first-child { margin-left: 0; }
+  .nota { font-size: 14px; line-height: 17px; color: var(--secondario); margin: auto 0 0; text-align: center; }
+  .nota i { display: block; }
+
+  /* Distillati: due colonne, le sezioni non si spezzano */
+  .colonne { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm; margin-top: 4mm; flex: 1; align-content: start; }
+  .colonne > div + div { border-left: 1px solid var(--filetto); margin-left: -6mm; padding-left: 6mm; }
+  .sez { margin-bottom: 3.6mm; }
+  .sez h3 { font-weight: 500; font-size: 19px; line-height: 22px; margin: 0 0 1.6mm; display: flex; align-items: baseline; gap: 3mm; }
+  .sez h3 i { font-size: 14px; color: var(--secondario); }
+  .sez h3::after { content: ""; flex: 1; height: 1px; background: var(--champagne); align-self: center; }
+  .v { display: grid; grid-template-columns: 1fr 9mm; column-gap: 2mm; break-inside: avoid; margin-bottom: .4mm; }
+  .v b { font-weight: 600; font-size: 15.5px; line-height: 17px; }
+  .v .sub { font-style: italic; font-size: 13.5px; color: var(--secondario); margin-left: 1mm; }
+  .v .p { font-weight: 600; font-size: 15.5px; line-height: 17px; text-align: right; }
+</style>
+<script>if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');</script>
+</head>
+<body>
+
+<!-- 1 · DOLCI -->
+<section class="pag">
+  <div class="testa">
+    <img src="cusin-monogramma-blu.png" alt="Cusin">
+    <p class="eti">La carta dei dolci <span>Desserts</span></p>
+    <h1>Dolci</h1>
+  </div>
+  <div class="corpo">
+    <div class="citazione">
+      <p class="frase"><span class="tbd">«L'unico vero viaggio è quello verso il passato.»</span></p>
+      <p class="autore">Marcel Proust</p>
+      <p class="testo">Ogni dolce ha il potere di riportarvi da qualche parte. I nostri sono preparati con ingredienti selezionati, con varianti <span class="nb">senza glutine</span> e <span class="nb">senza lattosio</span>: perché il ricordo di un buon dessert non dovrebbe avere confini.</p>
+      <p class="testo-en">Every dessert can take you somewhere. Ours are made with selected ingredients, with <span class="nb">gluten-free</span> and <span class="nb">lactose-free</span> versions: the memory of a good dessert should know no borders.</p>
+    </div>
+    <div class="filetto-corto"></div>
+    <div class="dolci">
+      <div class="riga"><div><h2>Tiramisù</h2>
+        <p class="abb"><i>Abbinamento consigliato</i> · Vermouth Rosato <span class="p">8</span></p>
+        <p class="all"><span class="dieta">Senza lattosio</span><span class="dieta">Senza glutine</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">8</div></div>
+      <div class="riga"><div><h2>Panna cotta al Mojito</h2>
+        <p class="abb"><i>Abbinamento consigliato</i> · <span class="nb">Viognier Passito</span> <span class="p">8</span></p>
+        <p class="all"><span class="dieta">Senza lattosio</span><span class="dieta">Senza glutine</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">8</div></div>
+      <div class="riga"><div><h2>Mousse al latte e <span class="nb">caramello alcolico</span> all'arancia</h2>
+        <p class="abb"><i>Abbinamento consigliato</i> · <span class="nb">Aleatico Passito</span> <span class="p">8</span></p>
+        <p class="all"><span class="dieta">Senza lattosio</span><span class="dieta">Senza glutine</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">10</div></div>
+      <div class="riga"><div><h2>Cheesecake fredda</h2>
+        <p class="abb"><i>Abbinamento consigliato</i> · <span class="nb">Ansonica Passito</span> <span class="p">8</span></p>
+        <p class="all"><span class="dieta">Senza lattosio</span><span class="dieta">Senza glutine</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">10</div></div>
+      <div class="riga"><div><h2>Goloso cioccolato e lampone</h2>
+        <p class="abb"><i>Abbinamento consigliato</i> · <span class="nb">Vermouth Rosso</span> <span class="p">8</span></p>
+        <p class="all"><span class="dieta">Senza lattosio</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">10</div></div>
+      <div class="riga"><div><h2>Sorbetto</h2>
+        <p class="all"><span class="dieta">Senza lattosio</span> <span class="tbd" style="margin-left:3mm">Allergeni/Allergens da indicare</span></p></div>
+        <div class="prezzo">8</div></div>
+    </div>
+    <p class="nota">I numeri degli allergeni corrispondono alla legenda del menù. Per qualsiasi esigenza alimentare rivolgetevi al nostro personale.
+      <i>Allergen numbers refer to the legend in our menu. Please inform our staff of any dietary requirement.</i></p>
+  </div>
+  <div class="piede"><span>Cusin · Dolci</span><span></span></div>
+</section>
+
+<!-- 2 · DISTILLATI E AMARI -->
+<section class="pag">
+  <div class="testa">
+    <img src="cusin-monogramma-blu.png" alt="Cusin">
+    <p class="eti">Dopo cena <span>After dinner</span></p>
+    <h1>Distillati e amari</h1>
+  </div>
+  <div class="colonne">
+   <div>
+    <div class="sez"><h3>Cognac</h3>
+      <div class="v"><div><b>Napoleon Vieille Réserve</b></div><div class="p">12</div></div>
+      <div class="v"><div><b>Rémy Martin VSOP</b></div><div class="p">12</div></div>
+    </div>
+    <div class="sez"><h3>Whisky</h3>
+      <div class="v"><div><b>Segretario di Stato</b></div><div class="p">12</div></div>
+      <div class="v"><div><b>Laphroaig Select</b> <span class="sub">torbato</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Gentleman Jack</b> <span class="sub">Tennessee whiskey</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Tenjaku</b> <span class="sub">blended giapponese</span></div><div class="p">12</div></div>
+      <div class="v"><div><b>Talisker Skye</b> <span class="sub">Scotch whisky</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Caol Ila</b> <span class="sub">12 anni</span></div><div class="p">14</div></div>
+    </div>
+    <div class="sez"><h3>Brandy</h3>
+      <div class="v"><div><b>Poli Arzente</b></div><div class="p">12</div></div>
+      <div class="v"><div><b>Poli Brandy</b></div><div class="p">13</div></div>
+      <div class="v"><div><b>Bas Armagnac Yvan Auban VSOP</b></div><div class="p">14</div></div>
+      <div class="v"><div><b>Morelli Riserva</b> <span class="sub">20 anni</span></div><div class="p">13</div></div>
+      <div class="v"><div><b>Piccola Distilleria Toscana</b> <span class="sub">brandy 45 anni</span></div><div class="p">18</div></div>
+      <div class="v"><div><b>Piccola Distilleria Toscana</b> <span class="sub">brandy 25 anni</span></div><div class="p">12</div></div>
+    </div>
+    <div class="sez"><h3>Rum</h3>
+      <div class="v"><div><b>Dzama 6 ans</b> <span class="sub"><span class="nb">Île de la Réunion</span></span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Don Diego Spiced</b></div><div class="p">10</div></div>
+      <div class="v"><div><b>Montebello</b> <span class="sub">6 ans, Guadalupa</span></div><div class="p">13</div></div>
+      <div class="v"><div><b>Millonario</b> <span class="sub">10 años Reserva, Perù</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Casa del Rum</b> <span class="sub">Selección 4, <span class="nb">Jamaica e Barbados</span></span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Zacapa 23 anni</b></div><div class="p">15</div></div>
+      <div class="v"><div><b>Don Papa Baroko</b></div><div class="p">14</div></div>
+      <div class="v"><div><b>Malecón Reserva Imperial 25</b></div><div class="p">18</div></div>
+      <div class="v"><div><b>Mount Gay Black Barrel</b></div><div class="p">12</div></div>
+      <div class="v"><div><b>Mount Gay Eclipse</b></div><div class="p">10</div></div>
+      <div class="v"><div><b>Mount Gay XO</b></div><div class="p">14</div></div>
+      <div class="v"><div><b>Piccola Distilleria Toscana</b> <span class="sub">rum Presidenziale</span></div><div class="p">12</div></div>
+    </div>
+   </div>
+   <div>
+    <div class="sez"><h3>Grappe</h3>
+      <div class="v"><div><b>Poli Sarpa Bianca</b></div><div class="p">8</div></div>
+      <div class="v"><div><b>Poli 24 Carati Barrique</b></div><div class="p">8</div></div>
+      <div class="v"><div><b>Poli Gewürztraminer</b> <span class="sub">aromatica</span></div><div class="p">8</div></div>
+      <div class="v"><div><b>Poli Merlot</b> <span class="sub">secca</span></div><div class="p">8</div></div>
+      <div class="v"><div><b>Poli Moscato</b> <span class="sub">morbida</span></div><div class="p">8</div></div>
+      <div class="v"><div><b>Nannoni Brunello</b></div><div class="p">10</div></div>
+      <div class="v"><div><b>Giare Amarone</b></div><div class="p">10</div></div>
+      <div class="v"><div><b>Giare Gewürztraminer</b></div><div class="p">10</div></div>
+      <div class="v"><div><b>Morelli</b> <span class="sub">Moscato</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Greppolungo</b> <span class="sub">Amarone invecchiata</span></div><div class="p">13</div></div>
+      <div class="v"><div><b>Luigi Francoli</b> <span class="sub">La visione di Luigi, riserva</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Luigi Francoli</b> <span class="sub">Erbaluce</span></div><div class="p">9</div></div>
+      <div class="v"><div><b>Luigi Francoli</b> <span class="sub">Nebbiolo del Gattinara</span></div><div class="p">10</div></div>
+      <div class="v"><div><b>Luigi Francoli</b> <span class="sub">Nebbiolo da Barolo, riserva</span></div><div class="p">12</div></div>
+      <div class="v"><div><b>Luigi Francoli</b> <span class="sub">La visione di Luigi, bianca</span></div><div class="p">9</div></div>
+    </div>
+    <div class="sez"><h3>Amari e liquori</h3>
+      <div class="v"><div><b>Amaro Arancia</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Spirito di Liquirizia</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Amaretto della Torre</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Amaro Quinta Era</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Amaro Etrusco</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Gin Botanico</b></div><div class="p">8</div></div>
+      <div class="v"><div><b>Jefferson</b> <span class="sub">amaro importante</span></div><div class="p">6</div></div>
+      <div class="v"><div><b>Zirmol</b> <span class="sub">cirmolo infuso in grappa</span></div><div class="p">6</div></div>
+      <div class="v"><div><b>Amaro al Fieno</b></div><div class="p">6</div></div>
+      <div class="v"><div><b>Sine Felle</b> <span class="sub">vermouth rosso 2019</span></div><div class="p">8</div></div>
+      <div class="v"><div><b>Sine Felle Rosato</b> <span class="sub">vermouth 2019</span></div><div class="p">9</div></div>
+      <div class="v"><div><b>Vermouth Altolago</b></div><div class="p">7</div></div>
+      <div class="v"><div><b>Limoncello</b></div><div class="p">5</div></div>
+    </div>
+    <div class="sez"><h3>Vini liquorosi</h3>
+      <div class="v"><div><b>Passito Ansonica</b></div><div class="p">5</div></div>
+      <div class="v"><div><b>Zibibbo Balanubi</b></div><div class="p">5</div></div>
+      <div class="v"><div><b>Malvasia Balanubi</b></div><div class="p">5</div></div>
+    </div>
+   </div>
+  </div>
+  <div class="piede"><span>Cusin · Distillati e amari</span><span></span></div>
+</section>
+
+</body>
+</html>
