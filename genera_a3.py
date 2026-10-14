@@ -232,7 +232,7 @@ p, li, h4 { text-wrap: pretty; }
 .testa h1 { font-weight: 500; font-size: 30pt; letter-spacing: .5em; margin-right: -.5em; line-height: 1; }
 .testa .nome p { font-size: 9.5pt; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; margin-top: 2mm; }
 .qr { justify-self: end; display: flex; align-items: center; gap: 3mm; }
-.qr img { width: 19mm; height: 19mm; display: block; image-rendering: pixelated; }
+.qr img { width: 22mm; height: 22mm; margin: -1.5mm 0; display: block; image-rendering: pixelated; }
 .qr p { font-size: 10pt; color: var(--secondario); }
 .qr .qr-it { font-style: italic; font-size: 14pt; color: var(--blu); }
 
