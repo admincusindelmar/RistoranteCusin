@@ -116,5 +116,10 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
 - **Due fogli A4**, uno per i dolci e uno per distillati e amari, stampati su un lato solo come il menù. Stessa grafica: Cormorant, blu Cusin, champagne per i filetti, monogramma blu in testa, prezzi senza simbolo dell'euro.
 - **Dolci**: la frase d'apertura è al «voi» («riportarvi»). Le icone senza lattosio e senza glutine sono diventate le diciture del menù («Senza lattosio», «Senza glutine»), lette così dalla foto: due diciture su tiramisù, panna cotta, mousse e cheesecake, solo «Senza lattosio» su goloso cioccolato e lampone e sorbetto. Ogni dolce ha l'abbinamento consigliato con il suo prezzo. Prezzi interi (8, 10) come nel menù.
 - **Distillati**: trascritti dalla foto, con le grafie corrette dei nomi: Gewürztraminer, Île de la Réunion, Millonario, Mount Gay, Malecón, Selección, Viognier (nell'abbinamento della panna cotta), Vieille Réserve. Le grappe di Luigi Francoli hanno il sottotitolo senza «grappa di», perché stanno già sotto «Grappe». «Amari» è diventato «Amari e liquori», perché comprende gin, vermouth e limoncello.
-- **Supporto proposto**: una tavoletta di legno con manico, a due facce (dolci davanti, distillati dietro), con una barra e tre viti in ottone come le cartelle e una striscia in cuoio color champagne. Dettagli e disegno in `pdf/Proposta-tavoletta-dolci-distillati.pdf`.
+- **Supporto**: la prima proposta, una tavoletta con manico a due facce, non ha convinto e l'ho tolta. Ora ci sono quattro proposte in `pdf/Proposte-supporto-dolci-distillati.pdf`:
+  - A, consigliata: cartella in cuoio blu Cusin a libro, con monogramma impresso a secco e fogli negli angolini;
+  - B: una terza cartella in legno, A5;
+  - C: un leggio da tavolo per i dolci e il carrello dei distillati;
+  - D: una tavoletta con molla in ottone.
+  Alla scelta si correggono i margini dei fogli: i 32 mm in alto servivano solo alla barra della tavoletta.
 
