@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Cusin · L'uva nel piatto</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<style>
+  /* Locandina per WhatsApp e social: 1080 × 1350 px, grafica del menù (Cormorant, blu Cusin, champagne solo nei filetti) */
+  :root { --blu: #152b61; --champagne: #d6c6a5; --avorio: #f4ede2; --secondario: #675e53; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; }
+  body { font-family: "Cormorant Garamond", Garamond, serif; font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu); background: var(--avorio); }
+  .foglio { width: 1080px; height: 1350px; padding: 70px 110px 60px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    border: 18px solid var(--avorio); outline: 1.5px solid var(--champagne); outline-offset: -40px; }
+  .mono { height: 64px; display: block; margin-bottom: 26px; }
+  .eti { font-size: 21px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; display: flex; align-items: center; gap: 22px; }
+  .eti::before, .eti::after { content: ""; width: 70px; height: 1.5px; background: var(--champagne); }
+  h1 { font-weight: 500; font-size: 92px; line-height: 1; margin-top: 18px; }
+  .data { font-style: italic; font-size: 36px; margin-top: 16px; }
+  .filetto { width: 90px; height: 1.5px; background: var(--champagne); margin: 34px auto 30px; }
+  .portata { margin-bottom: 22px; }
+  .portata h2 { font-size: 18px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 8px; }
+  .portata p { font-size: 30px; line-height: 1.22; }
+  .vino { font-style: italic; font-size: 23px; color: var(--secondario); margin-top: 4px; }
+  .prezzo { margin-top: auto; display: flex; align-items: baseline; gap: 16px; }
+  .prezzo b { font-size: 84px; font-weight: 500; line-height: 1; }
+  .prezzo span { font-size: 20px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; text-align: left; line-height: 1.3; }
+  .cta { font-size: 25px; margin-top: 20px; }
+  .cta b { font-weight: 700; }
+  .piede { font-size: 16px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="foglio">
+  <img class="mono" src="cusin-monogramma-blu.png" alt="Cusin">
+  <p class="eti">Serata a tema</p>
+  <h1>L'uva nel piatto</h1>
+  <p class="data">Venerdì 30 ottobre</p>
+  <div class="filetto"></div>
+
+  <div class="portata"><h2>Antipasti</h2>
+    <p>Carpaccio di ricciola e uva caramellata al salto<br>Gamberi croccanti al mais su crema di vino</p>
+    <p class="vino">in abbinamento Bauci Viognier</p></div>
+  <div class="portata"><h2>Primi</h2>
+    <p>Risotto al vino e Grana 36 mesi<br>Tortelli di sfoglia ai porcini e dentice con gelée al vino</p>
+    <p class="vino">in abbinamento Isy Rosé</p></div>
+  <div class="portata"><h2>Secondo</h2>
+    <p>Ricciola al fondo bruno con patate<br>in crema di formaggio erborinato</p>
+    <p class="vino">in abbinamento Pitis Syrah</p></div>
+  <div class="portata"><h2>Dolce</h2>
+    <p>Crostatine di marmellata al vino</p></div>
+
+  <div class="prezzo"><b>60 €</b><span>a persona<br>55 posti</span></div>
+  <p class="cta">Prenotate <b>rispondendo a questo messaggio</b></p>
+  <p class="piede">Cusin · Antignano</p>
+</div>
+</body>
+</html>
