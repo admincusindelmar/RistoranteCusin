@@ -9,6 +9,7 @@ dal proxy e passati alla pagina. Sul Mac si usa invece ./genera.sh.
 
 Uso: python3 genera_cloud.py
 """
+import glob
 import os
 import ssl
 import urllib.request
@@ -20,7 +21,9 @@ QUI = Path(__file__).resolve().parent
 CA = "/root/.ccr/ca-bundle.crt"
 SSL = ssl.create_default_context(cafile=CA if os.path.exists(CA) else None)
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/141 Safari/537.36"
-CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+# Chromium preinstallato nell'ambiente cloud: la cartella cambia con la versione, quindi si cerca
+_trovati = sorted(glob.glob("/opt/pw-browsers/chromium-*/chrome-linux*/chrome"))
+CHROME = _trovati[-1] if _trovati else ""
 
 
 def scarica(route):
