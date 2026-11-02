@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Cusin · Prodotti toscani DOP e IGP</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<style>
+:root { --blu:#152b61; --champagne:#d6c6a5; --avorio:#f4ede2; --secondario:#675e53; --filetto:rgba(21,43,97,.22); }
+@page { size: A4; margin: 16mm 18mm 18mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Cormorant Garamond", Garamond, serif; font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.eti { font-size: 12.5px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; }
+.copertina { height: 260mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; break-after: page; }
+.copertina .mono { height: 30mm; margin-bottom: 10mm; }
+.copertina h1 { font-weight: 500; font-size: 46px; line-height: 1.08; margin-top: 4mm; }
+.copertina .sotto { font-style: italic; font-size: 20px; margin-top: 4mm; }
+.filetto { width: 60px; height: 1px; background: var(--champagne); margin: 9mm auto; }
+.numeri { display: flex; gap: 14mm; }
+.numeri div { display: flex; flex-direction: column; align-items: center; }
+.numeri b { font-size: 44px; font-weight: 500; line-height: 1; }
+.numeri span { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-top: 2mm; line-height: 1.4; }
+.intro { font-size: 15.5px; line-height: 1.45; max-width: 140mm; margin-top: 10mm; }
+.avviso { font-size: 15.5px; line-height: 1.45; max-width: 140mm; margin-top: 5mm; background: #ebe2d3; padding: 3mm 4mm; text-align: left; }
+.blocco { margin-bottom: 9mm; }
+.blocco.intero { break-inside: avoid; }
+h2 { font-weight: 500; font-size: 26px; display: flex; align-items: baseline; gap: 4mm; margin-bottom: 2.5mm; break-after: avoid; }
+h2::after { content: ""; flex: 1; height: 1px; background: var(--champagne); align-self: center; }
+.nota { font-style: italic; font-size: 15px; color: var(--secondario); margin-bottom: 2mm; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; padding: 1.5mm 2mm 1.5mm 0; border-bottom: 1px solid var(--champagne); }
+td { font-size: 14.5px; line-height: 1.3; padding: 1.8mm 3mm 1.8mm 0; border-bottom: 1px solid var(--filetto); vertical-align: top; }
+td:first-child { font-weight: 600; font-size: 15.5px; }
+tr { break-inside: avoid; }
+.t3 td:first-child { width: 33%; } .t3 td:nth-child(2) { width: 36%; }
+.t2 td:first-child { width: 36%; }
+.vino { margin-bottom: 4mm; break-inside: avoid; }
+.vino h3 { font-size: 11.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 1mm; }
+.vino p { font-size: 15px; line-height: 1.45; }
+.idea { border-left: 1px solid var(--champagne); padding-left: 4mm; margin-bottom: 4mm; break-inside: avoid; }
+.i-t { font-size: 17px; font-weight: 600; }
+.i-n { font-size: 15px; font-style: italic; color: var(--secondario); }
+.fonti ul { list-style: none; font-size: 13.5px; line-height: 1.6; color: var(--secondario); }
+</style></head><body>
+<section class="copertina">
+  <img class="mono" src="cusin-monogramma-blu.png" alt="Cusin">
+  <p class="eti">Per la cucina di Cusin</p>
+  <h1>I prodotti toscani<br>a denominazione</h1>
+  <p class="sotto">DOP, IGP e vini, per il mare e per la terra</p>
+  <div class="filetto"></div>
+  <div class="numeri">
+    <div><b>32</b><span>prodotti alimentari<br>16 DOP · 16 IGP</span></div>
+    <div><b>58</b><span>denominazioni<br>del vino</span></div>
+    <div><b>2</b><span>distillati<br>IG</span></div>
+  </div>
+  <p class="intro">Dati Ismea presentati a BuyFood Toscana 2026. Qui sono raccolti i 31 prodotti alimentari verificati, con l'uso
+  in una cucina di mare e di terra; per l'elenco ufficiale completo fa fede la banca dati del Ministero dell'Agricoltura (MASAF).</p>
+  <p class="avviso"><b>Il pesce.</b> In Toscana non ci sono pesci o frutti di mare DOP o IGP: per il mare le denominazioni entrano
+  come condimento e accompagnamento. Fuori dalle denominazioni c'è la bottarga di Orbetello, Presidio Slow Food.</p>
+</section>
+<section class="blocco intero"><h2>Oli extravergine di oliva</h2><p class="nota">Vanno su tutto, mare e terra.</p><table class="t2"><thead><tr><th>Prodotto</th><th>In cucina</th></tr></thead><tbody><tr><td>Toscano IGP</td><td>L&#x27;olio di base per tutta la carta; ha anche menzioni geografiche (per esempio Colline di Firenze, Montalbano)</td></tr><tr><td>Chianti Classico DOP</td><td>Deciso e piccante: carni, zuppe, bruschette</td></tr><tr><td>Terre di Siena DOP</td><td>Fruttato medio: crudi di pesce e verdure</td></tr><tr><td>Lucca DOP</td><td>Più delicato: il più adatto al pesce</td></tr><tr><td>Seggiano DOP</td><td>Da olivastra seggianese, sull&#x27;Amiata; morbido, ottimo sui crudi</td></tr></tbody></table></section><section class="blocco intero"><h2>Formaggi</h2><table class="t3"><thead><tr><th>Prodotto</th><th>Mare</th><th>Terra</th></tr></thead><tbody><tr><td>Pecorino Toscano DOP</td><td>Nei paccheri cacio e pepe con gamberi, già in carta</td><td>Taglieri, primi, «baccelli e pecorino» del Primo Maggio</td></tr><tr><td>Pecorino delle Balze Volterrane DOP</td><td>Grattugiato su crudi di gambero</td><td>Stagionato, con miele e confetture</td></tr><tr><td>Pecorino Romano DOP</td><td>Si produce anche in provincia di Grosseto</td><td>Cacio e pepe, amatriciana, carbonara</td></tr></tbody></table></section><section class="blocco"><h2>Salumi e carni</h2><table class="t3"><thead><tr><th>Prodotto</th><th>Mare</th><th>Terra</th></tr></thead><tbody><tr><td>Prosciutto Toscano DOP</td><td>Avvolto su capesante o gamberi</td><td>Antipasto toscano, già in carta</td></tr><tr><td>Lardo di Colonnata IGP</td><td>Con gamberi e scampi scottati, o su crostone con alici</td><td>Crostoni, sull&#x27;arrosto</td></tr><tr><td>Finocchiona IGP</td><td>—</td><td>Taglieri, con fichi</td></tr><tr><td>Cinta Senese DOP</td><td>—</td><td>Arista, salumi, ragù</td></tr><tr><td>Mortadella di Prato IGP</td><td>—</td><td>Antipasti, con fichi o pane</td></tr><tr><td>Mortadella Bologna IGP</td><td>Prodotta anche in Toscana</td><td>Antipasti</td></tr><tr><td>Salamini italiani alla cacciatora DOP</td><td>Prodotti anche in Toscana</td><td>Aperitivi</td></tr><tr><td>Vitellone Bianco dell&#x27;Appennino Centrale IGP</td><td>Chianina, Maremmana</td><td>Tagliata e fiorentina: per la tagliata toscana</td></tr><tr><td>Agnello del Centro Italia IGP</td><td>—</td><td>Agnello di Pasqua, costolette</td></tr></tbody></table></section><section class="blocco"><h2>Legumi, cereali, castagne e funghi</h2><table class="t3"><thead><tr><th>Prodotto</th><th>Mare</th><th>Terra</th></tr></thead><tbody><tr><td>Farro della Garfagnana IGP</td><td>Insalata di farro con polpo o cozze; zuppa di farro e frutti di mare</td><td>Zuppe e minestre</td></tr><tr><td>Fagiolo di Sorana IGP</td><td>Fagioli e calamari; zuppa di fagioli e cozze</td><td>Fagioli all&#x27;olio, ribollita</td></tr><tr><td>Farina di Neccio della Garfagnana DOP</td><td>Gnocchi di castagne con baccalà</td><td>Necci, castagnaccio</td></tr><tr><td>Farina di castagne della Lunigiana DOP</td><td>Pasta fresca con crostacei</td><td>Testaroli, dolci</td></tr><tr><td>Castagna del Monte Amiata IGP</td><td>Crema di castagne, già nella perla di mazzancolle</td><td>Contorni, dolci</td></tr><tr><td>Marrone del Mugello IGP</td><td>Vellutata con capesante</td><td>Marron glacé, ripieni</td></tr><tr><td>Marrone di Caprese Michelangelo DOP</td><td>Con scampi e burro nocciola</td><td>Dolci</td></tr><tr><td>Fungo di Borgotaro IGP</td><td>Prodotto anche a Pontremoli; porcini con mazzancolle, già nei tagliolini</td><td>Tagliatelle, contorni</td></tr></tbody></table></section><section class="blocco intero"><h2>Spezie, pane e miele</h2><table class="t3"><thead><tr><th>Prodotto</th><th>Mare</th><th>Terra</th></tr></thead><tbody><tr><td>Zafferano di San Gimignano DOP</td><td>Risotti di mare, brodetti, cacciucco bianco</td><td>Risotti, ragù bianchi</td></tr><tr><td>Pane Toscano DOP</td><td>Crostoni del cacciucco, panzanella di mare</td><td>Fettunta, ribollita, pappa al pomodoro</td></tr><tr><td>Miele della Lunigiana DOP</td><td>Castagno e acacia; glassature per il tonno</td><td>Con i pecorini</td></tr></tbody></table></section><section class="blocco intero"><h2>Dolci</h2><table class="t2"><thead><tr><th>Prodotto</th><th>Uso</th></tr></thead><tbody><tr><td>Cantuccini Toscani IGP</td><td>Con il vin santo, nella carta dei dolci</td></tr><tr><td>Panforte di Siena IGP</td><td>Natale</td></tr><tr><td>Ricciarelli di Siena IGP</td><td>Piccola pasticceria</td></tr></tbody></table></section>
+<section class="blocco"><h2>Vini a denominazione</h2><div class="vino"><h3>Le 11 DOCG toscane</h3><p>Brunello di Montalcino · Vino Nobile di Montepulciano · Chianti · Chianti Classico · Carmignano · Vernaccia di San Gimignano · Morellino di Scansano · Montecucco Sangiovese · Elba Aleatico Passito · Suvereto · Val di Cornia Rosso</p></div><div class="vino"><h3>Per il pesce: bianchi e rosati della costa</h3><p>Bolgheri DOC (Vermentino e rosato) · Elba DOC (Ansonica, Vermentino) · Ansonica Costa dell&#x27;Argentario DOC · Val di Cornia DOC · Terratico di Bibbona DOC · Montescudaio DOC · Maremma Toscana DOC (Vermentino) · Capalbio DOC · Parrina DOC · Candia dei Colli Apuani DOC · Colli di Luni DOC (Vermentino, area in comune con la Liguria) · Vernaccia di San Gimignano DOCG</p></div><div class="vino"><h3>Per la carne</h3><p>Bolgheri Rosso e Bolgheri Sassicaia DOC · Brunello e Rosso di Montalcino · Nobile e Rosso di Montepulciano · Chianti Classico · Morellino di Scansano · Suvereto DOCG</p></div><div class="vino"><h3>Dolci e fine pasto</h3><p>Elba Aleatico Passito DOCG · Vin Santo del Chianti DOC · Vin Santo del Chianti Classico DOC · Moscadello di Montalcino DOC</p></div><div class="vino"><h3>IGT</h3><p>Toscana IGT e Costa Toscana IGT: molto usate dalle cantine della costa per i vini fuori disciplinare (per esempio i vini de La Fralluca della serata «L&#x27;uva nel piatto»)</p></div></section>
+<section class="blocco"><h2>Tre idee per la carta</h2><div class="idea"><p class="i-t">Gamberi rossi crudi, lardo di Colonnata IGP e olio di Seggiano DOP</p><p class="i-n">Un abbinamento classico del Tirreno.</p></div><div class="idea"><p class="i-t">Zuppa di farro della Garfagnana IGP e fagioli di Sorana IGP con cozze e calamari</p><p class="i-n">Il mare e terra più toscano.</p></div><div class="idea"><p class="i-t">Risotto allo zafferano di San Gimignano DOP con scampi</p><p class="i-n">Un primo da serata a tema.</p></div></section>
+<section class="blocco fonti"><h2>Fonti</h2><ul><li>Regione Toscana, oli DOP e IGP · <i>regione.toscana.it/-/selezione-oli-extravergine-di-oliva-dop-e-igp-della-toscana</i></li><li>Regione Toscana, prodotti IGP · <i>prodtrad.regione.toscana.it/mod_qtp_igp</i></li><li>Terra e Vita, Dop economy Toscana · <i>terraevita.edagricole.it</i></li><li>GoNews, BuyFood Toscana 2026 · <i>gonews.it/2026/10/29/buyfood-toscana-2026</i></li></ul></section>
+</body></html>
