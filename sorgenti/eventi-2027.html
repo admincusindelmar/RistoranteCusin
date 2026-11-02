@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Cusin · Serate a tema 2027</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<style>
+:root { --blu:#152b61; --champagne:#d6c6a5; --avorio:#f4ede2; --secondario:#675e53; --filetto:rgba(21,43,97,.25); }
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Cormorant Garamond", Garamond, serif; font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu); }
+.pag { width: 210mm; height: 297mm; padding: 14mm 18mm 11mm; display: flex; flex-direction: column; break-after: page; background: var(--avorio); }
+.pag:last-child { break-after: auto; }
+.piede { margin-top: auto; display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); border-top: 1px solid var(--filetto); padding-top: 3mm; }
+.eti { font-size: 12.5px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; }
+.eti-mini { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 1.5mm; }
+/* copertina */
+.copertina { align-items: center; text-align: center; justify-content: center; }
+.copertina .mono { height: 38mm; margin: 30mm 0 12mm; }
+.copertina h1 { font-weight: 500; font-size: 54px; line-height: 1; margin-top: 5mm; }
+.copertina .sotto { font-style: italic; font-size: 21px; margin-top: 4mm; }
+.filetto { width: 60px; height: 1px; background: var(--champagne); margin: 10mm auto; }
+.intro { font-size: 17px; line-height: 1.5; max-width: 140mm; text-align: center; color: var(--blu); margin-bottom: 20mm; }
+/* testate */
+.testa { text-align: center; }
+.testa img { height: 9mm; display: block; margin: 0 auto 4mm; }
+.h1p { font-weight: 500; font-size: 38px; line-height: 1.05; margin-top: 2mm; }
+.testa-mese { display: flex; align-items: center; gap: 6mm; border-bottom: 1px solid var(--champagne); padding-bottom: 4mm; }
+.testa-mese img { height: 13mm; }
+.data { font-style: italic; font-size: 19px; color: var(--secondario); }
+.nota-data { font-style: italic; font-size: 15px; background: #ebe2d3; padding: 2mm 3mm; margin-top: 3mm; }
+/* calendario */
+.cal { margin-top: 8mm; }
+.cal-r { display: grid; grid-template-columns: 30mm 46mm 1fr; align-items: baseline; padding: 2.1mm 0; border-bottom: 1px solid var(--filetto); }
+.cal-r .m { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.cal-r .d { font-size: 16px; font-style: italic; color: var(--secondario); }
+.cal-r .t { font-size: 16.5px; font-weight: 600; }
+.cal-r .t i { font-weight: 500; color: var(--secondario); }
+.nota-box { margin-top: 7mm; font-size: 15px; line-height: 1.45; }
+.passato { font-size: 15px; }
+.passato b { font-weight: 600; }
+/* mese */
+.due { display: flex; flex-direction: column; gap: 5mm; margin-top: 5mm; flex: 1; }
+.proposta { flex: 1; border-left: 1px solid var(--champagne); padding-left: 5mm; display: flex; flex-direction: column; }
+.lettera { font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); }
+.proposta h2 { font-weight: 600; font-size: 25px; line-height: 1.1; margin-top: 1mm; }
+.sotto-p { font-style: italic; font-size: 16.5px; color: var(--secondario); }
+.gancio { font-size: 15px; line-height: 1.42; margin-top: 2mm; }
+.menu { margin-top: 3mm; }
+.piatto { display: grid; grid-template-columns: 27mm 1fr; padding: .9mm 0; border-bottom: 1px solid var(--filetto); }
+.portata { font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; padding-top: 1mm; }
+.nome { font-size: 16.5px; }
+.chiusa { display: flex; justify-content: space-between; align-items: baseline; margin-top: 2.5mm; }
+.vino { font-size: 14.5px; font-style: italic; color: var(--secondario); }
+.vino b { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--blu); }
+.prezzo { font-size: 15px; white-space: nowrap; }
+.prezzo b { font-size: 28px; font-weight: 500; }
+.prezzo span { font-size: 10.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+/* come lavorarle */
+.passi { margin-top: 8mm; display: flex; flex-direction: column; gap: 5mm; }
+.passi h3 { font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.passi p { font-size: 16.5px; line-height: 1.45; }
+</style></head><body>
+<section class="pag copertina">
+  <img class="mono" src="cusin-monogramma-blu.png" alt="Cusin">
+  <p class="eti">Proposte per il 2027</p>
+  <h1>Le serate a tema</h1>
+  <p class="sotto">L'ultimo venerdì di ogni mese, due idee e il loro menù</p>
+  <div class="filetto"></div>
+  <p class="intro">Nel 2026 le serate a tema hanno raccontato vini, produttori e ingredienti: da Hofstätter a Benedetto Cavalieri,
+  dal riso di Maremma all'uva nel piatto. Per il 2027 le portiamo a dodici mesi, sempre l'ultimo venerdì,
+  con due proposte per ogni mese da cui scegliere. I menù sono spunti per la cucina: piatti, prezzi e abbinamenti
+  si definiscono con lo Chef prima di comunicare la serata.</p>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span></span></div>
+</section><section class="pag">
+  <div class="testa"><img src="cusin-monogramma-blu.png" alt="Cusin"><p class="eti">Il calendario</p><h1 class="h1p">Dodici venerdì</h1></div>
+  <div class="cal"><div class="cal-r"><span class="m">Gennaio</span><span class="d">Venerdì 29 gennaio</span><span class="t">Livorno d&#x27;inverno <i>oppure</i> Agrumi d&#x27;inverno</span></div><div class="cal-r"><span class="m">Febbraio</span><span class="d">Venerdì 26 febbraio</span><span class="t">Bollicine e ostriche <i>oppure</i> Il pesce povero</span></div><div class="cal-r"><span class="m">Marzo</span><span class="d">Venerdì 26 marzo</span><span class="t">Venerdì di magro <i>oppure</i> Primavera dell&#x27;orto</span></div><div class="cal-r"><span class="m">Aprile</span><span class="d">Venerdì 30 aprile</span><span class="t">Baccelli e pecorino <i>oppure</i> Cantina ospite di primavera</span></div><div class="cal-r"><span class="m">Maggio</span><span class="d">Venerdì 28 maggio</span><span class="t">Tonno rosso <i>oppure</i> Erbe e fiori</span></div><div class="cal-r"><span class="m">Giugno</span><span class="d">Venerdì 25 giugno</span><span class="t">La notte delle alici <i>oppure</i> Rosati al tramonto</span></div><div class="cal-r"><span class="m">Luglio</span><span class="d">Venerdì 30 luglio</span><span class="t">Gamberi rossi <i>oppure</i> Le isole toscane</span></div><div class="cal-r"><span class="m">Agosto</span><span class="d">Venerdì 27 agosto</span><span class="t">Griglia di mare <i>oppure</i> I fichi e il mare</span></div><div class="cal-r"><span class="m">Settembre</span><span class="d">Venerdì 24 settembre</span><span class="t">Mare e bosco <i>oppure</i> Polpo e moscardini</span></div><div class="cal-r"><span class="m">Ottobre</span><span class="d">Venerdì 29 ottobre</span><span class="t">L&#x27;uva nel piatto · seconda edizione <i>oppure</i> Zucca e mare</span></div><div class="cal-r"><span class="m">Novembre</span><span class="d">Venerdì 26 novembre</span><span class="t">Olio nuovo <i>oppure</i> Tartufo bianco e mare</span></div><div class="cal-r"><span class="m">Dicembre</span><span class="d">Venerdì 17 dicembre</span><span class="t">La cena degli auguri <i>oppure</i> Ostriche e Champagne</span></div></div>
+  <div class="nota-box"><p class="eti-mini">Da ricordare</p>
+    <p>26 marzo è il <b>Venerdì Santo</b>: la serata diventa una cena di magro.</p>
+    <p>30 aprile è la <b>vigilia del Primo Maggio</b>: molti hanno il ponte, va comunicata presto.</p>
+    <p>31 dicembre è l'<b>Ultimo dell'Anno</b>, che ha il suo menù: la serata di dicembre si sposta al 17.</p></div>
+  <div class="nota-box"><p class="eti-mini">Il 2026</p><p class="passato">Aprile <b>Hofstätter</b> · Maggio <b>Crudité</b> · Giugno <b>Levii</b> · Luglio <b>Riso Maremma</b> · Agosto <b>Panettone</b> · Settembre <b>Benedetto Cavalieri</b> · Ottobre <b>L&#x27;uva nel piatto</b> · Novembre <b>Castagne</b></p></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span></span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Gennaio</h1><p class="data">Venerdì 29 gennaio</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Livorno d&#x27;inverno</h2>
+  <p class="sotto-p">Cacciucco e ponce</p>
+  <p class="gancio">La cucina labronica nel mese più freddo: il cacciucco come si fa da noi, e per finire il ponce alla livornese. Una serata di casa, da raccontare a chi viene da fuori e da ritrovare per chi è di qui.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Torta di ceci con baccalà mantecato e cipolla rossa</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Triglie alla livornese su crostone di pane toscano</span></div><div class="piatto"><span class="portata">Piatto unico</span><span class="nome">Il cacciucco di Cusin, con le sue cinque «c»</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Sfogliatina di mele e il ponce alla livornese</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Rosso della Val di Cornia; ponce al caffè a fine cena</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Agrumi d&#x27;inverno</h2>
+  <p class="sotto-p">Il mare e la luce degli agrumi</p>
+  <p class="gancio">Quando fuori è grigio, in tavola arrivano arance, cedri, bergamotto e limoni. Ogni portata ha il suo agrume: una serata fresca e luminosa nel cuore dell&#x27;inverno.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crudo di ricciola, arancia rossa e finocchio</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gamberi al bergamotto con insalata di sedano rapa</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto al limone candito e scampi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Spigola al cedro con carciofi croccanti</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Tarte agli agrumi e meringa bruciata</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino della costa; un passito per il dolce</p><p class="prezzo"><b>60</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Gennaio</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Febbraio</h1><p class="data">Venerdì 26 febbraio</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Bollicine e ostriche</h2>
+  <p class="sotto-p">Il crudo incontra lo Champagne</p>
+  <p class="gancio">Febbraio è il mese delle ostriche migliori. Una serata dedicata al crudo e alle bollicine, con un percorso fra Franciacorta e Champagne guidato dal nostro personale di sala.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Benvenuto</span><span class="nome">Ostrica del Doge con perle di limone</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Plateau di crudo: scampi, gamberi rossi, tartare di tonno</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Linguine allo Champagne e gamberi rossi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Rombo al burro nocciola e crema di topinambur</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Zabaione allo Champagne con frutti rossi</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Franciacorta con il crudo, Champagne con i piatti caldi</p><p class="prezzo"><b>75</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Il pesce povero</h2>
+  <p class="sotto-p">Pesce azzurro, grande cucina</p>
+  <p class="gancio">Alici, sgombri, sugarelli e palamite: il pesce che il nostro mare dà in abbondanza e che spesso si dimentica. Una serata buona e sostenibile, con un prezzo più accessibile per avvicinare nuovi clienti.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Alici marinate agli agrumi e cipolla di Tropea</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Sgombro scottato con salsa verde</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Spaghettoni con palamita, pomodorini e finocchietto</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Sugarelli in saor con polenta croccante</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Cantucci e vin santo</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino o Ansonica; vin santo con il dolce</p><p class="prezzo"><b>45</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Febbraio</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Marzo</h1><p class="data">Venerdì 26 marzo</p></div></div>
+  <p class="nota-data">È il Venerdì Santo (Pasqua 2027 è il 28 marzo): per tradizione una cena di magro, a base di pesce.</p>
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Venerdì di magro</h2>
+  <p class="sotto-p">Il baccalà in quattro modi</p>
+  <p class="gancio">La cena del Venerdì Santo come si faceva una volta, con il baccalà protagonista. Un piatto della tradizione livornese, rivisto dalla nostra cucina.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Baccalà mantecato su chips di polenta</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Frittelle di baccalà e salsa al prezzemolo</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Tortelli di baccalà con crema di ceci</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Baccalà alla livornese con pomodoro e capperi</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Schiacciata di Pasqua livornese con crema allo zabaione</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Bianco di struttura, come un Vermentino affinato</p><p class="prezzo"><b>50</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Primavera dell&#x27;orto</h2>
+  <p class="sotto-p">Carciofi, fave e piselli</p>
+  <p class="gancio">Le prime verdure della primavera con il pesce: una serata leggera, adatta anche a chi segue il magro, con un percorso vegetariano a scelta.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Carciofi croccanti, seppia e maionese al limone</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crema di piselli con gamberi e menta</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto alle fave e pecorino con scampi crudi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Orata con asparagi e salsa al limone</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Torta di ricotta e fragole</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino giovane; rosato toscano</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Marzo</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Aprile</h1><p class="data">Venerdì 30 aprile</p></div></div>
+  <p class="nota-data">È la vigilia del Primo Maggio: molti hanno il ponte, conviene comunicarla con anticipo.</p>
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Baccelli e pecorino</h2>
+  <p class="sotto-p">Aspettando il Primo Maggio</p>
+  <p class="gancio">In Toscana il Primo Maggio si festeggia con fave fresche e pecorino. Noi lo anticipiamo di un giorno, con un menù che parte da lì e arriva al mare.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Benvenuto</span><span class="nome">Baccelli e pecorino toscano, come tradizione</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Tartare di gamberi, fave e menta</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Pici al ragù di mare e pecorino</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Trancio di ricciola con piselli e pancetta croccante</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Crostata di fragole e crema al limone</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Rosato della costa; un bianco toscano giovane</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Cantina ospite di primavera</h2>
+  <p class="sotto-p">Il ritorno di una serata del vino</p>
+  <p class="gancio">Ad aprile 2026 la serata Hofstätter ha aperto la stagione. Per il 2027 proponiamo una cantina della costa toscana, con il produttore presente in sala a raccontare i suoi vini.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crudo di scampi e asparagi</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Calamaro alla brace con crema di piselli</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto agli asparagi e gamberi rossi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Dentice al forno con carciofi</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Piccola pasticceria</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Quattro vini della cantina ospite, uno per portata</p><p class="prezzo"><b>65</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Aprile</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Maggio</h1><p class="data">Venerdì 28 maggio</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Tonno rosso</h2>
+  <p class="sotto-p">Dalla testa alla coda</p>
+  <p class="gancio">A fine maggio comincia la stagione del tonno rosso. Una serata dedicata a un solo pesce, usato in ogni sua parte: crudo, scottato, al forno, perfino nel dolce salato del pre-dessert.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Tartare di tonno, avocado e sesamo</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Ventresca scottata con cipolla in agrodolce</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Spaghetti con bottarga di tonno e limone</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Filetto di tonno in crosta di pistacchio</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Semifreddo alle mandorle</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Rosato e un rosso leggero servito fresco</p><p class="prezzo"><b>65</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Erbe e fiori</h2>
+  <p class="sotto-p">La primavera nel piatto</p>
+  <p class="gancio">Erbe aromatiche, fiori eduli e primi ortaggi: una serata colorata e fotogenica, perfetta da raccontare sui social prima ancora che a tavola.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Carpaccio di spigola con fiori e erbe di campo</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Fiori di zucca ripieni di ricotta e alici</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Ravioli alle erbe con burro e salvia</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Rombo al vapore con salsa al basilico</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Panna cotta alla lavanda e frutti rossi</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino e un bianco aromatico</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Maggio</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Giugno</h1><p class="data">Venerdì 25 giugno</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>La notte delle alici</h2>
+  <p class="sotto-p">Il pesce azzurro d&#x27;estate</p>
+  <p class="gancio">Le alici sono al loro meglio: marinate, fritte, sulla pasta. Una serata semplice e golosa, da tavolata tra amici, con un prezzo che invoglia a tornare.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Alici marinate al limone e pepe rosa</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Alici fritte in pastella leggera</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Spaghetti alici, pomodorini e pangrattato</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Tortino di alici e patate</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Sorbetto al limone</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino fresco o bollicine</p><p class="prezzo"><b>45</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Rosati al tramonto</h2>
+  <p class="sotto-p">La cena dove il sole tramonta sul mare</p>
+  <p class="gancio">Il tramonto più lungo dell&#x27;anno visto dalla nostra terrazza, con una selezione di rosati italiani e francesi. La serata più fotografata dell&#x27;estate.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Aperitivo</span><span class="nome">Crudo di gamberi rossi e rosato in terrazza</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Insalata di polpo, patate e olive taggiasche</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Paccheri con crostacei e pomodorino</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Ricciola alla griglia con verdure</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Pesche al vino rosato</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Tre rosati, dal più delicato al più strutturato</p><p class="prezzo"><b>65</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Giugno</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Luglio</h1><p class="data">Venerdì 30 luglio</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Gamberi rossi</h2>
+  <p class="sotto-p">Il re del crostaceo</p>
+  <p class="gancio">In piena estate, una serata tutta dedicata al gambero rosso: crudo, in bisque, in pasta, alla brace. Un tema forte, da comunicare con le foto dei piatti.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gambero rosso crudo con burrata e lime</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gambero rosso in tempura di mais</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Linguine al gambero rosso e bisque</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Gamberi rossi alla brace con salsa al limone</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Sorbetto all&#x27;albicocca</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Bollicine e Vermentino</p><p class="prezzo"><b>70</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Le isole toscane</h2>
+  <p class="sotto-p">Elba, Capraia e Giglio</p>
+  <p class="gancio">Le isole che vediamo dalla terrazza, portate in tavola: i loro vini, l&#x27;Aleatico e l&#x27;Ansonica, e i piatti della tradizione isolana.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gurguglione elbano con pesce spada</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Totani ripieni all&#x27;isolana</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Spaghetti alle cicale di mare</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Polpo in umido con patate</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Schiaccia briaca con Aleatico passito</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Ansonica dell&#x27;Elba e Aleatico passito</p><p class="prezzo"><b>60</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Luglio</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Agosto</h1><p class="data">Venerdì 27 agosto</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Griglia di mare</h2>
+  <p class="sotto-p">Fuoco e terrazza</p>
+  <p class="gancio">La griglia accesa all&#x27;aperto e il pescato del giorno: una serata conviviale di fine estate, con la cucina che diventa spettacolo.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crudo del giorno</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Spiedini di calamari e gamberi alla brace</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Spaghetti alla brace di pomodoro e alici</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Grigliata del pescato con verdure</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Anguria e menta in granita</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Rosato e Vermentino</p><p class="prezzo"><b>60</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>I fichi e il mare</h2>
+  <p class="sotto-p">Il frutto di fine estate</p>
+  <p class="gancio">A fine agosto i fichi sono maturi: dolci e salati insieme, accanto al pesce, con un dolce che li celebra. Un tema insolito che incuriosisce.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Fichi, crudo di ricciola e aceto balsamico</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gamberi avvolti nel lardo con fichi caramellati</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto ai fichi e gorgonzola dolce</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Branzino con fichi e cipolla rossa</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Crostata di fichi e mandorle</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Un bianco aromatico e un passito per il dolce</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Agosto</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Settembre</h1><p class="data">Venerdì 24 settembre</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Mare e bosco</h2>
+  <p class="sotto-p">Porcini e crostacei</p>
+  <p class="gancio">Arrivano i primi porcini: li incontriamo con scampi, gamberi e pesce bianco, in un menù di passaggio fra estate e autunno.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Carpaccio di porcini e scampi crudi</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Porcini fritti e gamberi croccanti</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Tagliatelle ai porcini e mazzancolle</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Rana pescatrice con porcini trifolati</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Torta di castagne e crema al rum</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Un bianco strutturato e un rosso leggero</p><p class="prezzo"><b>65</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Polpo e moscardini</h2>
+  <p class="sotto-p">I molluschi della nostra costa</p>
+  <p class="gancio">Una serata dedicata al polpo, il piatto che a Livorno non manca mai, cucinato in modi diversi: dall&#x27;insalata al ragù.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Insalata di polpo, sedano e olive</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Moscardini alla diavola su crostone</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Paccheri al ragù di polpo</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Polpo arrosto con crema di patate affumicate</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Semifreddo al torrone</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Vermentino e un rosso della costa</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Settembre</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Ottobre</h1><p class="data">Venerdì 29 ottobre</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>L&#x27;uva nel piatto · seconda edizione</h2>
+  <p class="sotto-p">Il ritorno della vendemmia</p>
+  <p class="gancio">La serata di ottobre 2026 diventa un appuntamento fisso: l&#x27;uva e il vino in ogni portata, con una cantina diversa ogni anno.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Carpaccio di dentice e uva fragola</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Gamberi al mosto cotto</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto al vino rosso e radicchio</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Ricciola al fondo bruno di vino e uva</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Schiacciata all&#x27;uva</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Tre vini della cantina ospite</p><p class="prezzo"><b>60</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Zucca e mare</h2>
+  <p class="sotto-p">Il colore dell&#x27;autunno</p>
+  <p class="gancio">La zucca, protagonista dell&#x27;autunno, accostata al pesce e ai crostacei: una serata morbida e calda, da proporre anche alle famiglie.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Vellutata di zucca, gamberi e amaretto</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Zucca arrosto, baccalà mantecato e semi tostati</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Tortelli di zucca con burro e scampi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Rombo con zucca arrosto e salvia</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Torta di zucca e cannella</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Un bianco morbido e un vino dolce</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Ottobre</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Novembre</h1><p class="data">Venerdì 26 novembre</p></div></div>
+  
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>Olio nuovo</h2>
+  <p class="sotto-p">Il frantoio a tavola</p>
+  <p class="gancio">Novembre è il mese dell&#x27;olio nuovo. Un frantoio toscano ospite e un menù costruito per esaltarlo, dalla fettunta al dolce all&#x27;olio.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Benvenuto</span><span class="nome">Fettunta con olio nuovo</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crudo di spigola e olio nuovo</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Zuppa di ceci e scampi con olio a crudo</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Baccalà confit all&#x27;olio e cavolo nero</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Torta all&#x27;olio e arance</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Un bianco toscano e un rosso giovane</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Tartufo bianco e mare</h2>
+  <p class="sotto-p">L&#x27;incontro più raro</p>
+  <p class="gancio">È la stagione del tartufo bianco di San Miniato. Accostarlo al mare è insolito: per questo funziona, ed è una serata di alto livello.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Uovo morbido, crema di patate e tartufo</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Carpaccio di scampi e tartufo</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Tagliolini al burro e tartufo bianco</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Rombo, topinambur e tartufo</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Zabaione caldo</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Un rosso importante e un bianco affinato</p><p class="prezzo"><b>85</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Novembre</span></div>
+</section><section class="pag mese">
+  <div class="testa-mese"><img src="cusin-monogramma-blu.png" alt="Cusin"><div><h1 class="h1p">Dicembre</h1><p class="data">Venerdì 17 dicembre</p></div></div>
+  <p class="nota-data">L&#x27;ultimo venerdì è il 31 dicembre, che ha già il menù dell&#x27;Ultimo dell&#x27;Anno. Per la serata di dicembre proponiamo un altro venerdì: il 17, prima di Natale.</p>
+  <div class="due"><div class="proposta">
+  <p class="lettera">Proposta A</p>
+  <h2>La cena degli auguri</h2>
+  <p class="sotto-p">Brindisi prima delle feste</p>
+  <p class="gancio">Una cena prima delle feste, per farsi gli auguri con amici e colleghi: anche per tavolate aziendali, con il panettone artigianale a chiudere.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Insalata di mare tiepida e agrumi</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Polpettine di pesce e salsa allo zafferano</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Risotto agli scampi e Champagne</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Branzino in crosta di sale</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Panettone artigianale con crema al mascarpone</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Bollicine per il brindisi</p><p class="prezzo"><b>55</b> € <span>a persona</span></p></div>
+</div><div class="proposta">
+  <p class="lettera">Proposta B</p>
+  <h2>Ostriche e Champagne</h2>
+  <p class="sotto-p">Le feste cominciano qui</p>
+  <p class="gancio">In alternativa, una serata elegante per aprire le feste: ostriche, crudo e un Champagne diverso per ogni portata.</p>
+  <div class="menu"><div class="piatto"><span class="portata">Benvenuto</span><span class="nome">Ostriche di tre provenienze</span></div><div class="piatto"><span class="portata">Antipasto</span><span class="nome">Crudo di scampi e caviale</span></div><div class="piatto"><span class="portata">Primo</span><span class="nome">Tagliolini allo Champagne e gamberi rossi</span></div><div class="piatto"><span class="portata">Secondo</span><span class="nome">Astice alla catalana</span></div><div class="piatto"><span class="portata">Dolce</span><span class="nome">Piccola pasticceria</span></div></div>
+  <div class="chiusa"><p class="vino"><b>Nel bicchiere</b> · Tre Champagne, uno per portata</p><p class="prezzo"><b>95</b> € <span>a persona</span></p></div>
+</div></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span>Dicembre</span></div>
+</section><section class="pag">
+  <div class="testa"><img src="cusin-monogramma-blu.png" alt="Cusin"><p class="eti">Per ogni serata</p><h1 class="h1p">Come lavorarle</h1></div>
+  <div class="passi">
+    <div><h3>Sei settimane prima</h3><p>Scegliere la proposta, definire il menù con lo Chef e, se c'è, confermare la cantina o il produttore ospite.</p></div>
+    <div><h3>Tre settimane prima</h3><p>Preparare il menù della serata con la grafica del menù, la locandina e i testi per WhatsApp, mail e social.</p></div>
+    <div><h3>Due settimane prima</h3><p>Primo messaggio WhatsApp e mail. Si prenota rispondendo al messaggio o con il pulsante «Prenota ora».</p></div>
+    <div><h3>Una settimana prima</h3><p>Promemoria a chi non ha risposto, con i posti che restano. Un ultimo messaggio il giorno prima, se ci sono posti.</p></div>
+    <div><h3>Dopo la serata</h3><p>Foto dei piatti sui social e un grazie a chi è venuto, con la data della serata del mese dopo.</p></div>
+  </div>
+  <div class="nota-box"><p class="eti-mini">Prezzi</p><p>I prezzi indicati sono di riferimento, con i vini in abbinamento da decidere caso per caso. Li stabilisce Gioacchino.</p></div>
+  <div class="piede"><span>Cusin · Serate a tema 2027</span><span></span></div>
+</section>
+</body></html>
