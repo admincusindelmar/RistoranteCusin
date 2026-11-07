@@ -147,3 +147,4 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   In giallo restano solo gli allergeni, mai confermati dalla cucina.
 - 07.11.2026 · ristorante · **Ultimo dell'Anno senza allergeni**, su richiesta: tolte tutte le righe. Senza più gialli, il menù è definitivo: `pdf/Menu-Ultimo-dell-Anno-2026.pdf` (il file «_BOZZA» è stato tolto).
 - 07.11.2026 · ristorante · **Ultimo dell'Anno solo in italiano**, su richiesta: tolte tutte le traduzioni inglesi (piatti, sezioni, sottotitolo, prezzo e note). Con meno testo la pagina usa l'impaginazione normale delle degustazioni (senza la classe `lunga`), più ariosa e centrata.
+- 07.11.2026 · ristorante · **Ultimo dell'Anno senza la riga del vino** («Chiedete al nostro personale l'abbinamento al calice…»), su richiesta. Tolta anche dalla descrizione per il sito. Rigenerati PDF e PNG.

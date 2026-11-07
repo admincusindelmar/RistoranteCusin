@@ -36,7 +36,7 @@ Per finire, il dolce di fine anno: non vi diciamo cos'è, lo scoprirete a tavola
 *Dolce*
 - Dolce di fine anno, a sorpresa
 
-**100 € a persona.** Il menù è servito per l'intero tavolo. Il nostro personale vi consiglierà l'abbinamento al calice dalla Carta dei Vini.
+**100 € a persona.** Il menù è servito per l'intero tavolo.
 
 I posti sono limitati: vi consigliamo di prenotare per tempo.
 
