@@ -3,13 +3,13 @@
 ## Introduzione breve
 
 **Natale da Cusin**
-Il 25 dicembre vi aspettiamo a tavola con un menù di Natale tutto di mare: tonno, gambero di Mazara, scampi e corba rossa, fino al dolce di Natale. Menù degustazione a 75 € a persona, acqua compresa.
+Il 25 dicembre vi aspettiamo a pranzo con un menù di Natale tutto di mare: tonno, gambero di Mazara, scampi e corba rossa, fino al dolce di Natale. Menù degustazione a 75 € a persona, acqua compresa.
 
 ## Descrizione completa
 
-**Menù di Natale · 25 dicembre 2026**
+**Pranzo di Natale · 25 dicembre 2026**
 
-Per Natale la cucina di Cusin porta in tavola il mare d'inverno, con i sapori della stagione: cachi, carciofi, cavolo nero, mela verde. Un menù degustazione da condividere con chi amate, ad Antignano.
+Per Natale la cucina di Cusin porta in tavola il mare d'inverno, con i sapori della stagione: cachi, carciofi, cavolo nero, mela verde. Un pranzo da condividere con chi amate, ad Antignano.
 
 Si comincia con tre antipasti: i cubi di tonno al pistacchio; il gambero di Mazara su crema di cachi e finocchio giallo; il carciofo con seppia e cialda di cavolo nero.
 
@@ -42,8 +42,8 @@ I posti sono limitati: vi consigliamo di prenotare per tempo.
 
 ## SEO
 
-**Meta title** (48 caratteri)
-Menù di Natale a Livorno 2026 · Ristorante Cusin
+**Meta title** (50 caratteri)
+Pranzo di Natale a Livorno 2026 · Ristorante Cusin
 
-**Meta description** (143 caratteri)
-Natale da Cusin ad Antignano (Livorno): menù di mare con gambero di Mazara, paccheri agli scampi e corba rossa. 75 € a persona, acqua compresa.
+**Meta description** (153 caratteri)
+Pranzo di Natale da Cusin ad Antignano (Livorno): menù di mare con gambero di Mazara, paccheri agli scampi e corba rossa. 75 € a persona, acqua compresa.
