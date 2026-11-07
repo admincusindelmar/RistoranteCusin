@@ -145,3 +145,4 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
   - Catalana: mezzo astice, due mazzancolle e uno scampo, con frutta e verdura;
   - dolce: «Dolce di fine anno», a sorpresa, non specificato.
   In giallo restano solo gli allergeni, mai confermati dalla cucina.
+- 07.11.2026 · ristorante · **Ultimo dell'Anno senza allergeni**, su richiesta: tolte tutte le righe. Senza più gialli, il menù è definitivo: `pdf/Menu-Ultimo-dell-Anno-2026.pdf` (il file «_BOZZA» è stato tolto).
