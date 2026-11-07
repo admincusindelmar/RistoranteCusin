@@ -137,5 +137,5 @@ Una riga per conferma: data · chi l'ha data · cosa. Esempio: «10.10.2026 · C
 
 - 07.11.2026 · ristorante · **correzioni al Stella di Mare** (pagina 2), dopo la chiusura del menù:
   - gli gnocchi non sono più di farina di riso ma gnocchi normali: «Gnocchi, calamari, totani, seppie e tartufo», allergeni **1** · 3 · 9 · 14 (aggiunto il glutine);
-  - il «Nido con Uovo Livornese» non c'è più. Al suo posto c'è **«Scampo e pera»**: scampo scottato con brunoise di pere e colatura di fichi, allergene 2 (crostacei). **Da confermare in cucina**: se resta il nido di kataifi va aggiunto l'1, e se la colatura di fichi contiene solfiti va aggiunto il 12.
+  - il «Nido con Uovo Livornese» non c'è più. Al suo posto c'è **«Scampo e pera»**: scampo scottato con brunoise di pere e colatura di fichi, allergene 2 (crostacei). **Confermato dal ristorante il 07.11.2026**: il nido non c'è più e la colatura di fichi non contiene solfiti, quindi resta solo il 2.
   Rigenerati A4, A3, la PNG della pagina e lo zip; la sola pagina è in `pdf/Menu-Autunno-2026_Stella-di-Mare.pdf`.
