@@ -39,3 +39,11 @@ Per finire, il dolce di fine anno: non vi diciamo cos'è, lo scoprirete a tavola
 **100 € a persona.** Il menù è servito per l'intero tavolo. Il nostro personale vi consiglierà l'abbinamento al calice dalla Carta dei Vini.
 
 I posti sono limitati: vi consigliamo di prenotare per tempo.
+
+## SEO
+
+**Meta title** (56 caratteri)
+Cenone di Capodanno a Livorno 2026 · Ristorante Cusin
+
+**Meta description** (155 caratteri)
+Cenone di San Silvestro da Cusin, ad Antignano (Livorno): menù di crostacei, risotto allo Champagne e dolce a sorpresa. 100 € a persona. Prenotate ora.
