@@ -119,7 +119,7 @@ Si paga al tavolo, senza caparra
 I posti sono limitati: vi consigliamo di prenotare per tempo.
 
 **Pulsante**
-Prenota ora → `[LINK DI PRENOTAZIONE]`
+Prenota ora → https://prenotazioni.cooperto.it/in/2605aa93-a1fd-4437-ba8c-c5a0be6c2621
 
 **Chiusura**
 Vi aspettiamo venerdì 27 novembre alle 20.15.
@@ -200,7 +200,7 @@ Vi aspettiamo da Cusin!
 L'invio unico di Natale e San Silvestro è stato spostato a sabato 28 novembre, il giorno dopo questa serata, per non sovrapporre i messaggi.
 
 # Controllo prima dell'invio
-- [ ] Sostituito `[LINK DI PRENOTAZIONE]` e provato il link.
+- [ ] Link di prenotazione nei pulsanti provato.
 - [ ] Inviata una mail di prova a voi stessi, aperta sul telefono e sul computer.
 - [ ] Allegata l'immagine del menù nel broadcast.
 - [ ] Nessun numero di telefono nei testi.
