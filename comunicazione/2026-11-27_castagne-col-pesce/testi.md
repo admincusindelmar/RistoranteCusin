@@ -8,7 +8,8 @@ Fonte: `pdf/Menu-Castagne-col-pesce-2026-11-27.pdf` (7.11.2026).
   - su WhatsApp si prenota **rispondendo al messaggio**;
   - nelle mail si prenota con il pulsante **«Prenota ora»**.
 - Niente allergeni e niente inglese, come nel menù.
-- **Data**: venerdì 27 novembre 2026, a cena. L'orario non è stato comunicato: va aggiunto dove serve.
+- **Data e ora**: venerdì 27 novembre 2026, **ore 20.15** (confermato).
+- **Pagamento**: al tavolo, **senza caparra** (confermato).
 - **Prezzo**: 60 € a persona, con **vini in abbinamento e acqua compresi**.
 - **Piatti**: sei portate, cioè due antipasti, due primi, un secondo e il castagnaccio.
 - **Vini**: si scrive solo «selezione di rosati», senza nomi di vini o di cantine.
@@ -19,12 +20,12 @@ Fonte: `pdf/Menu-Castagne-col-pesce-2026-11-27.pdf` (7.11.2026).
 
 ## Introduzione breve
 
-**Le castagne col pesce · venerdì 27 novembre**
+**Le castagne col pesce · venerdì 27 novembre, ore 20.15**
 Una serata dedicata all'incontro tra la castagna e il mare: necci, farina di castagne, ballotte e castagnaccio accanto a gamberi rossi, ricciola e corba. Sei portate con una selezione di rosati in abbinamento, 60 € a persona con vini e acqua compresi.
 
 ## Descrizione completa
 
-**Serata a tema · venerdì 27 novembre 2026**
+**Serata a tema · venerdì 27 novembre 2026, ore 20.15**
 
 A fine novembre la castagna è la regina della tavola toscana. Per la serata di questo mese l'abbiamo portata dove non ve l'aspettereste: accanto al pesce. Farina di castagne, necci, ballotte, miele di castagno e castagnaccio incontrano gamberi rossi, ricciola, mazzancolle e corba, in un menù di sei portate.
 
@@ -57,7 +58,7 @@ Nel bicchiere, una selezione di rosati.
 *Nel bicchiere*
 - Selezione di rosati
 
-**60 € a persona, vini in abbinamento e acqua compresi.**
+**60 € a persona, vini in abbinamento e acqua compresi.** Si paga al tavolo, senza caparra.
 
 I posti sono limitati: vi consigliamo di prenotare per tempo.
 
@@ -83,7 +84,7 @@ Necci, ballotte e castagnaccio… col pesce
 Sei portate e una selezione di rosati in abbinamento: 60 € a persona, vini e acqua compresi.
 
 **Etichetta sopra il titolo**
-SERATA A TEMA · VENERDÌ 27 NOVEMBRE 2026
+SERATA A TEMA · VENERDÌ 27 NOVEMBRE · ORE 20.15
 
 **Titolo**
 Le castagne col pesce
@@ -112,6 +113,7 @@ Selezione di rosati
 
 **Riquadro prezzo**
 60 € a persona · vini in abbinamento e acqua compresi
+Si paga al tavolo, senza caparra
 
 **Testo prima del pulsante**
 I posti sono limitati: vi consigliamo di prenotare per tempo.
@@ -120,7 +122,7 @@ I posti sono limitati: vi consigliamo di prenotare per tempo.
 Prenota ora → `[LINK DI PRENOTAZIONE]`
 
 **Chiusura**
-Vi aspettiamo venerdì 27 novembre.
+Vi aspettiamo venerdì 27 novembre alle 20.15.
 Lo staff di Cusin
 
 **Piè di pagina**
@@ -137,7 +139,7 @@ Cusin · Antignano, Livorno
 
 ```
 🌰 *Le castagne col pesce*
-_Venerdì 27 novembre 2026 · serata a tema_
+_Venerdì 27 novembre 2026 · ore 20.15_
 
 Per la serata di novembre la castagna incontra il nostro mare: sei portate e una selezione di rosati in abbinamento.
 
@@ -159,6 +161,7 @@ Per la serata di novembre la castagna incontra il nostro mare: sei portate e una
 Selezione di rosati
 
 💶 *60 € a persona, vini e acqua compresi*
+_Si paga al tavolo, senza caparra._
 
 I posti sono limitati.
 👉 *Per prenotare rispondete a questo messaggio* con il vostro nome e il numero di persone.
@@ -171,7 +174,7 @@ I posti sono limitati.
 ```
 🌰 *Le castagne col pesce · ultimi posti*
 
-Venerdì 27 novembre: sei portate di pesce e castagne, dai necci al castagnaccio, con una selezione di rosati in abbinamento.
+Venerdì 27 novembre, ore 20.15: sei portate di pesce e castagne, dai necci al castagnaccio, con una selezione di rosati in abbinamento.
 *60 € a persona, vini e acqua compresi.*
 
 👉 Per prenotare rispondete a questo messaggio con nome e numero di persone.
@@ -181,7 +184,7 @@ Venerdì 27 novembre: sei portate di pesce e castagne, dai necci al castagnaccio
 
 ```
 Grazie [NOME], la vostra prenotazione è confermata ✨
-🌰 Le castagne col pesce · venerdì 27 novembre
+🌰 Le castagne col pesce · venerdì 27 novembre, ore 20.15
 👥 [N] persone
 Vi aspettiamo da Cusin!
 ```
@@ -202,4 +205,3 @@ L'invio unico di Natale e San Silvestro è stato spostato a sabato 28 novembre, 
 - [ ] Allegata l'immagine del menù nel broadcast.
 - [ ] Nessun numero di telefono nei testi.
 - [ ] Prezzo (60 € con vini e acqua) e data (venerdì 27 novembre) giusti.
-- [ ] Se l'orario è deciso, aggiunto in tutti i testi.
