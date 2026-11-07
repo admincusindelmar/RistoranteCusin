@@ -11,9 +11,7 @@ Fonte: `pdf/Menu-Castagne-col-pesce-2026-11-27.pdf` (7.11.2026).
 - **Data**: venerdì 27 novembre 2026, a cena. L'orario non è stato comunicato: va aggiunto dove serve.
 - **Prezzo**: 60 € a persona, con **vini in abbinamento e acqua compresi**.
 - **Piatti**: sei portate, cioè due antipasti, due primi, un secondo e il castagnaccio.
-- **Vini**: tre rosati, presentati insieme (non c'è un abbinamento per portata):
-  - Dea e Particolare di Tenuta Buonamico;
-  - Levii dell'Azienda Agricola Levii.
+- **Vini**: si scrive solo «selezione di rosati», senza nomi di vini o di cantine.
 
 ---
 
@@ -22,7 +20,7 @@ Fonte: `pdf/Menu-Castagne-col-pesce-2026-11-27.pdf` (7.11.2026).
 ## Introduzione breve
 
 **Le castagne col pesce · venerdì 27 novembre**
-Una serata dedicata all'incontro tra la castagna e il mare: necci, farina di castagne, ballotte e castagnaccio accanto a gamberi rossi, ricciola e corba. Sei portate con tre rosati toscani in abbinamento, 60 € a persona con vini e acqua compresi.
+Una serata dedicata all'incontro tra la castagna e il mare: necci, farina di castagne, ballotte e castagnaccio accanto a gamberi rossi, ricciola e corba. Sei portate con una selezione di rosati in abbinamento, 60 € a persona con vini e acqua compresi.
 
 ## Descrizione completa
 
@@ -38,7 +36,7 @@ Come secondo, la corba al forno cotta nel brodo di castagne, con ballotte saltat
 
 Per finire, il castagnaccio.
 
-Nel bicchiere tre rosati: Dea e Particolare di Tenuta Buonamico, e Levii dell'Azienda Agricola Levii.
+Nel bicchiere, una selezione di rosati.
 
 **Il menù**
 
@@ -57,9 +55,7 @@ Nel bicchiere tre rosati: Dea e Particolare di Tenuta Buonamico, e Levii dell'Az
 - Castagnaccio
 
 *Nel bicchiere*
-- Dea · rosato · Tenuta Buonamico
-- Particolare · rosato · Tenuta Buonamico
-- Levii · rosato · Azienda Agricola Levii
+- Selezione di rosati
 
 **60 € a persona, vini in abbinamento e acqua compresi.**
 
@@ -70,8 +66,8 @@ I posti sono limitati: vi consigliamo di prenotare per tempo.
 **Meta title** (53 caratteri)
 Le castagne col pesce · Serata a tema · Cusin Livorno
 
-**Meta description** (147 caratteri)
-Venerdì 27 novembre da Cusin ad Antignano: sei portate di pesce e castagne, dai necci al castagnaccio, con tre rosati. 60 €, vini e acqua compresi.
+**Meta description** (150 caratteri)
+27 novembre da Cusin ad Antignano: sei portate di pesce e castagne, dai necci al castagnaccio, con rosati in abbinamento. 60 €, vini e acqua compresi.
 
 ---
 
@@ -84,7 +80,7 @@ Le castagne col pesce · venerdì 27 novembre da Cusin
 Necci, ballotte e castagnaccio… col pesce
 
 **Preheader** (il testo grigio accanto all'oggetto)
-Sei portate e tre rosati in abbinamento: 60 € a persona, vini e acqua compresi.
+Sei portate e una selezione di rosati in abbinamento: 60 € a persona, vini e acqua compresi.
 
 **Etichetta sopra il titolo**
 SERATA A TEMA · VENERDÌ 27 NOVEMBRE 2026
@@ -93,7 +89,7 @@ SERATA A TEMA · VENERDÌ 27 NOVEMBRE 2026
 Le castagne col pesce
 
 **Apertura**
-Per la serata di novembre abbiamo messo insieme due cose che di solito stanno lontane: la castagna, regina dell'autunno toscano, e il nostro mare. Necci, farina di castagne, ballotte e castagnaccio incontrano gamberi rossi, ricciola e corba, in sei portate accompagnate da tre rosati.
+Per la serata di novembre abbiamo messo insieme due cose che di solito stanno lontane: la castagna, regina dell'autunno toscano, e il nostro mare. Necci, farina di castagne, ballotte e castagnaccio incontrano gamberi rossi, ricciola e corba, in sei portate accompagnate da una selezione di rosati.
 
 **Il menù**
 
@@ -112,9 +108,7 @@ DOLCE
 Castagnaccio
 
 NEL BICCHIERE
-Dea · rosato · Tenuta Buonamico
-Particolare · rosato · Tenuta Buonamico
-Levii · rosato · Azienda Agricola Levii
+Selezione di rosati
 
 **Riquadro prezzo**
 60 € a persona · vini in abbinamento e acqua compresi
@@ -145,7 +139,7 @@ Cusin · Antignano, Livorno
 🌰 *Le castagne col pesce*
 _Venerdì 27 novembre 2026 · serata a tema_
 
-Per la serata di novembre la castagna incontra il nostro mare: sei portate e tre rosati in abbinamento.
+Per la serata di novembre la castagna incontra il nostro mare: sei portate e una selezione di rosati in abbinamento.
 
 *Antipasti*
 • Carpaccio di gamberi rossi e necci con ricotta senza lattosio
@@ -162,7 +156,7 @@ Per la serata di novembre la castagna incontra il nostro mare: sei portate e tre
 • Castagnaccio
 
 🍷 *Nel bicchiere*
-Dea e Particolare (Tenuta Buonamico), Levii (Azienda Agricola Levii): tre rosati
+Selezione di rosati
 
 💶 *60 € a persona, vini e acqua compresi*
 
@@ -177,7 +171,7 @@ I posti sono limitati.
 ```
 🌰 *Le castagne col pesce · ultimi posti*
 
-Venerdì 27 novembre: sei portate di pesce e castagne, dai necci al castagnaccio, con tre rosati in abbinamento.
+Venerdì 27 novembre: sei portate di pesce e castagne, dai necci al castagnaccio, con una selezione di rosati in abbinamento.
 *60 € a persona, vini e acqua compresi.*
 
 👉 Per prenotare rispondete a questo messaggio con nome e numero di persone.
