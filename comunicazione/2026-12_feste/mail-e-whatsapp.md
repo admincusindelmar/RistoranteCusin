@@ -304,7 +304,7 @@ Vi alleghiamo i due menù completi.
 # Calendario consigliato
 | Quando | Cosa |
 |---|---|
-| lunedì 23 novembre | Mail unica (3A) e broadcast unico (3B) |
+| sabato 28 novembre (il giorno dopo «Le castagne col pesce») | Mail unica (3A) e broadcast unico (3B) |
 | martedì 1 dicembre | Mail di Natale (1A) e WhatsApp di Natale (1B) |
 | giovedì 3 dicembre | Mail di San Silvestro (2A) e WhatsApp di San Silvestro (2B) |
 | martedì 15 dicembre | Promemoria Natale, solo se ci sono posti |

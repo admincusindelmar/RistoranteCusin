@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Cusin · Le castagne col pesce · 27 novembre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+<style>
+  /* Token delle brand guidelines v0.1, Modo Carta */
+  :root {
+    --blu: #152b61;
+    --champagne: #d6c6a5;
+    --avorio: #f4ede2;
+    --secondario: #675e53;          /* grigio-caldo-scuro: 5,5:1 sull'avorio */
+    --filetto: rgba(21, 43, 97, 0.25);
+    --giallo: #fff0a0;              /* solo per i punti da verificare */
+    --display: "Cormorant Garamond", Garamond, serif;
+    --testo: "Cormorant Garamond", Garamond, serif;   /* carattere unico (09.10.2026): prima Montserrat */
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: var(--testo); font-weight: 500; font-variant-numeric: lining-nums; color: var(--blu); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Versione schermo: simula l'avorio della carta. In stampa il fondo resta vuoto. */
+  body.schermo { background: #d9d3c8; }
+  body.schermo .pag { background: var(--avorio); margin: 0 auto 8mm; }
+
+  /* Margini dal PDF di Noemi: rilegatura a viti a sinistra */
+  .pag { width: 210mm; height: 297mm; padding: 11mm 17mm 11mm 40mm; position: relative; overflow: hidden; display: flex; flex-direction: column; break-after: page; background: #fff; }
+  .pag:last-child { break-after: auto; }
+
+  .testa { text-align: center; }
+  .testa img { height: 9mm; width: auto; display: block; margin: 0 auto 4mm; }
+  .eti { font-size: 12.5px; line-height: 15px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; margin: 0; }
+  .eti > span { font-family: var(--display); font-style: italic; font-size: 14px; font-weight: 500; color: var(--secondario); letter-spacing: .02em; text-transform: none; margin-left: 1mm; }
+  h1 { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 40px; margin: 3mm 0 0; letter-spacing: .005em; }
+  .sotto { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 19px; line-height: 23px; margin: 2.5mm 0 0; }
+  .en { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 17px; color: var(--secondario); margin: -.3mm 0 0; }
+  .intro { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 17px; line-height: 21px; margin: 5mm 0 0; }
+
+  .corpo { flex: 1; display: flex; flex-direction: column; }
+  .piede { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--secondario); border-top: 1px solid var(--filetto); padding-top: 3mm; margin-top: 4mm; }
+
+  /* Testi del piatto: nome stretto, descrizione ariosa, traduzione corsiva attaccata, allergeni staccati */
+  .tr { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 16.5px; color: var(--secondario); margin: -.6mm 0 0; }
+  .tr-in { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14.5px; color: var(--secondario); letter-spacing: 0; text-transform: none; margin-left: 1mm; }
+  .all { font-size: 13.5px; line-height: 15px; letter-spacing: .02em; color: var(--secondario); margin: 1.6mm 0 0; }
+  .all-in { font-size: 13.5px; letter-spacing: .02em; color: var(--secondario); margin-left: 1.5mm; }
+  .all .dieta { margin-left: 3mm; }
+  /* Traduzione e allergeni su righe proprie; solo nel crudo (.voce.breve) stanno sulla stessa riga */
+  .voce .tr { text-wrap: pretty; }
+  .voce .tr { display: block; }
+  .voce .all { display: block; margin: 1.3mm 0 0; }
+
+  .pz { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; color: var(--secondario); margin-left: 1mm; }
+
+  /* Degustazioni: composizione centrata */
+  .deg .corpo { text-align: center; justify-content: center; gap: 7mm; }
+  .deg .sez { display: flex; flex-direction: column; gap: 5mm; }
+  .deg .sez > .eti { margin-bottom: -2mm; }
+  .deg .voce h2 { margin: 0; }
+  .prezzo-deg { display: inline-flex; align-items: baseline; gap: 3mm; margin: 0 auto; padding: 0 0 0; }
+  .prezzo-deg b { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 40px; }
+  .prezzo-deg > span { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; text-align: left; line-height: 14px; }
+  .prezzo-deg span em { font-family: var(--display); font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--secondario); font-weight: 500; }
+  .deg .corpo { padding-top: 6mm; }
+  .deg.lunga { padding-top: 11mm; }
+  .deg.lunga .corpo { gap: 2.9mm; padding-top: 2mm; justify-content: flex-start; }
+  .deg.lunga .sez { gap: 2.3mm; }
+  .deg.lunga .voce .tr { margin-top: -.5mm; }
+  .deg.lunga .voce .all { margin-top: .9mm; }
+  .deg.lunga .sez > .eti { margin-bottom: -1mm; }
+  .deg.lunga .desc { margin-top: 1mm; line-height: 16.5px; }
+
+  .filetto-corto { width: 48px; height: 1px; background: var(--champagne); margin: 0 auto; }
+
+  /* Voci */
+  .voce h2 { font-family: var(--display); font-weight: 600; font-size: 20.7px; line-height: 21px; margin: 0; letter-spacing: .005em; }
+  .desc { font-size: 15.5px; line-height: 19px; margin: 1.8mm 0 0; }
+  .nota { font-size: 14px; line-height: 17px; color: var(--secondario); margin: .8mm 0 0; }
+  .dieta { font-size: 13.5px; letter-spacing: .02em; color: var(--blu); font-weight: 700; }
+  .chef { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin: 0 0 1mm; display: flex; align-items: center; gap: 2mm; }
+  .chef::before { content: ""; width: 6mm; height: 1px; background: var(--champagne); display: inline-block; }
+  .deg .chef { justify-content: center; }
+
+  /* Carta: nome a sinistra, prezzo a destra */
+  .carta .corpo { margin-top: 11mm; gap: 8mm; }
+  .carta.densa .corpo { gap: 4.4mm; margin-top: 6mm; }
+  .primi .corpo { gap: 2.6mm !important; margin-top: 3.5mm !important; }
+  .primi .desc { line-height: 16.5px !important; }
+  .voce.breve .tr, .voce.breve .all { display: inline; }
+  .voce.breve .all { margin-left: 2.5mm; }
+  .carta.densa .desc { line-height: 17.5px; margin-top: 1.4mm; }
+
+  .riga { display: grid; grid-template-columns: 1fr 14mm; column-gap: 4mm; align-items: start; }
+  .prezzo { font-size: 17.5px; line-height: 22px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+  .chefbox { border-left: 1px solid var(--champagne); padding-left: 4mm; margin-left: calc(-4mm - 1px); }
+  .cottura { display: table; margin-top: 1.2mm !important; font-family: var(--testo); font-size: 10.5px; line-height: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blu); border: 1px solid var(--champagne); padding: .6mm 2mm .5mm; margin-left: 0; white-space: nowrap; }
+  .cottura i { font-family: var(--display); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--secondario); margin-left: 1mm; }
+  .marca { display: inline-block; width: 1.6mm; height: 1.6mm; background: var(--blu); transform: rotate(45deg); margin: 0 0 .9mm 2.5mm; vertical-align: middle; font-size: 0; }
+
+  .sottosez { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin: 2mm 0 0; display: flex; align-items: baseline; gap: 3mm; }
+  .sottosez i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14.5px; letter-spacing: 0; text-transform: none; color: var(--secondario); }
+  .num { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: 0; }
+  .salse { display: flex; gap: 3mm; flex-wrap: wrap; margin-top: 1.5mm; }
+  .salse > span { font-family: var(--display); font-size: 16px; font-weight: 500; border: 1px solid var(--champagne); padding: .8mm 3.5mm; }
+
+  .box-nota { border-top: 1px solid var(--filetto); padding-top: 4mm; }
+  .box-nota p { margin: 0; }
+
+  .tbd { background: var(--giallo); box-shadow: 0 0 0 1.5px var(--giallo); }
+
+  /* Copertina */
+  .cop { padding-top: 30mm; }
+  .cop .corpo { align-items: center; text-align: center; }
+  .citazione { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 32.3px; line-height: 31.5px; letter-spacing: -.005em; margin: 16mm 0 0; }
+  .autore { font-size: 12.5px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; margin: 9mm 0 0; padding-left: .32em; }
+  .autore::before { content: ""; display: block; width: 48px; height: 1px; background: var(--champagne); margin: 0 auto 6mm; }
+  .cit-en { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; line-height: 18px; color: var(--secondario); margin: 4mm 0 0; }
+  .lockup { margin-top: auto; text-align: center; }
+  .lockup img { height: 16mm; display: block; margin: 0 auto 5mm; }
+  .lockup p { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: .45em; margin: 0 0 0 .45em; }
+
+  /* Pagina finale */
+  .tab { display: grid; grid-template-columns: 1fr 20mm; column-gap: 6mm; row-gap: 2.2mm; margin-top: 3mm; }
+  .tab .n { font-family: var(--display); font-weight: 600; font-size: 17px; line-height: 22px; }
+  .tab .n i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 15px; color: var(--secondario); margin-left: 2.5mm; }
+  .tab .p { font-size: 17.5px; line-height: 22px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+  .allerg { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: .6mm; margin-top: 3mm; font-size: 15px; line-height: 16px; }
+  .allerg b { font-family: var(--display); font-size: 15px; font-weight: 600; display: inline-block; width: 7mm; }
+  .allerg i { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 14px; color: var(--secondario); }
+  .legale { font-size: 13.5px; line-height: 16px; margin: 2.5mm 0 0; color: var(--secondario); }
+  .legale.en2 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 13.5px; line-height: 16px; color: var(--secondario); margin-top: 1mm; }
+  /* Etichette di sezione: con filetti, per non confondersi col sopratitolo di pagina */
+  .deg .sez > .eti { display: flex; align-items: center; justify-content: center; gap: 3mm; }
+  .deg .sez > .eti::before, .deg .sez > .eti::after { content: ""; width: 9mm; height: 1px; background: var(--champagne); }
+  .sottosez::after, .eti.sezione::after { content: ""; flex: 1; height: 1px; background: var(--champagne); align-self: center; }
+  .eti.sezione { display: flex; align-items: baseline; gap: 3mm; }
+  .eti-mini { font-size: 11px; line-height: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--blu); margin: 0; }
+  /* Nomi composti e unità che non vanno spezzati a fine riga */
+  .nb { white-space: nowrap; }
+  .all, .all-in { white-space: nowrap; }
+  .desc, .tr, .sotto, .en, .legale, .nota { text-wrap: pretty; }
+  /* Copertina: monogramma allineato all'incisione della cartella */
+  .cA .corpo { align-items: center; text-align: center; }
+  /* Opzione A: posizione del monogramma da allineare all'incisione della cartella.
+     Valori PROVVISORI sul foglio (dal bordo alto e dal bordo sinistro del foglio A4), da ricalcolare con le misure della cartella (vedi STATO.md):
+     --mono-top  = distanza incisione dal bordo alto della cartella − distanza foglio dal bordo alto della cartella
+     --mono-asse = asse incisione dal bordo sinistro della cartella − distanza foglio dal bordo sinistro della cartella
+     --mono-h    = altezza dell'incisione */
+  /* 09.10.2026: sigillo alto 80 mm e largo 35 mm, bordo alto a 100 mm dal bordo superiore del foglio, bordo destro a 80 mm dal bordo destro (asse a 210 − 80 − 17,5 = 112,5 mm).
+     Il PNG ha un po' di trasparenza attorno al segno (558 px di altezza, segno da 24 a 534 px): l'immagine è alta 80 × 558/510 = 87,53 mm e parte 3,76 mm più in alto. */
+  .cA { --mono-top: 96.24mm; --mono-asse: 112.5mm; --mono-h: 87.53mm; }
+  .cA .mono { position: absolute; top: var(--mono-top); left: var(--mono-asse); height: var(--mono-h); transform: translateX(-50%); display: block; margin: 0; }
+  .cA .corpo { padding-top: calc(var(--mono-top) + var(--mono-h) - 11mm); }
+  .cA .citazione { margin-top: 14mm; }
+  /* Testi della copertina centrati sull'asse del sigillo: l'area di testo va da 40 a 193 mm (centro 116,5 mm), quindi si stringe a destra del doppio dello scarto */
+  .cA .corpo { padding-right: calc(2 * (116.5mm - var(--mono-asse))); }
+  .cA .fondo { margin-top: auto; text-align: center; }
+  .nome-cusin { font-family: var(--display); font-weight: 500; font-size: 24px; letter-spacing: .5em; margin: 0 0 0 .5em; }
+  .stagione { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--secondario); margin: 4mm 0 0; }
+
+  .unita { font-family: var(--testo); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; color: var(--secondario); margin-left: 1.5mm; }
+</style>
+<script>
+  if (location.search.indexOf('schermo') >= 0) document.documentElement.classList.add('schermo');
+  document.addEventListener('DOMContentLoaded', function () {
+    if (document.documentElement.classList.contains('schermo')) {
+      document.body.classList.add('schermo');
+    }
+  });
+</script>
+<style>.uva .sez{gap:4.5mm}.uva .sez > .vino{margin-top:-1mm}.vino{font-family:var(--display);font-style:italic;font-weight:500;font-size:15px;line-height:18px;color:var(--secondario);margin:0}.vino b{font-style:normal;font-weight:600;color:var(--blu)}</style></head>
+<body>
+
+<!-- LE CASTAGNE COL PESCE · venerdì 27 novembre 2026 (solo in italiano e senza allergeni, come le feste) -->
+<section class="pag deg uva">
+  <div class="testa">
+    <img src="cusin-monogramma-blu.png" alt="Cusin">
+    <p class="eti">Serata a tema</p>
+    <h1>Le castagne col pesce</h1>
+    <p class="sotto">Venerdì 27 novembre 2026</p>
+  </div>
+  <div class="corpo">
+    <div class="sez">
+      <p class="eti">Antipasti</p>
+      <div class="voce"><h2><span class="nb">Gamberi rossi</span> e necci</h2>
+        <p class="desc">Carpaccio di <span class="nb">gamberi rossi</span> e necci con <span class="nb">ricotta senza lattosio</span></p></div>
+      <div class="voce"><h2>Bordatino di castagne</h2>
+        <p class="desc">Bordatino di <span class="nb">farina di castagne</span> con <span class="nb">cavolo nero</span> e <span class="nb">zighe sgusciate</span></p></div>
+    </div>
+    <div class="sez">
+      <p class="eti">Primi</p>
+      <div class="voce"><h2>Risotto alla ricciola</h2>
+        <p class="desc">Risotto alla ricciola, cachi, castagne e <span class="nb">miele di castagno</span></p></div>
+      <div class="voce"><h2>Sfoglia di castagne</h2>
+        <p class="desc">Sfoglia di castagne ripiena di mazzancolle e <span class="nb">sedano rapa</span>, con <span class="nb">colatura di erborinato</span></p></div>
+    </div>
+    <div class="sez">
+      <p class="eti">Secondo</p>
+      <div class="voce"><h2>Corba e ballotte</h2>
+        <p class="desc"><span class="nb">Corba al forno</span> cotta nel <span class="nb">brodo di castagne</span>, ballotte saltate al vino e <span class="nb">polentine croccanti</span></p></div>
+    </div>
+    <div class="sez">
+      <p class="eti">Dolce</p>
+      <div class="voce"><h2>Castagnaccio</h2></div>
+    </div>
+    <div class="sez">
+      <p class="eti">Nel bicchiere</p>
+      <p class="vino"><b>Dea</b> · rosato · <span class="nb">Tenuta Buonamico</span></p>
+      <p class="vino"><b>Particolare</b> · rosato · <span class="nb">Tenuta Buonamico</span></p>
+      <p class="vino"><b>Levii</b> · rosato · <span class="nb">Azienda Agricola Levii</span></p>
+    </div>
+    <div class="filetto-corto"></div>
+    <div>
+      <div class="prezzo-deg"><b>60</b><span><span class="nb">a persona</span></span></div>
+      <p class="nota">Vini in abbinamento e <span class="nb">acqua compresi</span></p>
+    </div>
+  </div>
+  <div class="piede"><span>Cusin · 27 novembre 2026</span><span></span></div>
+</section>
+
+</body>
+</html>
